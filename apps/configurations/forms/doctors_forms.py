@@ -9,6 +9,11 @@ class DoctorNamesForm(forms.ModelForm):
         model = DoctorNames
         fields = [
             "name",
+            "specialization",
+            "mobile1",
+            "mobile2",
+            "phone1",
+            "phone2",
             "description",
             "code",
             "active",

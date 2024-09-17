@@ -1,4 +1,6 @@
 # Ignoring src and assets folders
+.vscode
+.vscode/
 
 # Exclude everything from vendors
 /src/assets/vendor
@@ -132,7 +134,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-# .env
+.env
 .venv
 env/
 venv/

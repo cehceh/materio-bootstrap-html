@@ -4975,7 +4975,7 @@
         "kind": 6,
         "importPath": "apps.configurations.forms.doctors_forms",
         "description": "apps.configurations.forms.doctors_forms",
-        "peekOfCode": "class DoctorNamesForm(forms.ModelForm):\n    class Meta:\n        model = DoctorNames\n        fields = [\n            \"name\",\n            \"description\",\n            \"code\",\n            \"active\",\n            \"is_deleted\",\n        ]",
+        "peekOfCode": "class DoctorNamesForm(forms.ModelForm):\n    class Meta:\n        model = DoctorNames\n        fields = [\n            \"name\",\n            \"specialization\",\n            \"mobile1\",\n            \"mobile2\",\n            \"phone1\",\n            \"phone2\",",
         "detail": "apps.configurations.forms.doctors_forms",
         "documentation": {}
     },
