@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% url 'configurations:add_pos_station' as add_pos_station_url %}
+
+
+<form class="add-pos-station-form" method="post" enctype="multipart/form-data" id="add-pos-station-form">
+    {% csrf_token %}
+
+    <!-- Add Pos Station Div Buttons -->
+    {% include 'configurations/pos_station/includes/buttons/div_buttons.html' %}
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Starting our template tab scenario -->
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <!-- Add Pos Station Tabs Buttons -->
+                        {% include 'configurations/pos_station/includes/buttons/tabs_buttons.html' %}
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <!-- Pos Station Tab -->
+                                <div class="active tab-pane fade show clearfix" id="pos-station-tab" role="tabpanel" aria-labelledby="pos-station-tab">
+                                    {% include 'configurations/pos_station/includes/pos_station/pos_station.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Branch Tab -->
+                                <div class="tab-pane fade show clearfix" id="branch-tab" v-if="hideBranch" role="tabpanel" aria-labelledby="branch-tab">
+                                    {% include 'configurations/pos_station/includes/branch/branch.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                    {% include 'configurations/pos_station/includes/settings/add_settings.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Employees Tab -->
+                                <div class="tab-pane fade show clearfix" id="employees-tab" v-if="hideEmployees" role="tabpanel" aria-labelledby="employees-tab">
+                                    {% include 'configurations/pos_station/includes/employees/employees.html' %}
+                                </div>
+                            
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->          
+            </div>
+        </div>
+
+    </section>
+
+
+</form>
+<!-- /.form -->
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- Add Pos Station Js -->
+    {% include "configurations/pos_station/includes/js/js.html" %}
+
+    {% include "configurations/pos_station/includes/vueJs.html" %}
+
+{% endblock javascripts %}

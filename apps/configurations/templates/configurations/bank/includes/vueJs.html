@@ -1,0 +1,128 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const BankForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Bank-PAGE ?';
+            const title = 'BANKS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                name: '',
+                description:'',
+                isActive:false,
+                isDeleted:false,
+                // isEdit: false,
+                hideSettings:false,
+                hideBank:false,
+
+            }
+        },
+        computed: {    
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+
+            //here we can put jqueryb  code
+            $(document).on('submit', '#add-bank-form', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                let token = '{{csrf_token}}';
+                // let isActive= $("#id_active").is("checked");
+                // console.log("after success",isActive)
+                // let formData = new FormData($(this)[0]);
+                // formData.append("active", me.active);
+                // formData.append("is_deleted", me.isDeleted);
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "configurations:add_bank"  %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    cache: false,
+                    headers: {'X-CSRFToken': token},
+                    data: $(this).serialize(),
+                    // data: formData, //$("#form-store").serialize(),
+
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var bankId = data['bank_id']; 
+                            var bankName =data['bank_name'];
+                            // var patch = 
+                            
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['error']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['error']);
+                                window.location.href = (
+                                    "{% url 'configurations:edit_bank' id=0 %}"
+                                    ).replace('0', bankId);
+                                window.opener.updateParentDropdown(bankId, bankName,'bank');
+
+                                // console.log('PRO-ID: ', data['pro_id']);
+                                setInterval('location.reload()', 100000000);
+                                window.location.href = (
+                                    "{% url 'configurations:add_bank'  %}"
+                                    ).replace('0', unitId);
+                                localStorage.setItem('last-department-name', data.last_department_name);
+                                // window.location.href = 'products/add_product.html';
+                                // window.location.pathname = '{% url "products:add_product" %}';
+                                // localStorage.setItem('emp_id', empId);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['error']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX ADD :')
+                    },
+                });
+                e.preventDefault();
+            });  
+        },
+    });
+    BankForm.mount('#add-bank-form');
+
+</script>

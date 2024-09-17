@@ -1,0 +1,26 @@
+
+{% if request.path == patients_dashboard_url %}
+    <form class="form-inline mt-2 mt-md-0" method="get" action="{% url 'patientdata:patients-cards' %}">
+        <div class="nav-item d-flex align-items-center">
+            <i class="mdi mdi-magnify mdi-24px lh-0" type="submit"></i>
+            <input type="text" name="pat" value="{{request.GET.pat}}" class="form-control border-0 shadow-none bg-body" placeholder="Search patients cards ..." aria-label="Search...">
+        </div>
+    </form>
+{% elif request.path == patient_visits_dashboard_url %}
+<form class="form-inline mt-2 mt-md-0" method="get" action="{% url 'visits:patient-visits-cards' patient_id %}">
+    <div class="nav-item d-flex align-items-center">
+        <i class="mdi mdi-magnify mdi-24px lh-0" type="submit"></i>
+        <input type="text" name="pat" value="{{request.GET.pat}}" class="form-control border-0 shadow-none bg-body" placeholder="Search visits cards ..." aria-label="Search...">
+    </div>
+</form>
+{% else %}
+<div class="nav-item d-flex align-items-center">
+    <i class="mdi mdi-magnify mdi-24px lh-0" type="submit"></i>
+    <input type="text" class="form-control border-0 shadow-none bg-body" placeholder="No Search here..." aria-label="disabled" disabled>
+</div>
+{% endif %}
+
+
+
+
+&nbsp;

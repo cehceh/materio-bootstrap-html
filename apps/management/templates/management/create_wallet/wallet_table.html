@@ -1,0 +1,777 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6" id="walletTable">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+            {% include 'management/create_wallet/includes/buttons/table_div_buttons.html' %}
+        </div>
+        <!-- START LOG TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showLog">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            
+                            <div class="card-body table-responsive p-0">
+                                <table id="wallet" class="table text-nowrap">
+                                    <thead v-show="showLog">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Creator" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs" >{% trans "User of Update" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Created at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Updated at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Type" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showLog">
+                                        {% for obj in combined_qs %}
+                                        
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.user}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.created_at}}</td>
+                                            <td style="height: 1px;">{{obj.updated_at}}</td>
+                                            <td  class="text-center">
+                                                {% if obj.mobile %}
+                                                    <span class="badge bg-gradient-success">{{obj.mobile}}</span>
+                                                {% elif obj.account_name %}
+                                                    <span class="badge bg-gradient-success">{{obj.account_name}}</span>
+                                                {% endif %} 
+                                            </td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <!-- <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp; -->
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END LOG TABLE -->
+
+        <!-- START ACCOUNT WALLET TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showWallet">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="account-wallet" class="table text-nowrap">
+                                    <thead v-show="showWallet">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Balance" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Account name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showWallet">
+                                        {% for obj in account_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td style="height: 1px;">{{obj.total}}</td>
+                                            <td  class="text-center">
+                                                {% if obj.mobile %}
+                                                {% elif obj.account_name %}
+                                                    <span class="badge bg-gradient-success">{{obj.account_name}}</span>
+                                                {% endif %} 
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <!-- <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp; -->
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. END ACCOUNT TABLE -->
+
+        <!-- START ACCOUNT WALLET TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showMain">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="main" class="table text-nowrap">
+                                    <thead v-show="showMain">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Balance" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Type" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showMain">
+                                        {% for obj in main_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                    
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td style="height: 1px;">{{obj.total}}</td>
+                                            <td  class="text-center">
+                                                {% if obj.mobile %}
+                                                    <span class="badge bg-gradient-success">{{obj.mobile}}</span>
+                                                {% elif obj.account_name %}
+                                                    <span class="badge bg-gradient-success">{{obj.account_name}}</span>
+                                                {% endif %} 
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <!-- <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp; -->
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. END MAIN TABLE -->
+
+        <!-- START MOBILE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showMobileWallet">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="mobile-wallet" class="table text-nowrap">
+                                    <thead v-show="showMobileWallet">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Balance" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Mobile" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showMobileWallet">
+                                        {% for obj in mobile_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td style="height: 1px;">{{obj.total}}</td>
+                                            <td  class="text-center">
+                                                {% if obj.mobile %}
+                                                    <span class="badge bg-gradient-success">{{obj.mobile}}</span>
+                                                {% elif obj.account_name %}
+                                                {% endif %} 
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <!-- <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp; -->
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- /. END MOBILE TABLE -->
+
+        <!-- START DELEtE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showDeleted">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="delete-wallet" class="table text-nowrap">
+                                    <thead v-show="showDeleted">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "User of Deletion" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Deleted at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showDeleted">
+                                        {% for obj in deleted_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.deleted_at}}</td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                    
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to restore this record ?')">
+                                                    <span class="fas fa-undo-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- END DELETED TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="inActive">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="inactive-wallet" class="table text-nowrap">
+                                    <thead v-show="inActive">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Balance" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet type" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="inActive">
+                                        {% for obj in inactive_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">
+                                                {% if obj.name == 0 %}
+                                                {% elif obj.name == 1 %}
+                                                    <span class="badge bg-gradient-info">{% trans "Vodafone" %}</span>
+                                                {% elif obj.name == 2 %}
+                                                    <span class="badge bg-gradient-primary">{% trans "Etisalat" %}</span>
+                                                {% elif obj.name == 3 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "We" %}</span>
+                                                {% elif obj.name == 4 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Pay Mob" %}</span>
+                                                {% elif obj.name == 5 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Insta Pay" %}</span>
+                                                {% elif obj.name == 6 %}
+                                                    <span class="badge bg-gradient-dark">{% trans "Orange" %}</span>
+                                                {% endif %}</td>
+                                            <td style="height: 1px;">{{obj.total}}</td>
+                                            <!-- <td style="height: 1px;">{{obj.account_name}}</td> -->
+                                            <td  class="text-center">
+                                                {% if obj.mobile %}
+                                                    <span class="badge bg-gradient-success">{{obj.mobile}}</span>
+                                                {% elif obj.account_name %}
+                                                    <span class="badge bg-gradient-success">{{obj.account_name}}</span>
+                                                {% endif %} 
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ./END ROW -->
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    <!-- / for vuejs 3 code -->
+    <script>
+        const { createApp, ref, computed } = Vue;
+        const walletTable = createApp({
+            delimiters:["[[", "]]"],
+            setup() {
+                const msg = 'What is going on Wallet-PAGE ?';
+                const title = 'WALLETS SETTINGS ';
+                return {
+                    msg, title,
+                }
+            },
+            data() {
+            return {
+                showDiv:false,
+                showTable:false,
+                showLog:false,
+                showWallet:false,
+                showMobileWallet:false,
+                showDeleted:false,
+                showMain:false,
+                showReport:false,
+                inActive:false,
+            };
+        },
+            computed:{
+
+            },
+            methods:{
+                
+            },
+            mounted() {
+                //LOG DATA TABLE
+                $(function () {
+                    $("#wallet").DataTable({
+                        // dom: 'Bfrtip',
+                        // paging: true,
+                        // searching: true,
+                        ordering: true,
+                        order: [[0, "desc"]],
+                        pagingType: 'full_numbers',
+                        // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                        "pageLength": 5,
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "buttons": [
+                            {
+                                extend: 'print',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: "colvis",
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                                ,
+                        ],
+                    }).buttons().container().appendTo('#wallet_wrapper .col-md-6:eq(0)');
+            
+                });
+
+
+                // ACCOUNT DATA TABLE
+                $(function () {
+                    $("#account-wallet").DataTable({
+                        // dom: 'Bfrtip',
+                        // paging: true,
+                        // searching: true,
+                        ordering: true,
+                        order: [[0, "desc"]],
+                        pagingType: 'full_numbers',
+                        // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                        "pageLength": 5,
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "buttons": [
+                            {
+                                extend: 'print',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: "colvis",
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                                ,
+                        ],
+                    }).buttons().container().appendTo('#account-wallet_wrapper .col-md-6:eq(0)');
+            
+                });
+
+                // MOBILE DATA TABLE
+                $(function () {
+                    $("#mobile-wallet").DataTable({
+                        // dom: 'Bfrtip',
+                        // paging: true,
+                        // searching: true,
+                        ordering: true,
+                        order: [[0, "desc"]],
+                        pagingType: 'full_numbers',
+                        // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                        "pageLength": 5,
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "buttons": [
+                            {
+                                extend: 'print',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: "colvis",
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                                ,
+                        ],
+                    }).buttons().container().appendTo('#mobile-wallet_wrapper .col-md-6:eq(0)');
+            
+                });
+
+                // DELETED DATA TABLE
+                 // ACCOUNT DATA TABLE
+                $(function () {
+                    $("#delete-wallet").DataTable({
+                        // dom: 'Bfrtip',
+                        // paging: true,
+                        // searching: true,
+                        ordering: true,
+                        order: [[0, "desc"]],
+                        pagingType: 'full_numbers',
+                        // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                        "pageLength": 5,
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                        "buttons": [
+                            {
+                                extend: 'print',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                            {
+                                extend: "colvis",
+                                className:'bg-gradient-lightblue btn btn-sm',
+                                exportOptions: {
+                                    columns: ':visible'
+                                }
+                            },
+                                ,
+                        ],
+                    }).buttons().container().appendTo('#delete-wallet_wrapper .col-md-6:eq(0)');
+            
+                });
+
+                $(function () {
+                $("#inactive-wallet").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#inactive-wallet_wrapper .col-md-6:eq(0)');
+        
+            });
+
+            $(function () {
+                $("#main").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#main_wrapper .col-md-6:eq(0)');
+        
+            });
+
+
+
+
+            },
+
+        });
+        walletTable.mount("#walletTable")
+
+        
+    </script>
+
+{% endblock javascripts %}

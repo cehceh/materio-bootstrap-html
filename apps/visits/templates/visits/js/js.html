@@ -1,0 +1,69 @@
+
+<!-- Page specific script -->
+<script>
+
+    $(function(){ // Is equivilant To $( document ).ready(function(){})
+        $(document).on('submit', '.save-visit-form', function(e) {
+            e.preventDefault();
+            
+            let formData = new FormData($(this)[0]);
+            formData.append('visit-count', '{{visits_count}}')
+            
+            let token = '{{csrf_token}}';
+            
+            $.ajax({
+                type: 'POST',
+                url: '{% url "visits:add-visit" patient_id %}', 
+                headers: {'X-CSRFToken': token},
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                // enctype: "multipart/form-data",
+                
+                success: function (data) { 
+                    console.log(
+                        'DATA ERROR MSG --> ', data['msg'],   
+                        
+                    );
+                    
+                    $(function() {
+                        var Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 9000
+                        });
+                                                
+                        if (data['type'] == 'error'){
+                            // console.log(data['type'])
+                            toastr.error(data['msg']);
+                        } else if (data['type'] == 'success') {
+                            toastr.success(data['msg']);
+                            // console.log('SERVICE-ID: ');
+                            // setInterval('location.reload()', 20000);
+                            window.location.href = ("{% url 'visits:patient-visits-cards' patient_id %}");//.replace();
+                        } else if (data['type'] == 'info') {
+                            toastr.info(data['msg']);
+                        }
+                    });
+                },
+                error: function (){
+                    console.log('ERROR with ajax request');
+                },
+            });
+
+        });
+
+        function saveVisit(){
+            let submitBtn = $('.btn-submit');
+            submitBtn.click();
+        }
+        $(document).on('click', '.save-btn', function(){
+            let submitBtn = $('.submit-btn');
+            submitBtn.click();
+        });
+
+    });
+
+</script>

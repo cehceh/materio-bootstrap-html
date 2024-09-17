@@ -1,0 +1,145 @@
+
+{% load static %}
+
+<!-- <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}"> -->
+<!-- <link href="{% static 'css/selectize/selectize.bootstrap4.min.css' %}" rel="stylesheet" type="text/css"> -->
+<!-- <script type="text/javascript" src="{% static 'css/selectize/selectize.css' %}" defer></script> -->
+
+<!--  -->
+<!-- from stack-over-flow site to make search in drop-down menu -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" /> -->
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
+<!-- <link rel="stylesheet" href="{% static 'css/jquery-ui.bootstrap.min.css' %}"> -->
+
+
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="{% static 'google-fonts/googleapis_fonts.css' %}">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"> -->
+
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+
+
+<!-- # fav icon -->
+<link rel="icon" type="image/png" href="{% static 'favicon/favicon.ico' %}">
+
+<!-- IonIcons -->
+<!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+
+<!-- Tempusdominus Bootstrap 4 -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+
+ <!-- Bootstrap4 Duallistbox -->
+ <link rel="stylesheet" href="{% static 'dashboard/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css' %}">
+
+<!-- # For switch and checkboxes -->
+<link rel="stylesheet" src="{% static 'dashboard/plugins/bootstrap-slider/css/bootstrap-slider.min.css' %}">
+
+<link rel="stylesheet"
+  src="{% static 'dashboard/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css' %}">
+<link rel="stylesheet"
+  src="{% static 'dashboard/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.css' %}">
+
+
+<link rel="stylesheet" href="{% static 'dashboard/dashboard_build/scss/plugins/_bootstrap-switch.scss' %}" type=“text/css”>
+
+<!-- overlayScrollbars -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/toastr/toastr.min.css' %}">
+
+<!-- # Files for js data table -->
+<link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+<!-- For uPlot Chart -->
+<!-- comment on chart -->
+<!-- <link rel="stylesheet" src="{% static 'dashboard/plugins/uplot/uPlot.min.css' %}"> -->
+
+<!-- Select2 -->
+<!-- <link rel="stylesheet" href="{% static 'select2/4.0.8/css/select2.min.css' %}"> -->
+<!-- <link rel="stylesheet" href="{% static 'select2/4.0.8/css/select2.full.min.css' %}"> -->
+
+
+<!-- Theme style -->
+<link rel="stylesheet" href="{% static 'dashboard/dist/css/adminlte.min.css' %}">
+
+<!-- for jquery selectstyle -->
+<!-- <link href="{% static 'css/jqueryscripttop.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'css/selectstyle.css' %}" rel="stylesheet" type="text/css"> -->
+
+
+<style>
+  body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* .wrapper{
+
+  } */
+  .asterisk-input::after {
+      content: " *";
+      color: #e32;
+      position: absolute;
+      margin: -5px 0px 0px 1px;
+      font-size: large;
+      padding: 0 0 0 0;
+  }
+  #msg {
+      font-size: 30px;
+      margin-bottom: 0px;
+      text-align: center;
+  }
+  
+  /* For example edit button in products app */
+  /* #btn-edit-product {
+    background-color: #e32;
+  } */
+  /* for datatable */
+  /* .dataTables_filter {
+      display: none;
+  } */
+  /* 
+    Make inputs at least the height of their button counterpart 
+    Makes inputs behave like true block-level elements 
+  */
+  .input-block-level {
+    display: block;
+    width: 100%;
+    min-height: 28px;        
+    box-sizing: border-box; 
+  }
+</style>
+
+<style>
+  /* Input File */
+  .fileInput {
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #dee2e6;
+    /* box-shadow: 0px 0px 5px black; */
+    width: 400px; 
+    }
+  ::-webkit-file-upload-button{
+    color: white;
+    background:#3c8dbc;
+    padding: 3px;
+    border: 1px solid #dee2e6;
+    cursor: pointer;
+  }
+</style>

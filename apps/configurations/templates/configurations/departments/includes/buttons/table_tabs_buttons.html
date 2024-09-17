@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="card-header p-2">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link active" href="#table-tab" data-toggle="tab" @click="hideTable = true">
+                <i class="fas fa-chart-bar"></i> {% trans 'Stores Table' %}
+            </a>
+        </li>
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="#settings-tab" data-toggle="tab" @click="hideUnitName, hideSettings = true">
+                <i class="fas fa-switch"></i> {% trans 'Settings ' %} </a>
+        </li> -->
+
+        <!-- <li class="nav-item bg-gradient-primary">
+            <a class="nav-link" href="#save-tab" data-toggle="tab" type="submit" @click="hideUnitName = true">
+                <i class="fas fa-"></i> {% trans 'Any tab' %}
+            </a>
+        </li> -->
+    </ul>
+</div>

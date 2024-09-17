@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+<!--  -->
+<!-- {% load crispy_forms_tags %} -->
+<!--  -->
+{% load static %}
+{% load i18n %}
+
+<!-- {% load render_table from django_tables2 %}  -->
+
+<!--  -->
+{% block content %}
+
+<div class="container-fluid mt--6" id="add-branch">
+    <div class="card card-body" style="background-color: white;">
+
+        <div class="card-header">
+            <h1 class="title text-muted float-left">{% trans "Add Pos Station" %}</h1>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" class="float-left" style="width: 30%;height: 100%;">
+                {% csrf_token %}
+
+                <div class="field">
+                    <label class="label">{{ form.branch.label_tag }}</label>
+                    <div class="control">
+                        {% render_field form.branch class="form-control" %}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">{{ form.name.label_tag }}</label>
+                    <div class="control">
+                        {% render_field form.name class="form-control" %}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">{{ form.description.label_tag }}</label>
+                    <div class="control">
+                        {% render_field form.description class="form-control" %}
+                    </div>
+                </div>
+
+                <div class="field" v-if="!isHidden">
+                    <div class="custom-control custom-switch custom-switch-off-outline-danger custom-switch-on-primary">
+                        {% render_field form.active class="custom-control-input custom-control-input-danger" id="active" type="checkbox" %}
+                        <label for="active" class="custom-control-label">
+                            {{ form.active.label_tag }}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field" v-if="!isHidden">
+                    <div class="custom-control custom-switch custom-switch-off-secondary custom-switch-on-danger">
+                        {% render_field form.is_deleted class="custom-control-input custom-control-input-danger" id="isdeleted" type="checkbox" %}
+                        <label for="isdeleted" class="custom-control-label">
+                            {{ form.is_deleted.label_tag }}
+                        </label>
+                    </div>
+                </div>
+                <br>
+
+                <!-- button to show and hide a div -->
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="btn btn-outline-primary col-lg-12" id="submit-branch">
+                            {% trans "Save" %}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- <div class="field ">
+                    <div class="control ">
+                        <button type="submit " class="btn btn-outline-primary ">Submit(SAVE)</button>
+                    </div>
+                </div> -->
+
+            </form>
+
+
+            <div class="float-right " style="width: 65%; height: 100%; margin: 10px; padding: 20px; background-color:white; border-style: outset; border-radius: 20px; border-color: #aab5af; box-shadow: 2px 2px 4px 4px grey; ">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{% trans "Branches Table" %} </h3>
+
+                        <div class="card-tools" class="float-right">
+                            <form method="GET" action="." class="float-right">
+                                <input type="text" name="table_search" value="{{request.GET.table_search}}" class="form-control" 
+                                placeholder="{% trans 'Search pos station ... ' %}">
+
+                                <div class="input-group-append" hidden>
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form> &nbsp; &nbsp; &nbsp; &nbsp;
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-body">
+                        <!-- -->
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">{% trans "# ID" %}</th>
+                                    <th>{% trans "Pos Station" %}</th>
+                                    <th>{% trans "Branch" %}</th>
+                                    <!-- <th>{% trans "Creation Date" %} </th>-->
+                                    <th>{% trans "Active" %}</th>
+
+                                    <!-- <th style="width: 5%"><span class="fas fa-eye"></span></th> -->
+                                    <th style="width: 5%"><span class="fas fa-edit"></span></th>
+                                    <th style="width: 10%"><span class="fas fa-trash-alt"></span></th>
+                                    <!-- <th style="width: 10%"><span class="fas fa-image"></span></th> -->
+                                </tr>
+                            </thead>
+                            {% for obj in main_page %}
+                            <tbody>
+                                <tr>
+                                    <td>{{obj.id}}</td>
+                                    <td>{{obj.name}}</td>
+                                    <td>{{obj.branch}}</td>
+                                    <!-- <td>{{obj.created_at}}</td> -->
+                                    <td>{{obj.active}}</td>
+                                    <!-- <td>
+                                        {% if obj.id in inventory %} {% if obj.active %}
+                                        <a href="#">
+                                            <span class="badge bg-gradient-success">active</span>
+                                        </a>
+                                        {% else %}
+                                        <a href="#">
+                                            <span class="badge bg-gradient-secondary">inactive</span>
+                                        </a>
+                                        {% endif %} {% else %}
+                                        <p class="text-center text-red">
+                                            <small>Please Add this product to inventory to activate it
+                                                </small>
+                                        </p>
+                                        {% endif %}
+                                    </td> -->
+                                    <!--  -->
+                                    <td>
+                                        <a href="{% url 'configurations:edit_pos_station' obj.id %}">
+                                            <span class="badge bg-gradient-primary">
+                                                <span class="fas fa-edit"></span>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    {% if obj.is_deleted %}
+                                    <td>
+                                        <a href="#">
+                                            <span class="badge bg-gradient-danger">
+                                                {% trans "deleted" %} <span class="fa fa-recycle"></span>
+                                            </span>
+
+                                        </a>
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        <a href="#" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                            <span class="fas fa-trash-alt"></span>
+                                        </a>
+                                    </td>
+
+                                    {% endif %}
+
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            {% include 'includes/pagination.html' with page=main_page %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+<!--  -->
+{% block javascripts %}
+<!--  -->
+<script>
+var addCategory = new Vue({
+    el: '#add-category',
+    delimiters: ['[[', ']]'],
+    data: {
+        active: true,
+        isHidden: true,
+    },
+    computed: {
+        coloredIfTrue: function() {
+                    // this.active = ;
+        }
+    },
+})
+</script>
+
+<script>
+
+$.ajaxSetup({
+    headers: {
+        "X-CSRFToken": '{{ csrf_token }}'
+    }
+});
+
+// $(".cart_remove_icon").click(function () {
+        //     let product_id = $(this).data("item_id");
+        //     let action = "remove";
+        //     console.log('ID-FROM-CART: ', product_id);
+
+        //     $.ajax({
+        //         url: '#',
+        //         type: "POST",
+        //         data: {
+        //             'product_id': product_id,
+        //             'action': action
+        //         },
+        //         success: function (data) {
+        //             localStorage.setItem("modified", true);
+        //             location.reload();
+        //         }
+        //     })
+        // });
+
+$("#submit-category").click(function (e) {
+            // {#let product_id = $(this).data("item_id");#}
+            // e.preventDefault();
+            // let action = "save";
+            // console.log("clicked");
+
+            // $.ajax({
+            //     url: '{% url "categories:add_category"  %}',
+            //     type: "POST",
+            //     data: {
+            //         // {#'product_id': product_id,#}
+            //         'action': action
+            //     },
+            //     success: function (data) {
+            //         console.log(data)
+            //         localStorage.setItem("modified", true);
+            //         location.reload();
+            //     }
+            // })
+});
+
+$("#submit-category").click(function (e) {
+
+            // let arrow = $(this);
+            // let arrow_attached_input = arrow.parent().find('input');
+            // let arrow_attached_input_value = parseInt(arrow_attached_input.val());
+            let product_id = '{{product_id}}'; //arrow.parent().find('input').data("item_id");
+            console.log(product_id)
+            
+            // let product_price_selector_id = "#item_price_"+product_id;
+            // let product_available_quantity = parseInt(arrow.data("available_quantity"));
+            // let total_price_cell_selector_id = "#total_price_"+product_id;
+            // let sub_total_price_selector_id = "#sub_total_price";
+            // let action = "add";
+
+            // if (arrow.hasClass("increase")) {
+            //     if (arrow_attached_input_value < product_available_quantity -1 ) {
+            //         console.log("product_available_quantity: " + product_available_quantity)
+            //         arrow_attached_input_value += 1
+            //         console.log("product_available_quantity: " + product_available_quantity)
+            //     }
+
+            //     $(total_price_cell_selector_id).text(
+            //         parseFloat($(product_price_selector_id).text() * arrow_attached_input_value).toFixed(2)
+            //     );
+            // }
+
+            // if (arrow.hasClass("decrease") && arrow_attached_input_value > 1) {
+            //     arrow_attached_input_value -= 1
+            //     $(total_price_cell_selector_id).text(
+            //         parseFloat($(product_price_selector_id).text() * arrow_attached_input_value).toFixed(2)
+            //     );
+            //     console.log('arrow_attached_input_value', arrow_attached_input_value);
+            // }
+
+            $.ajax({
+                url: "{% url 'categories:add_category' %}",
+                type: "POST",
+                data: {
+                    'product_id': product_id,
+                    // 'quantity': arrow_attached_input_value,
+                    // 'action': action
+                },
+                success: function (data) {
+                    // $('#category').text(" $ " + data["cart_total_price"])
+                    localStorage.setItem("modified", true);
+                    console.log('DATA-SUCCESS: ', data, 'PRODUCT-ID: ', product_id)
+                    $.ajax({
+                        url: "#",
+                        type: "GET",
+                        success: function (data) {
+                            // $("#").text(data["cart_len"]);
+                            // $("#nav_cart_total_price").html(data["cart_total_price"]);
+                            localStorage.setItem("modified", false);
+                            console.log('FROM-CART: ', data)
+                        }
+                    })
+                }
+            })
+        });
+
+window.addEventListener('storage', () => {
+    location.reload()
+});
+
+</script>
+
+{% endblock javascripts %}

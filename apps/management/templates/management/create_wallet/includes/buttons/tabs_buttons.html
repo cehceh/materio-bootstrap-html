@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="card-header p-0">
+    <ul class="nav nav-pills">
+        <li class="nav-item btn-xs">
+            <a class="nav-link active font-weight-bold " href="#wallet-tab" data-toggle="tab" @click="hideSettings = false, hideWallet = true">
+                <i class="fas fa-wallet"></i> {% trans 'Wallet' %}
+            </a>
+        </li>
+        <li class="nav-item btn-xs" >
+            <a class="nav-link font-weight-bold" href="#settings-tab" data-toggle="tab" @click="hideWallet = false, hideSettings = false">
+                <i class="fas fa-cog"></i> {% trans 'Settings ' %} </a>
+        </li>
+
+        <!-- <li class="nav-item bg-gradient-primary"> -->
+        <!-- <a class="nav-link btn-sm" href="#save-tab" data-toggle="tab" type="submit" @click="hideWallet = true">
+            <i class="fas fa-save"></i> {% trans 'Save' %}
+        </a> -->
+        <!-- </li> -->
+    </ul>
+</div>

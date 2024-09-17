@@ -1,0 +1,63 @@
+
+<!-- Page specific script -->
+<script>
+
+    $(function(){ // Is equivilant To $( document ).ready(function(){})
+        $(document).on('submit', '.add-doctor-form', function(e) {
+            e.preventDefault();
+            // alert("CLICKED--->>")
+            let formData = new FormData($(this)[0]);
+            // formData.append('age', $('#id_age').val())
+            
+            let token = '{{csrf_token}}';
+            $.ajax({
+                type: 'POST',
+                url: '{% url "configurations:add-doctor-names" %}', 
+                headers: {'X-CSRFToken': token},
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                // enctype: "multipart/form-data",
+                
+                success: function (data) { 
+                    console.log(
+                        'DATA ERROR MSG --> ', data['msg'],   
+                        
+                    );
+                    
+                    $(function() {
+                        var Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 9000
+                        });
+                        let doctorNameId= data.doctor_name_id;                  
+                        if (data['type'] == 'error'){
+                            toastr.error(data['msg']);
+                        } else if (data['type'] == 'success') {
+                            toastr.success(data['msg']);
+                            // setInterval('location.reload()', 20000);
+                            window.location.href = ("{% url 'configurations:edit-doctor-names' id=0 %}").replace('0', doctorNameId);
+                        } else if (data['type'] == 'info') {
+                            toastr.info(data['msg']);
+                        }
+                    });
+                },
+                error: function (){
+                    console.log('ERROR with ajax request');
+                },
+            });
+
+        });
+
+        // /*  =================== Saving ================== */
+        $(document).on('click', '.save-btn', function(){
+            let submitBtn = $('.submit-btn');
+            submitBtn.click();
+        });
+
+    });
+
+</script>

@@ -1,0 +1,33 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<label class="">
+    {% trans "Adding Branch For Pos Station:" %} 
+    <span style="color: red;">*</span>
+</label>
+<br>
+
+<hr />
+
+<div class="field">
+    <label class="label">{% trans "Branch" %}</label>
+    <div class="control">
+        {% if request.path == add_pos_station_url %}
+            {% render_field form.name class="form-control form-control-sm" v-model="name" %}
+        {% elif request.path == edit_pos_station_url %}
+            {% render_field form.name class="form-control form-control-sm" v-model="editBranch"  %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="field">
+    <label class="label">{% trans "Description" %}</label>
+    <div class="control">
+        {% if title == "Create Pos Station" %}
+            {% render_field form.description class="form-control" %}
+        {% else %}
+            {% render_field form.description class="form-control" disabled="true" %}
+        {% endif %}
+    </div>
+</div>
+<br>

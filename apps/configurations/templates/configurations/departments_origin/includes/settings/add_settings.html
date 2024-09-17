@@ -1,0 +1,42 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<!-- Post -->
+<div class="post" v-if="hideSettings" id="settingsTab">
+    
+    <label class="">{% trans "Settings Of Bank Account:" %} </label><br> 
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="custom-control custom-switch custom-switch-off-outline-default custom-switch-on-green" disabled>
+
+                    {% render_field form.active class="custom-control-input custom-control-input-primary"  type="checkbox" v-model="isActive"  %}
+                    
+                <label for="id_active" {% if add_departments_url %} :class="[[isActive ? 'custom-control-label text-success ':'custom-control-label']]" {% elif edit_departments_url %} :class="[[isActiveChange ? 'custom-control-label text-success':'custom-control-label']]" {% endif %}>
+                    <i :class="[[isActive ? 'fas fa-check': '' ]]"></i>
+                    {% trans 'Active' %}
+                    <!-- {{ set_form.sale.label_tag }} -->
+                </label>
+            </div>
+        </div>[[isActive]]=act
+        [[isActiveChange]]=isActiveChange
+
+        <div class="col-lg-4">
+            <div class="custom-control custom-switch custom-switch-off-outline-default custom-switch-on-danger" disabled>
+                    {% render_field form.is_deleted class="custom-control-input custom-control-input-primary"  type="checkbox" v-model="isDeleted"  %}
+                <label for="id_is_deleted" {% if add_departments_url %} :class="[[isDeleted ? 'custom-control-label text-danger':'custom-control-label']]" {% else %} :class="[[isDeleted ? 'custom-control-label text-danger':'custom-control-label']]" {% endif %}>
+                    <i :class="[[isDeleted ? 'fas fa-trash': '' ]]"></i>
+
+                    {% trans 'Deleted' %} 
+                    <!-- {{ set_form.sale.label_tag }} -->
+                </label>
+            </div>[[isDeleted]]=del
+        
+        </div>
+        <hr class="my-4" />
+    
+    </div>
+</div>
+
+
+

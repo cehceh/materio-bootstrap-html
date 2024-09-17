@@ -1,0 +1,185 @@
+{% load static %}
+{% load i18n %}
+<div class="container-fluid mt--6" id="">
+    <div class="card card-body p-2 pl-3">
+
+        <div class="row">
+            <div class="col-gl-2">
+                <div class="control">
+                    <a href="{% url 'management:add_wallet' %}" type="button" class="btn btn-info btn-sm" id="">
+                        <i class="fa fa-wallet"></i>&nbsp;
+                        <i class="fa fa-plus"></i>
+                        <!-- {% trans 'Create' %} -->
+                    </a>
+                </div>
+            </div>
+            &nbsp;
+            <div class="col-gl-2">
+                <div class="control">
+                    <a href="{% url 'treasuries:transactions_treasuries_table' 'management' 'CreateWallet' %}" type="button" class="btn bg-gradient-indigo btn-sm" id="">
+                        <i class="fa fa-th"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="col-7">
+            </div> -->
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-file-export"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-info btn-sm">
+                    <i class="fas fa-print"></i>
+                </a>
+            </div>
+        </div>
+    
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showMain ? 'info-box-icon bg-gradient-info' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showWallet=false, showMain=true, showMobileWallet=false, showReport=false, showLog=false, showDeleted=false, inActive=false, showDiv=true" class="text-white">
+                    <i class="fas fa-wallet"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Wallets" %}</span>
+                <span class="info-box-number">{{main_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="info-box">
+            <span :class="[[showWallet ? 'info-box-icon bg-gradient-success' : 'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showWallet=true, showMain=false, showReport=false, inActive=false, showLog=false, showDeleted=false, showMobileWallet=false, showDiv=true" class="text-white">
+                    <i class="fas fa-check-circle"></i>
+                    <!-- <i class="fas fa-user"></i> -->
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Active App Wallet" %}</span>
+                <span class="info-box-number">{{account_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="info-box">
+            <span :class="[[showMobileWallet ? 'info-box-icon bg-gradient-success' : 'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showMobileWallet=true, inActive=false, showMain=false, showReport=false,  showWallet=false, showLog=false, showDeleted=false, showDiv=true" class="text-white">
+                    <!-- <i class="fas fa-wallet"></i>&nbsp; -->
+                    <i class="fas fa-mobile"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Mobile Wallet" %}</span>
+                <span class="info-box-number">{{mobile_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[inActive ? 'info-box-icon bg-gradient-primary' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showDeleted=false, inActive=false, showMain=false, showReport=false, showWallet=false, showLog=false, showMobileWallet=false, showDiv=true" class="text-white">
+                    <i class="fas fa-ban"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "InActive" %}</span>
+                <span class="info-box-number"> </span>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showDeleted ? 'info-box-icon bg-gradient-danger' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showDeleted=false, inActive=false, showMain=false, showWallet=false, showLog=false, showMobileWallet=false, showDiv=true" class="text-white">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Deleted" %}</span>
+                <span class="info-box-number"> </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showLog ? 'info-box-icon bg-gradient-purple':'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showLog=true, inActive=false, showMain=false,  showWallet=false, showDeleted=false, showMobileWallet=false, showDiv=true" class="text-white">
+                    <i class="fas fa-history"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Log" %}</span>
+                <span class="info-box-number">{{main_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showReport ? 'info-box-icon bg-gradient-info' : 'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showWallet=false, showMain=false, showMobileWallet=false, showReport=true, showLog=false, showDeleted=false, inActive=false, showDiv=true" class="text-white">
+                    <i class="fas fa-file"></i>
+                    <!-- <i class="fas fa-user"></i> -->
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Report" %}</span>
+                <span class="info-box-number"></span>
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+
+
+<!-- 
+<div class="container-fluid mt--6" id=""> 
+    <div class="card card-body p-2 pl-3">
+        <div class="col-gl-3">
+            <h5 class="title text-center">{{title}} {% trans "Log" %}</h5>
+        </div>
+        <div class="row">
+            <div class="col-gl-2">
+                <div class="control">
+                    <a href="{% url 'management:wallet_table' %}" type="button" class="btn btn-info btn-sm" id="">
+                        <i class="fas fa-history"></i>
+                    </a>
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-gl-1">
+                <button @click="showTable = !showTable" class="btn btn-outline-primary btn-sm" title="View Wallet">
+                    <i class="fas fa-wallet"></i>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,227 @@
+<!-- Page specific script -->
+
+<script>
+
+    function enableEditInputs() {
+        $("input").removeAttr('disabled');
+    }
+
+    $(function(){
+        // add unit name 
+        //edit department name
+
+    
+        // edit department name 
+        // $    //here we can put jqueryb  code
+        //     $(document).on('submit', '#edit-department', function(e) {
+        //         // let lastUnitName = '{{last_unit_name}}';
+        //         let token = '{{csrf_token}}';
+        //         let formData = new FormData($(this)[0])
+
+
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: '{% url "configurations:edit_departments" qs.id %}',
+        //             // data: {}, //{'my-form':$(this).serialize()},
+        //             cache: false,
+        //             contentType: false,
+        //             processData: false,
+        //             data: formData,
+        //             headers: {'X-CSRFToken': token},
+                    
+        //             success: function(data) {
+        //                 // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+        //                 // localStorage.setItem('last-unit-name', lastUnitName);
+        //                 $(function() {
+        //                     var Toast = Swal.mixin({
+        //                         toast: true,
+        //                         position: 'top-end',
+        //                         showConfirmButton: false,
+        //                         timer: 9000
+        //                     });
+        //                     var departmentId = data['department_id']; 
+        //                     // var patch = 
+                            
+        //                     if (data['type'] == 'error'){
+        //                         console.log(data['type'])
+        //                         toastr.error(data['error']);
+        //                     } else if (data['type'] == 'success') {
+        //                         toastr.success(data['error']);
+        //                         // console.log('PRO-ID: ', data['pro_id']);
+        //                         // setInterval('location.reload()', 10000);
+        //                         // window.location.href = (
+        //                         //     "{% url 'configurations:edit_branches' id=0 %}"
+        //                         //     ).replace('0', branchId);
+        //                         // localStorage.setItem('last-department-name', data.last_department_name);
+        //                         // window.location.href = 'products/add_product.html';
+        //                         // window.location.pathname = '{% url "products:add_product" %}';
+        //                         // localStorage.setItem('emp_id', empId);
+        //                     } else if (data['type'] == 'info') {
+        //                         toastr.info(data['error']);
+        //                     }
+        //                 });
+        //             },
+        //             error: function(){
+        //                 console.log('ERROR FROM AJAX EDIT :')
+        //             },
+        //         });
+        //         e.preventDefault();
+        //     });
+
+        
+        // 
+        // 
+        // 
+
+        $(document).on('click', '.btn-add', function(e) {
+            e.preventDefault();
+            var parentRow = $(this).closest('.charge-row'),
+                cloneRow = cloneChargeRow(parentRow);
+
+            $('.charge-row:last').after(cloneRow);
+
+        }).on('click', '.btn-remove', function(e) {
+            $(this).closest('.charge-row').remove();
+
+            e.preventDefault();
+            return false;
+        });
+
+
+        function cloneChargeRow(parentRow) {
+            // Clear existing add button
+            // $('.charge-row').find('.btn-add').removeClass('btn-add btn-success').addClass('btn-remove btn-danger');
+            // $('.charge-row').find('.btn').html('<span class="fa fa-minus"></span>');
+            $('.charge-row').find('.checkbox').removeClass('unit-checkbox').addClass('unit-check disabled');
+            $('.charge-row').find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+
+            var newRow = parentRow.clone();
+
+            // newRow.find('.btn').addClass('btn-add btn-success').removeClass('btn-remove btn-danger');
+            // newRow.find('.btn').html('<span class="fa fa-plus"></span>');
+            newRow.find('.btn').addClass('btn-remove btn-danger').removeClass('btn-add btn-success');
+            newRow.find('.btn').html('<span class="fa fa-minus"></span>');
+
+            newRow.find('.checkbox').addClass('unit-check disabled').removeClass('unit-check');
+            newRow.find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+            
+            // newRow.find('input:checkbox').removeAttr('checked');
+            newRow.find('input:checkbox').attr('disabled', true);
+            newRow.find('input:checkbox').prop('checked', false).end(); // for rest all cloned checkboxes
+            newRow.find('input').val('');
+
+            return newRow;
+        }
+    });
+
+    // for adding new category
+    // (https://stackoverflow.com/questions/54658658/clone-multiple-inputs-javascript)
+    $(function(){
+        var count = 0;
+        $(document).on('click', '.plus', function(e) {
+            e.preventDefault();
+            count ++;
+            var parentRow = $(this).closest('.category-row'),
+                cloneRow = cloneCategoryRow(parentRow);
+            // var value = (parentRow.find('#category-level').val());
+            // console.log(value);
+            $('.category-row:last').after(cloneRow);
+            // $('.category-level').val() = 1;
+            // console.log(value);
+
+        }).on('click', '.minus', function(e) {
+            $(this).closest('.category-row').remove();
+            count --;
+            $('.category-row').find('.plus').attr('disabled', false);
+
+            e.preventDefault();
+            return false;
+        });
+
+        function cloneCategoryRow(parentRow) {
+            // Clear existing add button
+            // $('.charge-row').find('.btn-add').removeClass('btn-add btn-success').addClass('btn-remove btn-danger');
+            // $('.charge-row').find('.btn').html('<span class="fa fa-minus"></span>');
+            // $('.category-row').find('.checkbox').removeClass('unit-checkbox').addClass('unit-check disabled');
+            // $('.charge-row').find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+
+            var newRow = parentRow.clone();
+
+            
+            // newRow.find('.btn').addClass('btn-add btn-success').removeClass('btn-remove btn-danger');
+            // newRow.find('.btn').html('<span class="fa fa-plus"></span>');
+            newRow.find('.btn-category').addClass('btn-outline-danger minus').removeClass('btn-outline-primary plus');
+            newRow.find('.btn-category').html('<span class="fa fa-minus"></span>');
+
+            // newRow.find('.checkbox').addClass('unit-check disabled').removeClass('unit-check');
+            // newRow.find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+            
+            
+            // newRow.find('input:checkbox').attr('disabled', true);
+            // newRow.find('input:checkbox').prop('checked', false).end(); // for rest all cloned checkboxes
+            newRow.find('input').val('');
+
+            var value = (parentRow.find('.category-level').val());
+            // var value = (parseInt(value)++);
+            var newValue = newRow.find('.category-level').val();
+            console.log('value for parent:== ' ,value + 'COUNT: '+ count, 'newValue: ' + newValue);
+            if(count < 5){
+                newRow.find('.category-level').val(parseInt(value) + count);
+                // newRow.find('.category-level').val(parseInt(newValue) + count) ;
+                // count++;
+            } 
+            if (count >= 4) {
+                console.log('COUNT:ELSEIF: ', count)
+                // $(this).closest('.category-row').remove();
+                $('.category-row').find('.plus').attr('disabled', true);
+                
+            }; 
+            newRow.find('.minus').attr('disabled', false).end();
+            
+                // newRow.closest('.category-row').remove();
+                // newRow.find('.category-row').hide();
+            // };
+            // newRow.find('.category-level').val(parseInt(count)) ;
+
+            return newRow;
+        }
+    });
+
+</script>
+
+
+
+<script>
+    //** for open a good popup window nice code to perform the mission
+    function openWindow(url) {
+        var w = 480, 
+            h = 340;
+        if (document.getElementById) {
+            w = screen.availWidth;
+            h = screen.availHeight;
+        }
+
+        var popW = 1300, //300,
+            popH = 700; //200;
+
+        var leftPos = (w - popW) / 2;
+        var topPos = (h - popH) / 2;
+
+        msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+        ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+
+    }
+
+</script>
+
+<!-- <input type="text" id="messageText" />
+<button id="sendMessage">Send Message to Parent</button> -->
+<script>
+    let button = document.querySelector("#add-unit-name");
+    button.addEventListener("click", function () {
+        let message = $("#id_name").val();
+        // document.querySelector("#id_name").value;
+        // Send `message` to the parent using the postMessage method on the window.parent reference.
+        window.parent.postMessage(message, window.location.pathname); // "*"
+    });
+</script>

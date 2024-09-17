@@ -1,0 +1,306 @@
+{% get_theme_variables 'patients_dashboard_url' as patients_dashboard_url %} 
+{% get_theme_variables 'all_patients_url' as all_patients_url %}
+{% get_theme_variables 'add_patient_url' as add_patient_url %}
+{% get_theme_variables 'visits_table_url' as visits_table_url %}
+
+{% url 'patientdata:edit-patient' patient_id as edit_patient_url %}
+{% url 'patientdata:patient-history' patient_id as patient_history_url %} 
+
+{% get_theme_variables 'history_patient_url' patient_id=patient_id as history_patient_url %}
+
+<!-- {% url 'visits:visits-table' as visits_table_url %} -->
+{% url 'visits:add-visit' patient_id as add_visit_url %}
+{% url 'visits:edit-visit' visit_id patient_id as edit_visit_url %}
+{% url 'visits:patient-visits-cards' patient_id as patient_visits_dashboard_url %}
+
+
+<nav class="layout-navbar {{container_class}} navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+            {% include 'layout/partials/includes/nav-search-input.html' %}
+            <!-- <div class="nav-item d-flex align-items-center">
+                <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none bg-body" placeholder="Search anything ..." aria-label="Search...">
+            </div> &nbsp; -->
+    
+            <!-- BUTTONS -->
+            {% if request.path == patients_dashboard_url %}
+            
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_patient_url}}" type="button" class="btn rounded-pill btn-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new patient">
+                    <i class="mdi mdi-account-plus mdi-1px lh-0"></i> 
+                    <!-- Patient -->
+                </a>
+            </div>
+            &nbsp;
+            
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{all_patients_url}}" type="button" class="btn rounded-pill btn-outline-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's in a table">
+                    <i class="mdi mdi-table mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Table -->
+                </a>
+            </div>
+            &nbsp;
+            {% elif request.path == patient_visits_dashboard_url %}
+            
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_patient_url}}" type="button" class="btn rounded-pill btn-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new patient">
+                    <i class="mdi mdi-account-plus mdi-1px lh-0"></i>
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{edit_patient_url}}" type="button" class="btn rounded-pill btn-outline-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Update patient ({{patient.name}})">
+                    <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account mdi-1px lh-0"></i> 
+                    <!-- Patient -->
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{patients_dashboard_url}}" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's cards">
+                    <i class="mdi mdi-cards mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Cards -->
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_visit_url}}" type="button" class="btn rounded-pill btn-outline-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new visit">
+                    <i class="mdi mdi-plus-outline mdi-1px"></i>
+                    <i class="mdi mdi-clipboard-pulse mdi-1px"></i>
+                    <!-- Visit -->
+                </a>
+            </div>
+            &nbsp;
+            
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{all_patients_url}}" type="button" class="btn rounded-pill btn-outline-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's in a table">
+                    <i class="mdi mdi-table mdi-1px lh-0"></i>
+                    <i class="mdi mdi-account-group mdi-1px"></i>
+                    <!-- Patients Table -->
+                </a>
+            </div>
+            &nbsp;
+            {% elif request.path == all_patients_url or request.path == history_patient_url or request.path == visits_table_url %}
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_patient_url}}" type="button" class="btn rounded-pill btn-outline-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new patient">
+                    <i class="mdi mdi-account-plus mdi-1px lh-0"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{patients_dashboard_url}}" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's cards">
+                    <i class="mdi mdi-cards mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Cards -->
+                </a>
+            </div>
+            &nbsp;
+                
+            {% else %} <!-- here to make save button only for specific pages  -->
+                
+            <div class="nav-item d-flex align-items-center">
+                <a type="submit" class="btn rounded-pill btn-primary btn-xs save-btn" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Saving your changes by hitting this button">
+                    <span class="fa fas-save"></span>Save 
+                </a>
+            </div> 
+            &nbsp; 
+            {% endif %}
+
+            {% if request.path == add_patient_url %}
+            
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{all_patients_url}}" type="button" class="btn rounded-pill btn-outline-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's in a table">
+                    <i class="mdi mdi-table mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Table -->
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{patients_dashboard_url}}" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's data as cards">
+                    <i class="mdi mdi-cards mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Cards -->
+                </a>
+            </div>
+            &nbsp;
+            {% elif request.path == edit_patient_url %} 
+            <a href="{{add_patient_url}}" type="button" class="btn rounded-pill btn-info btn-xs">
+                <i class="mdi mdi-account-plus mdi-1px lh-0"></i>  
+            </a>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button" class="btn rounded-pill btn-outline-danger btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add past history for this patient">
+                    <i class="mdi mdi-plus-outline mdi-1px"></i>
+                    <i class="mdi mdi-history mdi-1px"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{patients_dashboard_url}}" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all patient's data as cards">
+                    <i class="mdi mdi-cards mdi-1px lh-0"></i> 
+                    <i class="mdi mdi-account-group mdi-1px lh-0"></i> 
+                    <!-- Patients Cards -->
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_visit_url}}" type="button" class="btn rounded-pill btn-outline-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new visit for ({{patient.name}})">
+                    <i class="mdi mdi-plus-outline mdi-1px"></i>
+                    <i class="mdi mdi-clipboard-pulse mdi-1px"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{% url 'visits:patient-visits-cards' patient_id %}" type="button" class="btn rounded-pill btn-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all visits for ({{patient.name}})">
+                    <i class="mdi mdi-cards mdi-1px"></i>
+                    <i class="mdi mdi-clipboard-pulse mdi-1px"></i>
+                    <!-- Visits Cards -->
+                </a>
+            </div>
+            &nbsp;
+            {% elif request.path == add_visit_url or request.path == edit_visit_url %}
+            <div class="nav-item d-flex align-items-center">
+                <a href="{{add_visit_url}}" type="button" class="btn rounded-pill btn-outline-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new visit for this patient">
+                    <i class="mdi mdi-plus-outline mdi-1px"></i>
+                    <i class="mdi mdi-clipboard-pulse mdi-0px"></i> 
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a href="{% url 'patientdata:edit-patient' patient_id %}" type="button" class="btn rounded-pill btn-outline-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit this patient data">
+                    <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i>
+                    <i class="mdi mdi-account-outline mdi-1px lh-0"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="nav-item d-flex align-items-center">
+                <a type="button" class="btn rounded-pill btn-outline-danger btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View present history of this patient">
+                    <i class="mdi mdi-history mdi-1px"></i> 
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="{% url 'visits:patient-visits-cards' patient_id %}" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="View all visits of this patient">
+                    <i class="mdi mdi-cards mdi-0px"></i> 
+                    <i class="mdi mdi-clipboard-pulse mdi-0px"></i> 
+                    <!-- Visits Cards -->
+                </a>
+            </div>
+            &nbsp;
+            {% endif %}
+
+            {% if request.path == edit_visit_url %}
+                {% if first_id == last_id %}
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-secondary-subtle text-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="No previous visit">
+                                <i class="mdi mdi-arrow-left"></i> 
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-primary btn-xs text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Current visit no.">
+                                {{current_index}}
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a href="#" type="button" class="btn rounded-pill btn-secondary-subtle text-dark btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="No next visit">
+                                <i class="mdi mdi-arrow-right"></i> 
+                            </a>
+                        </div>
+                    </div>
+                {% elif current_id == first_id %}
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-secondary btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="No Previous visit no.">
+                                <i class="mdi mdi-arrow-left"></i> 
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-primary text-white btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Current visit no.">
+                                {{current_index}}
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a href="{% url 'visits:edit-visit' next_current_id patient_id %}" type="button" class="btn rounded-pill btn-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Next visit no. {{next_index}}">
+                                <i class="mdi mdi-arrow-right"></i> {{next_index}}
+                            </a>
+                        </div>
+                    </div>
+                {% elif current_id == last_id %}
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a href="{% url 'visits:edit-visit' before_current_id patient_id %}" type="button" class="btn rounded-pill btn-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous visit no. {{before_index}}" disabled>
+                                {{before_index}} <i class="mdi mdi-arrow-left"></i> 
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-primary text-white btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Current visit no.">
+                                {{current_index}}
+                            </a>
+                        </div>
+                    </div>
+                    
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-secondary-subtle btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="No next visit no.">
+                                <i class="mdi mdi-arrow-right"></i> 
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a href="{% url 'visits:edit-visit' before_current_id patient_id %}" type="button" class="btn rounded-pill btn-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Previous visit no. {{before_index}}">
+                                {{before_index}} <i class="mdi mdi-arrow-left"></i> 
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a type="button" class="btn rounded-pill btn-primary text-white btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Current visit no.">
+                                {{current_index}}
+                            </a>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <div class="col-gl-3">
+                        <div class="control">
+                            <a href="{% url 'visits:edit-visit' next_current_id patient_id %}" type="button" class="btn rounded-pill btn-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Next visit no. {{next_index}}">
+                                <i class="mdi mdi-arrow-right"></i> {{next_index}}
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        </div>
+        <!-- /Search -->
+    </div>
+</nav>

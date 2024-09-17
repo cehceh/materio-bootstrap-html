@@ -1,0 +1,55 @@
+<!-- for vue 3 -->
+<script>
+    // var level_1 = {{cat_1|safe}};
+    const { createApp, ref, computed } = Vue;
+    const addCreateObject = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on here ?';
+            const title = 'Create Object Settings: ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                isHidden: false,
+                hideCreateObject: false,
+                hideSettings: false,
+                count:0,
+            }
+        },
+        computed: {},
+        methods: {
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+            // created: function () {
+            //     axios.get('{% url "management:add_create_object" %}').then(function(response) {
+            //     this.table_list = response.data
+            //     }.bind(this)).catch(function (error) {
+            //     console.log('failure')
+            //     })
+            // }
+        },
+    });
+    addCreateObject.mount('#add-create-object');
+
+</script>

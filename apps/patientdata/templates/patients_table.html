@@ -1,0 +1,160 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+
+{% block content %}
+
+patient_id==>{{patient_id}}
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+
+<!-- Bootstrap Dark Table -->
+<div class="card">
+    <h5 class="card-header">Table Dark</h5>
+    <div class="table-responsive text-nowrap">
+        <div class="card-body">
+
+            <table class="table table-dark patients-table" id="table-dark">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Patient</th>
+                        <th>Card ID</th>
+                        <th>Mobile</th>
+                        <th>Status</th>
+                        <th><i class="mdi mdi-cog mdi-5px text-primary mdi-spin"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in qs %}
+                    {% url 'patientdata:edit-patient' obj.id as edit_patient_url %}
+                    <tr>
+                        <td>
+                            <!-- <i class="mdi mdi-wallet-travel mdi-20px text-danger me-3"></i> -->
+                            <i class="mdi mdi-format-list-numbered mdi-5px text-warning me-1"></i>
+                            <span class="fw-medium">{{obj.id}}</span>
+                        </td>
+                        <td>
+                            <i class="mdi mdi-card-account-details mdi-5px text-danger me-1"></i>
+                            <span class="fw-medium">{{obj.name}}</span>
+                        </td>
+                        <td><span class="badge rounded-pill bg-label-primary me-1">{{obj.cardid}}</span></td>
+                        <td>
+                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="{{obj.name}}">
+                                    {{obj.mobile}}
+                                </li>
+                                
+                            </ul>
+                        </td>
+                        <td><span class="badge rounded-pill bg-label-primary me-1">Active</span></td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'patientdata:edit-patient' obj.id %}"><i class="mdi mdi-pencil-outline me-1"></i> Edit</a>
+                                    <a class="dropdown-item" href="{% url 'visits:add-visit' obj.id %}"><i class="mdi mdi-plus-outline me-1"></i> Visit</a>
+                                    <a class="dropdown-item" href="#"><i class="mdi mdi-medical-bag me-1"></i> Present History</a>
+                                    <a class="dropdown-item" href="#"><i class="mdi mdi-pill me-1"></i> </a>
+                                    <a class="dropdown-item" href="javascript:void(0);"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                    
+                                    <!-- {% qr_from_text obj.cardid size=5 image_format="png" error_correction="L" %} -->
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<!--/ Bootstrap Dark Table -->
+
+
+{% endblock %}
+
+
+{% block page_js %} 
+<!-- ## Files important for js data table -->
+<script src="{% static 'dashboard/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+
+<script src="{% static 'dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+</script>
+
+<!--  -->
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.html5.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.print.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js' %}">
+</script>
+
+<script>
+
+  $(function () {
+      $("#table-dark").DataTable({
+          // dom: 'Bfrtip',
+          // paging: true,
+          // searching: true,
+          // ordering: true,
+          // order: [[0, "desc"]],
+          // pagingType: 'full_numbers',
+          // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          "pageLength": 5,
+          "responsive": true,
+          "lengthChange": false,
+          "autoWidth": false,
+          "buttons": [
+                  {
+                      extend: 'print',
+                      className:'bg-gradient-lightblue btn btn-sm',
+                      exportOptions: {
+                          columns: ':visible'
+                      }
+                  },
+                  {
+                      extend: 'excel',
+                      className:'bg-gradient-lightblue btn btn-sm',
+                      exportOptions: {
+                          columns: ':visible'
+                      }
+                  },
+                  {
+                      extend: "colvis",
+                      className:'bg-gradient-lightblue btn btn-sm',
+                      exportOptions: {
+                          columns: ':visible'
+                      }
+                  },
+                      ,
+              ],
+      }).buttons().container().appendTo('#table-dark_wrapper .col-md-6:eq(0)');
+
+  });
+
+</script>
+
+
+
+{% endblock page_js %}

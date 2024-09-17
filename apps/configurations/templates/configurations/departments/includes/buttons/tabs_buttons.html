@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="card-header p-0">
+    <ul class="nav nav-pills">
+        <li class="nav-item btn-xs">
+            <a class="nav-link active"  href="#department-tab" data-toggle="tab" @click="hideSettings=false, hideDep = true">
+                <i class="fas fa-file"></i> <b> {% trans 'Department' %}</b>
+            </a>
+        </li>
+        <li class="nav-item btn-xs">
+            <a class="nav-link"  href="#settings-tab" data-toggle="tab" @click="hideDep=false, hideSettings = true">
+                <i class="fas fa-cog"></i> <b> {% trans 'Settings ' %}</b> </a>
+        </li>
+
+        <!-- <li class="nav-item bg-gradient-primary"> -->
+        <!-- <a class="nav-link btn-sm" href="#save-tab" data-toggle="tab" type="submit" @click="hideBranch = true">
+            <i class="fas fa-save"></i> {% trans 'Save' %}
+        </a> -->
+        <!-- </li> -->
+    </ul>
+</div>

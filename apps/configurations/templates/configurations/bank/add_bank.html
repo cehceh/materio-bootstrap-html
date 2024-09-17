@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% url 'configurations:add_bank' as add_bank_url %}
+
+<form class="add-bank-form" method="post" enctype="multipart/form-data" id="add-bank-form">
+    {% csrf_token %}
+
+    <!-- Add Bank Div Buttons -->
+    {% include 'configurations/bank/includes/buttons/div_buttons.html' %}
+
+    <section class="content" >
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Starting our template tab scenario -->
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <!-- Add Bank Tabs Buttons -->
+                        {% include 'configurations/bank/includes/buttons/tabs_buttons.html' %}
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <!-- Bank Tab -->
+                                <div class="active tab-pane fade show clearfix" id="bank-tab" role="tabpanel" aria-labelledby="bank-tab">
+                                    {% include 'configurations/bank/includes/bank/bank.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                    {% include 'configurations/bank/includes/settings/add_settings.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+                            
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->          
+            </div>
+        </div>
+    </section>
+</form>
+<!-- /.form -->
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- Add Vendors Js -->
+    {% include "configurations/bank/includes/js/js.html" %}
+    {% include "configurations/bank/includes/vueJs.html" %}
+
+{% endblock javascripts %}

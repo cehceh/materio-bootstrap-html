@@ -1,0 +1,60 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const unitNameForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on UNIT-NAMES-PAGE ?';
+            const title = 'UNIT-NAMES SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                name: '',
+                hideSettings:false,
+                isActive:false,
+                isDeleted:false,
+                hideUnitName:false,
+        
+    
+
+            }
+        },
+        computed: {    
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+    });
+    unitNameForm.mount('#unit-names-form');
+
+</script>

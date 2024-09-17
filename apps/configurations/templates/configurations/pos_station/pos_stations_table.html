@@ -1,0 +1,1099 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6" id="posTable">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+        <!-- <div class="col-12"> -->
+            {% include 'configurations/pos_station/includes/buttons/table_div_buttons.html' %}
+        </div>
+        <div class="col-xl-12 order-xl-2" v-show="showLog">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tools">
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-striped table-responsive p-0">
+                                <table id="pos-log-table" class="table text-nowrap nowrap">
+                                    <thead v-show="showLog">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Creator" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Created at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "User of Update" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Updated at" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Branch" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showLog">
+                                        {% for obj in combined_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.user}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.created_at}}</td>
+                                            <td style="height: 1px;">{{obj.updated_at}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">{{obj.branch}}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'configurations:edit_pos_station' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'configurations' 'PosStation' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 order-xl-2" v-show="showMain">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tools">
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="pos-main-table" class="table text-nowrap">
+                                    <thead v-show="showMain">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Branch" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showMain">
+                                        {% for obj in main_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">{{obj.branch}}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'configurations:edit_pos_station' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'configurations' 'PosStation' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END POS TABLE -->
+        <!-- START DELEtE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showDeleted">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="pos-delete-table" class="table text-nowrap">
+                                    <thead v-show="showDeleted">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Branch" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "User of Deletion" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Deleted at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showDeleted">
+                                        {% for obj in deleted_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">{{obj.branch}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.deleted_at}}</td>
+                                            <td style="height: 1px;">
+                                                {% if not obj.active %}
+                                                <a href="{% url 'switch_active' obj.id 'configurations' 'PosStation' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-secondary">Inactive</i>
+                                                </a>
+                                                {% else %}
+                                                <a href="{% url 'switch_active' obj.id 'configurations' 'PosStation' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-green">Active</i>
+                                                </a> 
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'configurations:edit_pos_station' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'configurations' 'PosStation' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to retsore this record ?')">
+                                                    <span class="fas fa-undo-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- END DELETED TABLE -->
+        <!----Esraa---->
+        <!-- START ACTIVE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showActive">
+            <div class="card">
+                <div class="card-header"> 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="pos-active-table" class="table text-nowrap">
+                                    <thead v-show="showActive">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Branch" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showActive">
+                                        {% for obj in active_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">{{obj.branch}}</td>
+                                            <td style="height: 1px;">
+                                                <a href="{% url 'switch_active' obj.id 'configurations' 'PosStation' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-green">Active</i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'configurations:edit_pos_station' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'configurations' 'PosStation' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            <!-- END ACTIVE TABLE -->
+            </div>
+        </div>
+        
+
+
+
+         <!-- START INACTIVE TABLE -->
+         <div class="col-xl-12 order-xl-2" v-show="inActive">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="pos-inactive-table" class="table text-nowrap">
+                                    <thead v-show="inActive">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "ID" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Pos Station Branch" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="inActive">
+                                        {% for obj in inactive_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">{{obj.branch}}</td>
+                                            <td style="height: 1px;">
+                                                <a href="{% url 'switch_active' obj.id 'configurations' 'PosStation' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-secondary">Inactive</i>
+                                                </a>
+                                            </td>
+                                            
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'configurations:edit_pos_station' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'configurations' 'PosStation' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- ./END ROW -->
+</div>
+
+
+{% endblock content %}
+
+
+<!-- /egin JS code -->
+{% block javascripts %}
+<script>
+    const { createApp, ref, computed } = Vue;
+    const vueTable = createApp({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on POS-PAGE ?';
+            const title = 'POS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                showDiv:false,
+                showTable:false,
+                showLog:false,
+                showMain:false,
+                showDeleted:false,
+                inActive:false,
+                showActive:false,
+            };
+        },
+        computed:{
+
+        },
+        methods:{
+            
+        },
+        mounted() {
+
+        let me = this;
+
+            $(document).ready(function(){
+                $(document).on('click', '.show-log, .show-deleted, .in-active, .is-active, .show-main', function(e){
+                    console.log('sHOWLOGGGG', me.showLog)
+                    console.log('sHOWDELETED', me.showDeleted)
+                    //$('#main-bank').DataTable().destroy();
+                    let type = true;
+                    if (me.showLog == type) {
+                        // If showLog is true, set it to false, showDeleted to false, and inActive to false
+                        // me.showLog = false;
+                        me.showActive = false;
+                        me.showDeleted = false;
+                        me.showMain = false;
+                        me.inActive = false;
+                        console.log("SHOW LOG TRUE", me.showLog);
+                    } else if (me.showDeleted == type) {
+                        // If showDeleted is true, set it to false, showLog to false, and inActive to false
+                        me.showLog = false;
+                        me.showActive = false;
+                        // me.showDeleted = false;
+                        me.showMain = false;
+                        me.inActive = false;
+                        console.log("SHOW LOG FALSEE", me.showLog);
+                    } else if (me.inActive == type) {
+                        // If inActive is true, set showLog and showDeleted to false
+                        me.showLog = false;
+                        me.showActive = false;
+                        me.showDeleted = false;
+                        me.showMain = false;
+
+                        console.log("inActive TRUE");
+                    } else if (me.showActive === true){
+                        me.showLog = false;
+                        me.inActive = false;
+                        me.showDeleted = false;
+                        me.showMain = false;
+                        console.log("ACTIVE TRUE")
+
+                    } else if (me.showMain == true){
+                        me.showLog = false;
+                        me.inActive = false;
+                        me.showDeleted = false;
+                        me.showActive = false;
+                        console.log("Main TRUE")
+                    }
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '{% url "configurations:pos_stations_table" %}',
+                        data: {
+                            'type': type,
+                            'show-log': me.showLog,
+                            'show-deleted': me.showDeleted,
+                            'in-active':me.inActive,
+                            'active':me.showActive,
+                            'show-main':me.showMain,
+                        },
+                        success: function(data) {
+                            // Your success handling code...
+                            let url = function (id){
+                                let path = "{% url 'configurations:edit_pos_station' id=0 %}".replace('0', id)
+                                return path;
+                            }
+
+                            let switchStatus = (label) =>{
+                                if(label === true){
+                                    return '<i class="badge bg-gradient-green">Active</i>';
+                                }
+                                return '<i class="badge bg-gradient-secondary">Inactive</i>';
+
+                            };
+                            // APPEND DATA TO THE TABLE - WHAT IS HAPPEN
+                            if (me.showMain){
+
+                                let mainList = data['main-list'];
+                                $("#pos-main-table").DataTable().destroy();
+                                $("#pos-main-table tbody").empty();  // Clear existing rows
+                                mainList.forEach((obj, index, array) => {
+                                    let del_url = "{% url 'switch_delete' id=0 app_name='configurations' model='PosStation' %}".replace("0", `${obj.id}`)
+                                    $('#pos-main-table tbody').append(`
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">${obj.id}</td>
+                                            <td style="height: 1px;">${obj.code}</td>
+                                            <td style="height: 1px;">${obj.name}</td>
+                                            <td style="height: 1px;">${obj.branch}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="${url(`${obj.id}`)}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="${del_url}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    `);
+
+                                });
+
+                                let mainTable = $("#pos-main-table").DataTable({
+                                    // dom: 'Bfrtip',
+                                    // paging: true,
+                                    // searching: true,
+                                    ordering: true,
+                                    order: [[0, "desc"]],
+                                    pagingType: 'full_numbers',
+                                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                                    "pageLength": 5,
+                                    "responsive": true,
+                                    "lengthChange": false,
+                                    "autoWidth": false,
+                                    "buttons": [
+                                        {
+                                            extend: 'print',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: 'excel',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: "colvis",
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                            ,
+                                    ],
+                                }).buttons().container().appendTo('#pos-main-table_wrapper .col-md-6:eq(0)');
+                            }
+                            else if(me.showActive){
+                                let activeList = data['active-list'];
+                                // let TotalActive = data['total-active'];
+                                $("#pos-active-table").DataTable().destroy();
+                                $("#pos-active-table tbody").empty();  // Clear existing rows
+                                activeList.forEach((obj, index, array) => {
+                                    let del_url = "{% url 'switch_delete' id=0 app_name='configurations' model='PosStation' %}".replace("0", `${obj.id}`)
+                                    let status_url = "{% url 'switch_active' id=0 app_name='configurations' model_name='PosStation' %}".replace("0", `${obj.id}`)
+                                    $('#pos-active-table tbody').append(`
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">${obj.id}</td>
+                                            <td style="height: 1px;">${obj.code}</td>
+                                            <td style="height: 1px;">${obj.name}</td>
+                                            <td style="height: 1px;">${obj.branch}</td>
+                                            <td style="height: 1px;">
+                                                <a href="${status_url}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-green">Active</i>
+                                                </a> 
+                                            </td>
+
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="${url(`${obj.id}`)}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="${del_url}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    `);
+
+                                });
+                                // FOR getting the version 
+                                versionNo = $.fn.dataTable.version;
+                                console.log('VERSION:::-->>> ', versionNo);
+                                // Initialize the Datatable again
+                                // $("#main-bank").DataTable();
+                                $("#pos-active-table").DataTable({
+                                    // dom: 'Bfrtip',
+                                    // paging: true,
+                                    // searching: true,
+                                    ordering: true,
+                                    order: [[0, "desc"]],
+                                    pagingType: 'full_numbers',
+                                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                                    "pageLength": 5,
+                                    "responsive": true,
+                                    "lengthChange": false,
+                                    "autoWidth": false,
+                                    "buttons": [
+                                        {
+                                            extend: 'print',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: 'excel',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: "colvis",
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                            ,
+                                    ],
+                                }).buttons().container().appendTo('#pos-active-table_wrapper .col-md-6:eq(0)');
+                            }
+                            else if(me.inActive){
+                                let inactiveList = data['inactive-list'];
+                                $("#pos-inactive-table").DataTable().destroy();
+                                $("#pos-inactive-table tbody").empty();  // Clear existing rows
+                                inactiveList.forEach((obj, index, array) => {
+                                    let del_url = "{% url 'switch_delete' id=0 app_name='configurations' model='PosStation' %}".replace("0", `${obj.id}`)
+                                    let status_url = "{% url 'switch_active' id=0 app_name='configurations' model_name='PosStation' %}".replace("0", `${obj.id}`)
+                                    $('#pos-inactive-table tbody').append(`
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">${obj.id}</td>
+                                            <td style="height: 1px;">${obj.code}</td>
+                                            <td style="height: 1px;">${obj.name}</td>
+                                            <td style="height: 1px;">${obj.branch}</td>
+                                            <td style="height: 1px;">
+                                                <a href="${status_url}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-secondary">Inactive</i>
+                                                </a> 
+                                            </td>
+
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="${url(`${obj.id}`)}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="${del_url}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    `);
+
+                                });
+                                // FOR getting the version 
+                                versionNo = $.fn.dataTable.version;
+                                console.log('VERSION:::-->>> ', versionNo);
+                                // Initialize the Datatable again
+                                // $("#main-bank").DataTable();
+                                $("#pos-inactive-table").DataTable({
+                                    // dom: 'Bfrtip',
+                                    // paging: true,
+                                    // searching: true,
+                                    ordering: true,
+                                    order: [[0, "desc"]],
+                                    pagingType: 'full_numbers',
+                                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                                    "pageLength": 5,
+                                    "responsive": true,
+                                    "lengthChange": false,
+                                    "autoWidth": false,
+                                    "buttons": [
+                                        {
+                                            extend: 'print',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: 'excel',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: "colvis",
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                            ,
+                                    ],
+                                }).buttons().container().appendTo('#pos-inactive-table_wrapper .col-md-6:eq(0)');
+                            }
+                            else if(me.showDeleted){
+                                let deleteList = data['delete-list'];
+                                $("#pos-delete-table").DataTable().destroy();
+                                $("#pos-delete-table tbody").empty();  // Clear existing rows
+                                deleteList.forEach((obj, index, array) => {
+                                    let del_url = "{% url 'switch_delete' id=0 app_name='configurations' model='PosStation' %}".replace("0", `${obj.id}`)
+                                    let status_url = "{% url 'switch_active' id=0 app_name='configurations' model_name='PosStation' %}".replace("0", `${obj.id}`)
+                                    $('#pos-delete-table tbody').append(`
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">${obj.id}</td>
+                                            <td style="height: 1px;">${obj.code}</td>
+                                            <td style="height: 1px;">${obj.name}</td>
+                                            <td style="height: 1px;">${obj.branch}</td>
+                                            <td style="height: 1px;">${obj.updated_user__username}</td>
+                                            <td style="height: 1px;">${obj.deleted_at}</td>
+                                            <td style="height: 1px;">
+                                                <a href="${status_url}" onclick="return confirm('Are you sure ?')">
+                                                    ${switchStatus(obj.active)}
+                                                </a>
+                                            </td>
+
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="${url(`${obj.id}`)}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="${del_url}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to retsore this record ?')">
+                                                    <span class="fas fa-undo-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    `);
+
+                                });
+                                // FOR getting the version 
+                                versionNo = $.fn.dataTable.version;
+                                console.log('VERSION:::-->>> ', versionNo);
+                                $("#pos-delete-table").DataTable({
+                                    ordering: true,
+                                    order: [[0, "desc"]],
+                                    pagingType: 'full_numbers',
+                                    "pageLength": 5,
+                                    "responsive": true,
+                                    "lengthChange": false,
+                                    "autoWidth": false,
+                                    "buttons": [
+                                        {
+                                            extend: 'print',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: 'excel',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: "colvis",
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                            ,
+                                    ],
+                                }).buttons().container().appendTo('#pos-delete-table_wrapper .col-md-6:eq(0)');
+                            }
+
+                            else if (me.showLog){
+
+                                let logList = data['log-list'];
+                                $("#pos-log-table").DataTable().destroy();
+                                $("#pos-log-table tbody").empty();  // Clear existing rows
+                                logList.forEach((obj, index, array) => {
+                                    let del_url = "{% url 'switch_delete' id=0 app_name='configurations' model='PosSation' %}".replace("0", `${obj.id}`)
+                                    $('#pos-log-table tbody').append(`
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">${obj.id}</td>
+                                            <td style="height: 1px;">${obj.code}</td>
+                                            <td style="height: 1px;">${obj.user__username}</td>
+                                            <td style="height: 1px;">${obj.created_at}</td>
+                                            <td style="height: 1px;">${obj.updated_user__username}</td>
+                                            <td style="height: 1px;">${obj.updated_at}</td>
+                                            <td style="height: 1px;">${obj.name}</td>
+                                            <td style="height: 1px;">${obj.branch}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="${url(`${obj.id}`)}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="${del_url}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                    `);
+
+                                });
+                                // FOR getting the version 
+                                versionNo = $.fn.dataTable.version;
+                                console.log('VERSION:::-->>> ', versionNo);
+                                // Initialize the Datatable again
+                                // $("#main-bank").DataTable();
+                                $("#pos-log-table").DataTable({
+                                    // dom: 'Bfrtip',
+                                    // paging: true,
+                                    // searching: true,
+                                    ordering: true,
+                                    order: [[0, "desc"]],
+                                    pagingType: 'full_numbers',
+                                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                                    "pageLength": 5,
+                                    "responsive": true,
+                                    "lengthChange": false,
+                                    "autoWidth": false,
+                                    "buttons": [
+                                        {
+                                            extend: 'print',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: 'excel',
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                        {
+                                            extend: "colvis",
+                                            className:'bg-gradient-lightblue btn btn-sm',
+                                            exportOptions: {
+                                                columns: ':visible'
+                                            }
+                                        },
+                                            ,
+                                    ],
+                                }).buttons().container().appendTo('#pos-log-table_wrapper .col-md-6:eq(0)');
+                            }
+
+                        },
+                        error: function() {
+                            // Your error handling code...
+                        }
+                    });
+                    e.preventDefault();
+                });
+            });
+
+
+
+
+
+
+
+
+            //LOG DATA TABLE
+            // $(function () {
+            //     $("#pos-log-table").DataTable({
+            //         // dom: 'Bfrtip',
+            //         // paging: true,
+            //         // searching: true,
+            //         ordering: true,
+            //         order: [[0, "desc"]],
+            //         pagingType: 'full_numbers',
+            //         // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            //         "pageLength": 5,
+            //         "responsive": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": [
+            //             {
+            //                 extend: 'print',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: 'excel',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: "colvis",
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //                 ,
+            //         ],
+            //     }).buttons().container().appendTo('#pos-log-table_wrapper .col-md-6:eq(0)');
+        
+            // });
+    
+
+            // // POS DATA TABLE
+            // $(function () {
+            //     $("#pos-table").DataTable({
+            //         // dom: 'Bfrtip',
+            //         // paging: true,
+            //         // searching: true,
+            //         ordering: true,
+            //         order: [[0, "desc"]],
+            //         pagingType: 'full_numbers',
+            //         // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            //         "pageLength": 5,
+            //         "responsive": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": [
+            //             {
+            //                 extend: 'print',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: 'excel',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: "colvis",
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //                 ,
+            //         ],
+            //     }).buttons().container().appendTo('#pos-table_wrapper .col-md-6:eq(0)');
+        
+            // });
+    
+            
+            // // DELETED DATA TABLE
+            // $(function () {
+            //     $("#delete").DataTable({
+            //         // dom: 'Bfrtip',
+            //         // paging: true,
+            //         // searching: true,
+            //         ordering: true,
+            //         order: [[0, "desc"]],
+            //         pagingType: 'full_numbers',
+            //         // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            //         "pageLength": 5,
+            //         "responsive": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": [
+            //             {
+            //                 extend: 'print',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: 'excel',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: "colvis",
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //                 ,
+            //         ],
+            //     }).buttons().container().appendTo('#delete_wrapper .col-md-6:eq(0)');
+        
+            // });
+    
+            // //INACTIVE DATA TABLE
+            // $(function () {
+            //     $("#inactive").DataTable({
+            //         // dom: 'Bfrtip',
+            //         // paging: true,
+            //         // searching: true,
+            //         ordering: true,
+            //         order: [[0, "desc"]],
+            //         pagingType: 'full_numbers',
+            //         // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            //         "pageLength": 5,
+            //         "responsive": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": [
+            //             {
+            //                 extend: 'print',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: 'excel',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: "colvis",
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //                 ,
+            //         ],
+            //     }).buttons().container().appendTo('#inactive_wrapper .col-md-6:eq(0)');
+        
+            // });
+
+            // //Active data table   
+            // $(function () {
+            //     $("#active").DataTable({
+            //         // dom: 'Bfrtip',
+            //         // paging: true,
+            //         // searching: true,
+            //         ordering: true,
+            //         order: [[0, "desc"]],
+            //         pagingType: 'full_numbers',
+            //         // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            //         "pageLength": 5,
+            //         "responsive": true,
+            //         "lengthChange": false,
+            //         "autoWidth": false,
+            //         "buttons": [
+            //             {
+            //                 extend: 'print',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: 'excel',
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //             {
+            //                 extend: "colvis",
+            //                 className:'bg-gradient-lightblue btn btn-sm',
+            //                 exportOptions: {
+            //                     columns: ':visible'
+            //                 }
+            //             },
+            //                 ,
+            //         ],
+            //     }).buttons().container().appendTo('#active_wrapper .col-md-6:eq(0)');
+        
+            // });
+    
+    
+    
+        },
+    
+    });
+    vueTable.mount("#posTable")
+    
+        
+</script>
+{% endblock javascripts %}
+
+    <!-- <section class="content" id="add-category">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+
+                        {% include 'categories/new_category/includes/buttons/table_tabs_buttons.html' %}
+
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <div class="active tab-pane fade show clearfix" id="table-tab" role="tabpanel" aria-labelledby="table-tab">
+                                    {% include 'categories/new_category/includes/table/category_table.html' %}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section> -->

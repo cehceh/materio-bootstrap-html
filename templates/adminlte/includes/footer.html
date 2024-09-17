@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<footer class="footer text-center bg-gray" style="position: fixed; bottom: 0; width: 100%;">
+    <strong class="content">{% trans "Copyright" %} &copy; 2017 - {% now 'Y' %} 
+        <a href="#" class="text-dark" target="_blank"> 
+            {% trans "Developed by Amr Amer" %} </a>.
+    </strong> {% trans "All rights reserved." %}
+    <div class="float-right d-none d-sm-inline-block">
+        <b>{% trans "Version" %}</b> 5.0.1
+    </div>
+</footer>

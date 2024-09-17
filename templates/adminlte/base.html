@@ -1,0 +1,75 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{title}}</title>
+
+        {% include 'adminlte/base/css.html' %}
+        <!--Page CSS-->
+        {% block page_css %}{% endblock page_css %}
+
+        <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    </head>
+    <!-- onload="" -->
+    <body class="hold-transition sidebar-mini sidebar-collapse">
+        <!-- Site wrapper -->
+        <div class="wrapper" id="app">
+            <!-- Navbar -->
+            {% include 'adminlte/includes/navbar.html' %}
+            <!-- /.navbar -->
+
+            <!-- Main Sidebar Container -->
+            {% include 'adminlte/includes/sidebar.html' %}
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <!-- page-header here -->
+                
+                <!-- Main content -->
+                <section class="content">
+                    <div class="card-body"> 
+                        <!-- put message here -->
+
+                        {% block content %}
+                        {% endblock content %}
+
+                    </div>
+                </section>
+                <!-- /.content -->
+
+            </div>
+            <!-- /.content-wrapper -->
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-light">
+                <!-- Control sidebar content goes here -->
+            </aside>
+            <!-- /.control-sidebar -->
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- new footer position -->
+        {% include 'adminlte/includes/footer.html' %}
+
+        <!-- jQuery -->
+        {% include 'adminlte/base/js.html' %}
+
+        <!--? for Js code scripts -->
+        {% block page_js %}
+        <!--  -->
+        {% endblock page_js %}
+
+        <!-- <script>
+            axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+            axios.defaults.xsrfCookieName = "csrftoken";
+        </script> -->
+
+    </body>
+
+</html>

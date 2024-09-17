@@ -1,0 +1,148 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const EditDepartmentsForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on edit  Departments-PAGE ?';
+            const title = 'Deapartment SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                // name
+                hideDepartments:false,
+                hideSettings:false,
+                isActive:"{{form.active.value|yesno:'yeah,no,maybe'}}",
+                isDeleted:"{{form.is_deleted.value|yesno:'yeah,no,maybe'}}",
+                editName: '{{form.name.value}}',
+                isEdit: false,
+                // 
+                
+
+            }
+        },
+        computed: {  
+            isActiveChange() {
+                if (this.isActive == 'yeah'){
+                    this.isActive = true;
+                } else if (this.isActive == true) {
+                    this.isActive = "{{ form.active.value|yesno:'yeah,no,maybe' }}";
+                    this.isActive = true;
+                }else if(this.isActive == 'no'){
+                    this.isActive = false;
+                }else{
+                    this.isActive = false;
+                }
+                return this.isActive;
+                
+            },
+
+            isDeletedChanged() {
+                if (this.isDeleted == 'yeah') {
+                    this.isDeleted = true;
+                // } else if (this.isDeleted == 'no') {
+                //     this.isDeleted = false;
+                } else if (this.isDeleted == true) {
+                    this.isDeleted = "{{ form.is_deleted.value|yesno:'yeah,no,maybe' }}";
+                    this.isDeleted = true;
+                } else {
+                    this.isDeleted = false;
+                }
+                return this.isDeleted;
+            },
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+            let me = this;
+            // edit department name 
+            //? here we can put jqueryb  code 
+            $(document).on('submit', '#edit-department', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                let token = '{{csrf_token}}';
+                let formData = new FormData()
+                formData.append("name", me.editName);
+                // formData.append("active", me.isActive);
+                // formData.append("is_deleted", me.isDeleted);
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "configurations:edit_departments" qs.id %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    // cache: false,
+                    // headers: {'X-CSRFToken': token},
+                    // data: $(this).serialize(),
+                    cache: false,
+                    headers: {'X-CSRFToken': token},
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var departmentId = data['department_id']; 
+                            // var patch = 
+                            
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['error']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['error']);
+                                console.log('IS DELEETDDD',me.isDeleted)
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['error']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX EDIT :')
+                    },
+                });
+                e.preventDefault();
+            });
+
+        },
+
+    });
+    EditDepartmentsForm.mount('#edit-department');
+
+</script>

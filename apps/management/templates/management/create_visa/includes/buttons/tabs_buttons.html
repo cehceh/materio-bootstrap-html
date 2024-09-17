@@ -1,0 +1,21 @@
+{% load i18n %}
+
+<div class="card-header p-0">
+    <ul class="nav nav-pills">
+        <li class="nav-item btn-xs">
+            <a class="nav-link active font-weight-bold" href="#visa-tab" data-toggle="tab" @click="hideSettings = false, hideVisa = true">
+                <i class="fab fa-cc-visa"></i> {% trans 'Visa' %}
+            </a>
+        </li>
+        <li class="nav-item btn-xs">
+            <a class="nav-link font-weight-bold" href="#settings-tab" data-toggle="tab" @click="hideVisa = false, hideSettings = false">
+                <i class="fas fa-cog"></i> {% trans 'Settings ' %} </a>
+        </li>
+
+        <!-- <li class="nav-item bg-gradient-primary"> -->
+        <!-- <a class="nav-link btn-sm" href="#save-tab" data-toggle="tab" type="submit" @click="hideVisa = true">
+            <i class="fas fa-save"></i> {% trans 'Save' %}
+        </a> -->
+        <!-- </li> -->
+    </ul>
+</div>

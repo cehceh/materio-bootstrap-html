@@ -1,0 +1,134 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const WalletForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Wallet-PAGE ?';
+            const title = 'WALLETS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                name: 0,
+                mobile: '',
+                accountName: '',
+                type:0,
+                ismobile:false,
+                isaccount:false,
+                balance: 0.0,
+                hideSettings:false,
+                hideWallet:false,
+                isActive:false,
+                isDeleted:false,
+                hideTable:false,
+                // hideLog:false,
+                // showTable:false,
+                // description:'',
+
+            }
+        },
+        computed: {    
+            chooseAppMobile() {
+                if (this.type == 0) {
+                    this.ismobile = true;
+                    this.isaccount = true;
+                    this.mobile = '';
+                    this.accountName = '';
+                } else if (this.type == 1) {
+                    this.ismobile = true;
+                    this.isaccount = false;
+                    this.accountName = '';
+                } else if (this.type == 2) {
+                    this.ismobile = false;
+                    this.isaccount = true;
+                    this.mobile = '';
+                }
+            },
+
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+            //here we can put jqueryb  code
+            $(document).on('submit', '#add-wallet-form', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                let token = '{{csrf_token}}';
+                let formData = new FormData($(this)[0])
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "management:add_wallet"  %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    cache: false,
+                    headers: {'X-CSRFToken': token},
+                    contentType: false,
+                    processData: false,
+                    data: formData, //$(this).serialize(),
+                    // data: $(this).serialize(),
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        var walletId = data['wallet_id']; 
+                        var walletName = data['wallet_name'];
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var walletId = data['wallet_id']; 
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['msg']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['msg']);
+                                window.location.href = 
+                                    "{% url 'management:edit_wallet' id=0 %}".replace('0', walletId);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['msg']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX ADD :')
+                    },
+                });
+                e.preventDefault();
+            });  
+        },
+    });
+    WalletForm.mount('#add-wallet-form');
+
+</script>

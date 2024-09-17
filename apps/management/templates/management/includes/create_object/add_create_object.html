@@ -1,0 +1,45 @@
+{% load widget_tweaks %}
+{% load i18n %}
+<!-- Post --> 
+<div class="post clearfix" id="createObjectTab">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group ">
+                <label class="label asterisk-input">{{ form.name.label_tag }}</label>
+                <div class="control ">
+                    {% if title == "Create Object" %}
+                    {% render_field form.name class="form-control" v-model="name" %}
+                    {% elif title == "Edit Object" %}
+                    {% render_field form.name class="form-control" v-model="name" disabled="true" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group ">
+                
+                <label class="label asterisk-input">{{ form.type.label_tag }}</label>
+                <div class="control ">
+                    {% if title == "Create Object" %}
+                    {% render_field form.type class="form-control" v-model="type" %}
+                    {% elif title == "Edit Object" %}
+                    {% render_field form.type class="form-control" v-model="type" disabled="true" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label class="label input">{{ form.account_no.label_tag }}</label>
+                <div class="control">
+                    {% if title == "Create Object" %}
+                    {% render_field form.account_no class="form-control" v-model="account_no" %}
+                    {% elif title == "Edit Object" %}
+                    {% render_field form.account_no class="form-control" v-model="account_no" disabled="true" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.post -->

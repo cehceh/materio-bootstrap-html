@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% url 'configurations:edit_departments' qs.id as edit_departments_url %}
+{% url 'configurations:add_departments' as add_departments_url %}
+
+
+
+<form class="" method="post" enctype="multipart/form-data" id="edit-department-form">
+    {% csrf_token %}
+
+    <!-- Edit department Div Buttons -->
+    {% include 'configurations/departments/includes/buttons/div_buttons.html' %}
+    <fieldset :disabled ="!isEdit">
+
+        <section class="content" id="edit-department">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Starting our template tab scenario -->
+                    <div class="col-md-12">
+                        <div class="card">
+
+                            <!-- Edit department Tabs Buttons -->
+                            {% include 'configurations/departments/includes/buttons/tabs_buttons.html' %}
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="tab-content">
+
+                                    <!-- department Tab -->
+                                    <div class="active tab-pane fade show clearfix" id="department-tab" role="tabpanel" aria-labelledby="department-tab">
+                                        {% include 'configurations/departments/includes/edit_department/edit_department.html' %}
+                                    </div>
+                                    <!-- /.tab-pane -->
+
+                                    <!-- Settings Tab -->
+                                    <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                        {% include 'configurations/departments/includes/edit_settings/edit_settings.html' %}
+                                    </div>
+                                    <!-- /.tab-pane -->
+                            
+                                </div>
+                                <!-- /.tab-content -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->          
+                </div>
+            </div>
+        </section>
+    </fieldset>
+</form>
+<!-- /.form -->
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- Edit Vendors Js -->
+    {% include "configurations/departments/includes/js/js.html" %}
+    {% include "configurations/departments/includes/edit_department/vueJs.html" %}
+
+
+{% endblock javascripts %}

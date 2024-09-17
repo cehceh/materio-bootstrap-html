@@ -1,0 +1,196 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const VisaForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Visa-PAGE ?';
+            const title = 'VISAS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                visaName: '',
+                expireDate: '',
+                visaNo:'',
+                bank:'',
+                total:0,
+                bankBranch:'',
+                accountNo:0,
+                isActive:false,
+                isDeleted:false,
+                hideVisa:false,
+                hideSettings:false,
+                // description:'',
+
+            }
+        },
+        computed: {    
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 500; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+
+            window.updateParentDropdown = function(selectedValue, selectedText, type) {
+                
+                console.log(
+                    'selectedText::**', selectedText,
+                    'selectedValue::**', selectedValue,
+                    'type::**', type,
+                );
+                if (type == 'bank'){
+                    $('#id_bank').append(`
+                        <option value="${selectedValue}" selected>${selectedText}</option>
+                    `).change();
+                } else if (type == 'client'){
+                    $('#id_serv-client').append(`
+                        <option value="${selectedValue}" selected>${selectedText}</option>
+                    `).change();
+                } 
+            }
+
+            //here we can put jqueryb  code
+            $(document).on('submit', '#add-visa-form', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                let token = '{{csrf_token}}';
+                let formData = new FormData($(this)[0])
+                
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "management:add_visa"  %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData, //$(this).serialize(),
+                    headers: {'X-CSRFToken': token},
+                    // data: $(this).serialize(),
+                    success: function(data) {
+                        var visaId = data['visa_id']; 
+                        var visaName = data['visa_no'];
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            // var visaId = data['visa_id']; 
+                            // var patch = 
+                            
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['msg']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['msg']);
+                                console.log('visa_id', data['visa_id']);
+                                console.log('visa_no', data['visa_no']);
+                                // window.opener.updateParentDropdown(visaId, visaName,'visa');
+                                console.log('VISA ON SAve ', data.msg);
+                                setInterval('location.reload()', 100000000);
+                                window.location.href = 
+                                    "{% url 'management:edit_visa' id=0 %}".replace('0', visaId);
+                                // localStorage.setItem('last-department-name', data.last_department_name);
+                                // window.location.href = 'products/add_product.html';
+                                // window.location.pathname = '{% url "products:add_product" %}';
+                                // localStorage.setItem('emp_id', empId);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['msg']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX ADD :')
+                    },
+                });
+                e.preventDefault();
+            });  
+            $(document).on('change', '.bank', function(e) {
+            // console.log('MAIN-CAT CHANGED ', localStorage.getItem('cat_id'))
+            let bankId = $(this).val(); //.find('option:selected').val();
+            $(".bank-account").prop('disabled', false);
+            
+            $.ajax({
+                url:'{% url "treasuries:ajax_get_bank_account" %}', 
+                type:'GET',
+                dataType:'json',
+                // contentType: "application/json",
+                data: {
+                    'bank_id': bankId,
+                    "wallet_id": '',
+                    'bank_account_id': '', 
+                    // 'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }, 
+                success: function (data) { 
+                    const bankAc = data.ac;
+                    console.log('BANKAC:::', bankAc);
+                    $(".bank-account option").hide();
+                    $(".bank-account option").hide();
+                    console.log('List HIDE AFTER VALUE....');
+                    $(".bank-account")[0].selectedIndex=0; // very helpful line
+                    // $(".visa")[0].selectedIndex=0; // very helpful line
+                    if (data.error == 'list-empty') {
+                        $(".bank-account option").each(function () {
+
+                            // $(".bank-account option").hide(); // have no effect till now
+                            $(this).hide();
+                            console.log('List HIDE FROM .EACH....');
+                        });
+                        console.log('List HIDE IN IF STATEMENT....');
+                    } else {
+                        if (bankAc.length) {
+                            for (const accountNum of bankAc) { 
+                                $(".bank-account option[value="+ accountNum + "]").show(); //.trigger('change');
+                            }
+                        }
+                        
+                    };
+                    
+                },
+                error:
+                    function (data) {
+                        //display any unhandled error
+                        console.log(data, 'Something went wrong in POST !!!');
+                }
+            });
+            e.preventDefault();
+        });
+        },
+    });
+    VisaForm.mount('#add-visa-form');
+
+</script>

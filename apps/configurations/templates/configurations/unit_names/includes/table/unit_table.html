@@ -1,0 +1,110 @@
+
+{% load i18n %}
+
+<div class="col-xl-12 order-xl-2">
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">{% trans "Unit Names Table" %} </h3>
+
+            <div class="card-tools" class="float-right">
+                <form method="GET" action="." class="float-right">
+                    <input type="text" name="table_search" value="{{request.GET.table_search}}" class="form-control" 
+                    placeholder="{% trans 'Search Unit name ... ' %}">
+
+                    <div class="input-group-append" hidden>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form> &nbsp; &nbsp; &nbsp; &nbsp;
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+            <!-- -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th style="width: 10px">{% trans "# ID" %}</th>
+                        <th>{% trans "Code" %}</th>
+                        <th>{% trans "Unit Name" %}</th>
+                        <!-- <th>{% trans "Creation Date" %} </th>-->
+                        <th>{% trans "Status" %}</th>
+                        <!-- <th style="width: 5%"><span class="fas fa-eye"></span></th> -->
+                        <th style="width: 5%"><span class="fas fa-edit"></span></th>
+                        <!-- <th style="width: 10%"><span class="fas fa-trash-alt"></span></th> -->
+                        <!-- <th style="width: 10%"><span class="fas fa-image"></span></th> -->
+                    </tr>
+                </thead>
+                {% for obj in main_page %}
+                <tbody>
+                    <tr class="text-center">
+                        <td>{{obj.id}}</td>
+                        <td>{{obj.code}}</td>
+                        <td>{{obj.name}}</td>
+                        <!-- <td>{{obj.created_at}}</td> -->
+                        <td style="height: 1px;">
+                            {% if not obj.active %}
+                                <i class="badge bg-gradient-secondary">Inactive</i>
+                            {% else %}
+                                <i class="badge bg-gradient-green">Active</i>
+                            {% endif %}
+                        </td>
+                        <!-- <td><i class="badge bg-gradient-green">{{obj.active}}</i></td> -->
+                        <!-- <td>
+                            {% if obj.id in inventory %} {% if obj.active %}
+                            <a href="#">
+                                <span class="badge bg-gradient-success">active</span>
+                            </a>
+                            {% else %}
+                            <a href="#">
+                                <span class="badge bg-gradient-secondary">inactive</span>
+                            </a>
+                            {% endif %} {% else %}
+                            <p class="text-center text-red">
+                                <small>Please Add this product to inventory to activate it
+                                    </small>
+                            </p>
+                            {% endif %}
+                        </td> -->
+                        <!--  -->
+                        <td>
+                            <a href="{% url 'configurations:edit_unit_names' obj.id %}">
+                                <span class="badge bg-gradient-primary">
+                                    <span class="fas fa-edit"></span>
+                                </span>
+                            </a>
+                        </td>
+                        <!-- {% if obj.is_deleted %}
+                        <td>
+                                <span class="badge bg-gradient-danger">
+                                    {% trans "deleted" %} <span class="fa fa-recycle"></span>
+                                </span>
+                        </td>
+                        {% else %}
+                        <td>
+                            <a href="#" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                <span class="fas fa-trash-alt"></span>
+                            </a>
+                        </td>
+
+                        {% endif %} -->
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="card-footer clearfix">
+            <ul class="pagination pagination-sm m-0 float-right">
+                {% include 'includes/pagination.html' with page=main_page %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+

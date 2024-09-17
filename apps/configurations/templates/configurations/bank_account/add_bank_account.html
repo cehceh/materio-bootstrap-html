@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% url 'configurations:add_bank_account' as add_bank_account_url %}
+
+<form class="" method="post" enctype="multipart/form-data" id="add-bank-account-form">
+    {% csrf_token %}
+
+    <!-- Add Bank Account Div Buttons -->
+    {% include 'configurations/bank_account/includes/buttons/div_buttons.html' %}
+
+    <section class="content" id="add-bank-account">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Starting our template tab scenario -->
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <!-- Add Bank Account Tabs Buttons -->
+                        {% include 'configurations/bank_account/includes/buttons/tabs_buttons.html' %}
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <!-- Bank Account Tab -->
+                                <div class="active tab-pane fade show clearfix" id="bank-account-tab" role="tabpanel" aria-labelledby="bank-tab">
+                                    {% include 'configurations/bank_account/includes/bank_account/bank_account.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                    {% include 'configurations/bank_account/includes/settings/add_settings.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+                            
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->          
+            </div>
+        </div>
+    </section>
+</form>
+<!-- /.form -->
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- Add Vendors Js -->
+    {% include "configurations/bank_account/includes/js/js.html" %}
+    {% include "configurations/bank_account/includes/vueJs.html" %}
+
+{% endblock javascripts %}

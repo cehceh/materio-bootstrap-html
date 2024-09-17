@@ -1,0 +1,130 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="container-fluid mt--6" id="edit-departments">
+    <div class="card card-body p-2 pl-3">
+        <div class="col-gl-3">
+            <!-- <h5 class="title text-center">{{title}} {% trans "Edit Category" %}</h5> -->
+        </div>        
+        <div class="row">
+            &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    {% if request.path == add_departments_url %}
+                        <button type="submit" class="btn btn-primary btn-sm" >
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% elif request.path == edit_departments_url %}
+                        <button type="submit" :class="[[!isEdit ? 'btn btn-default btn-sm':'btn btn-primary btn-sm' ]]"  :disabled="!isEdit ? true:false"
+                                @click="">
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            &nbsp; &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-sm btn-outline-success"  @click="isEdit=!isEdit">
+                        <i class="fas fa-edit"></i>
+                        <!-- {% trans 'Add new' %} -->
+                    </a>
+                </div>
+            </div>
+            &nbsp; 
+            <!-- <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:add_departments' %}" type="button" class="btn btn-sm btn-outline-info" id="btn-table" onclick="isEdit=true">
+                        <i class="fas fa-balance-scale"></i>&nbsp; 
+                        <i class="fas fa-plus"></i> 
+                        <!-- {% trans 'Edit' %} -->
+                    <!-- </a>
+                </div>
+            </div>   --> 
+            &nbsp; 
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-sm btn-outline-info">
+                        <i class="fas fa-print"></i> 
+                        <!-- {% trans 'Edit' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp;&nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:departments_table' %}" type="button" class="btn btn-sm btn-outline-info" id="btn-table" onclick="">
+                        <i class="fas fa-th-list"></i> 
+                        <!-- {% trans 'Edit' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp;&nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:add_departments' %}" type="button" class="btn btn-sm btn-outline-info" id="btn-table" onclick="isEdit=true">
+                        <!-- <i class="material-icons"></i> -->
+                        <i class="fas fa-folder"></i> &nbsp;
+                        <i class="fas fa-plus"></i> 
+                        <!-- {% trans 'Add New Department' %} -->
+                    </a>
+                </div>
+            </div>  
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-outline-secondary btn-sm" id="" onclick="return confirm('خلى بالك انت حاتشيل كل الخانات فى شاشة المنتجات')">
+                        <i class="fas fa-broom"></i> 
+                        <!-- {% trans 'Discard' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp; &nbsp;
+            <div class="col-gl-3">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-outline-danger btn-sm" id="btn-delete-department">
+                        <i class="fas fa-trash"></i> 
+                        <!-- {% trans 'Delete' %} -->
+                    </a>
+                </div>
+                <!-- <div class="control">
+                    <button :class="[[isHidden? 'btn btn-outline-primary' : 'btn btn-outline-secondary']]" @click="isHidden = !isHidden, count++" type="button">
+                        <i class="fas fa-"></i> [[ isHidden ? 'Display Settings':'Hide Settings' ]]
+                    </button> 
+                </div> -->
+                <!-- &nbsp; count: [[count]] -->
+            </div>
+        </div>
+
+        <!-- </div> -->
+        
+        <!-- </div> -->
+
+    </div>
+</div>
+
+<!-- <div class="col-xl-12 order-xl-1" > -->
+<div class="container-fluid mt--6" id="cat-save-button">
+    <div class="row">
+        <div class="col-xl-12 order-xl-2">
+            <!-- <div class="card"> -->
+                <!-- <div class="col-gl-6">
+                    <div class="control">
+                        <button type="submit" class="btn btn-outline-primary" id="submit-category">
+                            <i class="fas fa-save"></i> Submit
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="col-gl-6">
+                    <button :class="[[isHidden? 'btn btn-outline-primary' : 'btn btn-outline-secondary']]" @click="isHidden = !isHidden, count++" type="button">
+                        <i class="fas fa-"></i> [[ isHidden ? 'Display Settings':'Hide Settings' ]]
+                    </button> 
+                </div> -->
+            <!-- </div> -->
+
+        </div>
+    </div>
+</div>
+    

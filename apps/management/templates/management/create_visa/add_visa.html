@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% url 'management:add_visa' as add_visa_url %}
+
+<form class="" method="post" enctype="multipart/form-data" id="add-visa-form">
+    {% csrf_token %}
+
+    <!-- Add Visa Div Buttons -->
+    {% include 'management/create_visa/includes/buttons/div_buttons.html' %}
+
+    <section class="content" id="add-visa-form">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Starting our template tab scenario -->
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <!-- Add Visa Tabs Buttons -->
+                        {% include 'management/create_visa/includes/buttons/tabs_buttons.html' %}
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <!-- Visa Tab -->
+                                <div class="active tab-pane fade show clearfix" id="visa-tab" role="tabpanel" aria-labelledby="visa-tab">
+                                    {% include 'management/create_visa/includes/create_visa/add_visa.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                    {% include 'management/create_visa/includes/settings/add_settings.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+                            
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->          
+            </div>
+        </div>
+    </section>
+</form>
+<!-- /.form -->
+{% endblock content %}
+
+{% block javascripts %}
+
+    <!-- Add Vendors Js -->
+    {% include "management/create_visa/includes/js/js.html" %}
+    {% include "management/create_visa/includes/vueJs.html" %}
+
+{% endblock javascripts %}

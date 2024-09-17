@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% block content %}
+<form class="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'management/includes/buttons/div_buttons.html' %}
+    <section class="content" id="add-create-object">
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- Starting our template tab scenario -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <!-- Buttons -->
+                        {% include 'management/includes/buttons/tabs_buttons.html' %}
+
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <!-- Product Tab -->
+                                <div class="active tab-pane fade show clearfix" id="create-object-tab" role="tabpanel" aria-labelledby="create-object-tab">
+                                    <!-- <input type="hidden" name="product" value="product"> -->
+                                    {% include 'management/includes/create_object/add_create_object.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade show clearfix" id="settings-tab" v-if="hideSettings" role="tabpanel" aria-labelledby="settings-tab">
+                                    {% include 'management/includes/settings/add_settings.html' %}
+                                </div>
+                                <!-- /.tab-pane -->
+
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                    <!-- /.card -->
+
+                </div>
+                <!-- /.col -->
+
+            </div>
+        </div>
+    </section>
+</form>
+<!-- /.form -->
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<!-- Page specific script -->
+<script>
+    // (https://stackoverflow.com/questions/54658658/clone-multiple-inputs-javascript)
+    $(function(){
+        $(document).on('click', '.btn-add', function(e) {
+            e.preventDefault();
+            var parentRow = $(this).closest('.charge-row'),
+                cloneRow = cloneChargeRow(parentRow);
+
+            $('.charge-row:last').after(cloneRow);
+
+        }).on('click', '.btn-remove', function(e) {
+            $(this).closest('.charge-row').remove();
+
+            e.preventDefault();
+            return false;
+        });
+
+        function cloneChargeRow(parentRow) {
+            // Clear existing add button
+            // $('.charge-row').find('.btn-add').removeClass('btn-add btn-success').addClass('btn-remove btn-danger');
+            // $('.charge-row').find('.btn').html('<span class="fa fa-minus"></span>');
+            $('.charge-row').find('.checkbox').removeClass('unit-checkbox').addClass('unit-check disabled');
+            $('.charge-row').find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+
+            var newRow = parentRow.clone();
+
+            // newRow.find('.btn').addClass('btn-add btn-success').removeClass('btn-remove btn-danger');
+            // newRow.find('.btn').html('<span class="fa fa-plus"></span>');
+            newRow.find('.btn').addClass('btn-remove btn-danger').removeClass('btn-add btn-success');
+            newRow.find('.btn').html('<span class="fa fa-minus"></span>');
+
+            newRow.find('.checkbox').addClass('unit-check disabled').removeClass('unit-check');
+            newRow.find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+
+            // newRow.find('input:checkbox').removeAttr('checked');
+            newRow.find('input:checkbox').attr('disabled', true);
+            newRow.find('input:checkbox').prop('checked', false).end(); // for rest all cloned checkboxes
+            newRow.find('input').val('');
+
+            return newRow;
+        }
+    });
+
+    //** for open a good popup window nice code to perform the mission
+    function openWindow(url) {
+        var w = 480,
+            h = 340;
+        if (document.getElementById) {
+            w = screen.availWidth;
+            h = screen.availHeight;
+        }
+
+        var popW = 1300, //300,
+            popH = 700; //200;
+
+        var leftPos = (w - popW) / 2;
+        var topPos = (h - popH) / 2;
+
+        msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+        ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+
+    }
+
+</script>
+
+{% include 'management/includes/vueJs.html' %}
+
+{% endblock javascripts %}

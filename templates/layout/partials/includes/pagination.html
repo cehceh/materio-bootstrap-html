@@ -1,0 +1,143 @@
+{% load i18n %}
+<!-- <section class="section">
+
+  <div class="pagination center">
+    <span class="step-links">
+    {% if main_page %}
+
+      {% if page.has_other_pages %}
+        <ul class="pagination">
+          {% if page.has_previous %}
+            <li>
+              <input class="btn btn-outline-primary" onclick="window.location.href='?page={{  page.previous_page_number }}';"  type="button" value="&laquo;"/>
+              
+            </li>
+          {% else %}
+          
+            <li>
+              <a class="btn btn-outline-secondary disabled" type="button" href="#">
+                <span>&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          {% for i in page.paginator.page_range %}
+            {% if page.number == i %}
+              <li>
+                <a type="button" class="btn btn-primary active"> {{ i }} 
+                  <span class="sr-only" id="current-num"></span>
+                </a>
+              </li>
+            {% else %}
+              <li>
+                <a class="btn btn-outline-primary" type="button" href='?page={{ i }}'>
+                  {{ i }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+          {% if page.has_next %}
+            <li>
+              <a class="btn btn-outline-primary" type="button" href='?page={{ page.next_page_number }}'>
+                &raquo; 
+              </a>
+            </li>
+          {% else %}
+            
+            <li>
+              <a class="btn btn-outline-secondary disabled" type="button" href="#">
+                <span>&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+
+    {% endif %}
+    </span>
+  </div>
+
+</section> -->
+
+
+
+
+<nav aria-label="Page navigation">
+  {% if main_page %}
+
+    {% if page.has_other_pages %}
+      <ul class="pagination">
+        {% if page.has_previous %}
+          
+          <li class="page-item first">
+            <a class="page-link" onclick="window.location.href='?page={{  page.previous_page_number }}';">
+              <i class="tf-icon mdi mdi-chevron-double-left"></i></a>
+          </li>
+        {% else %}
+          <li class="page-item prev">
+            <a class="page-link disabled" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-left"></i></a>
+          </li>
+        
+        {% endif %}
+        {% for i in page.paginator.page_range %}
+          {% if page.number == i %}
+            <li class="page-item active">
+              <a class="page-link" href="#">{{ i }}</a>
+            </li>
+
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ i }}">{{i}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        {% if page.has_next %}
+          
+          <li class="page-item next">
+            <a class="page-link" href="?page={{ page.next_page_number }}"><i class="tf-icon mdi mdi-chevron-right"></i></a>
+          </li>
+          
+        {% else %}
+          <li class="page-item last">
+            <a class="page-link disabled" href="#"><i class="tf-icon mdi mdi-chevron-double-right"></i></a>
+          </li>
+          
+        {% endif %}
+
+      </ul>
+
+    {% endif %}
+  
+  {% endif %}
+</nav>
+
+
+
+<!-- 
+<li class="page-item first">
+        <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-double-left"></i></a>
+      </li>
+      <li class="page-item prev">
+        <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-left"></i></a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">1</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">2</a>
+      </li>
+      <li class="page-item active">
+        <a class="page-link" href="javascript:void(0);">3</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">4</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="javascript:void(0);">5</a>
+      </li>
+      <li class="page-item next">
+        <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-right"></i></a>
+      </li>
+      <li class="page-item last">
+        <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-double-right"></i></a>
+      </li>
+-->

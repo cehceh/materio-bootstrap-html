@@ -1,0 +1,116 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="container-fluid mt--6" id="edit-pos-station">
+    <div class="card card-body p-2 pl-3">
+        <div class="col-gl-3">
+            <!-- <h5 class="title text-center">{{title}} {% trans "Edit Category" %}</h5> -->
+        </div>
+        <!-- <div class="card-header"> -->
+        <!-- <a type="button" class="btn btn-outline-dark float-right" href="{% url 'categories:add_category' %}">
+            {% trans "Add New" %}
+        </a> -->
+
+        <!-- <div class="card-body"> -->
+        <div class="row">
+            
+            &nbsp; &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    {% if request.path == add_pos_station_url %}
+                        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-pos-station">
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% elif request.path == edit_pos_station_url %}
+                        <button type="submit" :class="[[!isEdit ? 'btn btn-default btn-sm':'btn btn-primary btn-sm' ]]" id="btn-edit-pos-station" :disabled="!isEdit ? true:false"
+                                @click="">
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            &nbsp; 
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-outline-success btn-sm" id="btn-edit-pos-station" @click="isEdit=!isEdit">
+                        <i class="fas fa-edit"></i> 
+                        <!-- {% trans 'Edit' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:pos_stations_table' %}" type="button" class="btn btn-outline-info btn-sm" id="btn-table" onclick="">
+                        <i class="fas fa-th-list"></i> 
+                    </a>
+                </div>
+            </div> 
+            &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:add_pos_station' %}" type="button" class="btn btn-outline-info btn-sm" id="" onclick="">
+                        <i class="fas fa-cash-register"></i> &nbsp;
+                        <i class="fas fa-plus"></i> 
+                    </a>
+                </div>
+            </div> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp; &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="" class="btn btn-outline-secondary btn-sm" id="" onclick="return confirm('خلى بالك انت حاتشيل كل الخانات فى شاشة المنتجات')">
+                        <i class="fas fa-broom"></i> 
+                        <!-- {% trans 'Discard' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp; &nbsp;
+            <div class="col-gl-3">
+                <div class="control">
+                    <a href="#" type="" class="btn btn-outline-danger btn-sm" id="btn-delete-pos-station">
+                        <i class="fas fa-trash"></i> 
+                        <!-- {% trans 'Delete' %} -->
+                    </a>
+                </div>
+                <!-- <div class="control">
+                    <button :class="[[isHidden? 'btn btn-outline-primary' : 'btn btn-outline-secondary']]" @click="isHidden = !isHidden, count++" type="button">
+                        <i class="fas fa-"></i> [[ isHidden ? 'Display Settings':'Hide Settings' ]]
+                    </button> 
+                </div> -->
+                <!-- &nbsp; count: [[count]] -->
+            </div>
+        </div>
+
+        <!-- </div> -->
+        
+        <!-- </div> -->
+
+    </div>
+</div>
+
+<!-- <div class="col-xl-12 order-xl-1" > -->
+<div class="container-fluid mt--6" id="cat-save-button">
+    <div class="row">
+        <div class="col-xl-12 order-xl-2">
+            <!-- <div class="card"> -->
+                <!-- <div class="col-gl-6">
+                    <div class="control">
+                        <button type="submit" class="btn btn-outline-primary" id="submit-category">
+                            <i class="fas fa-save"></i> Submit
+                        </button>
+                    </div>
+                </div> 
+
+                <div class="col-gl-6">
+                    <button :class="[[isHidden? 'btn btn-outline-primary' : 'btn btn-outline-secondary']]" @click="isHidden = !isHidden, count++" type="button">
+                        <i class="fas fa-"></i> [[ isHidden ? 'Display Settings':'Hide Settings' ]]
+                    </button> 
+                </div> -->
+            <!-- </div> -->
+
+        </div>
+    </div>
+</div>
+    

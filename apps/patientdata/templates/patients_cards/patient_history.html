@@ -1,0 +1,40 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+
+{% block content %}
+
+<!-- request.path={{request.path}} -->
+
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xxl">
+<!-- visits==>{{visits}} -->
+        <div class="row mb-5">
+            <div class="col-md-6 col-lg-2 mb-3"></div>
+            <div class="col-md-6 col-lg-8 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Patient History</h5>
+                        <h6 class="card-subtitle text-muted">choose history type</h6>
+                        <img class="img-fluid d-flex mx-auto my-4 rounded" src="{% static 'img/clinic/doctor.jpg' %}" alt="Card image cap" />
+                        <p class="card-text">Choose what history do you want to add.</p>
+                        <a href="javascript:void(0);" class="card-link btn btn-primary rounded-pill btn-xs">Past History</a>
+                        <a href="javascript:void(0);" class="card-link btn btn-danger rounded-pill btn-xs">Present History</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-2 mb-3"></div>
+            
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

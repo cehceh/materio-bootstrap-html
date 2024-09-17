@@ -1,0 +1,70 @@
+
+<!-- Page specific script -->
+<script>
+
+    $(function(){ // Is equivilant To $( document ).ready(function(){})
+        $(document).on('submit', '.edit-visit-form', function(e) {
+            e.preventDefault();
+            let url = window.location.href;//$(this).attr('href');
+            console.log('URL--->>>', url)
+            let formData = new FormData($(this)[0]);
+            formData.append('visit-count', '{{current_index}}')
+            
+            let token = '{{csrf_token}}';
+            let patientId = '{{patient_id}}';
+            let visitId = '{{visit_id}}';
+            $.ajax({
+                type: 'POST',
+                url: '{% url "visits:edit-visit" visit_id=1 patient_id=0 %}'.replace('1', visitId).replace('0', patientId), 
+                headers: {'X-CSRFToken': token},
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                // enctype: "multipart/form-data",
+                
+                success: function (data) { 
+                    console.log(
+                        'DATA ERROR MSG --> ', data['msg'],   
+                        
+                    );
+                    
+                    $(function() {
+                        var Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 9000
+                        });
+                                                
+                        if (data['type'] == 'error'){
+                            toastr.error(data['msg']);
+                        } else if (data['type'] == 'success') {
+                            toastr.success(data['msg']);
+                            // console.log('SERVICE-ID: ');
+                            // setInterval('location.reload()', 20000);
+                            window.location.href = url;//(#);//.replace();
+                        } else if (data['type'] == 'info') {
+                            toastr.info(data['msg']);
+                        }
+                    });
+                },
+                error: function (){
+                    console.log('ERROR with ajax request');
+                },
+            });
+
+        });
+
+        function saveVisit(){
+            let submitBtn = $('.btn-submit');
+            submitBtn.click();
+        }
+        $(document).on('click', '.save-btn', function(){
+            let submitBtn = $('.submit-btn');
+            submitBtn.click();
+        });
+
+    });
+
+</script>

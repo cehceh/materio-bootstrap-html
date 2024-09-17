@@ -1,0 +1,114 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const AddPosStation = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Add-Pos-Station-PAGE ?';
+            const title = 'POS STATIONS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                name: "",
+                description:'',
+                branch: '',
+                hideSettings:false,
+                hidePosStation:false,
+                hideBranch:false,
+                hideEmployees: false,
+                isActive:false,
+                isDeleted:false,
+                posCode: '{{pos_code}}',
+            }
+        },
+        computed: {    
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+            //here we can put jqueryb  code
+
+            $(document).on('submit', '.add-pos-station-form', function(e) {
+                
+                let token = '{{csrf_token}}';
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "configurations:add_pos_station"  %}',
+                    headers: {'X-CSRFToken': token},
+                    cache: false,
+                    // contentType:false,
+                    // processData:false,
+                    data: $(this).serialize(),
+
+                    // data: formData,
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var posStationId = data['pos_station_id']; 
+                            // var patch = 
+                            
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['error']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['error']);
+                                window.location.href = (
+                                "{% url 'configurations:edit_pos_station' id=0 %}"
+                                ).replace('0', posStationId);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['error']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX ADD :')
+                    },
+                });
+                e.preventDefault();
+            });  
+        },
+    }).mount('#add-pos-station-form');
+//AddPosStation
+
+
+</script>

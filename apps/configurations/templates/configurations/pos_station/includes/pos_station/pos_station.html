@@ -1,0 +1,104 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <label class="label bg-gradient-lightblue btn-xs btn-block text-center">
+                    {% trans "Main Info" %}
+                </label>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group ">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> 
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>
+                        <!-- <input class="form-control form-control-sm" placeholder="Pos Station Code"  type="text" disabled> -->
+                        {% render_field form.code class="form-control form-control-sm" readonly="readonly"%}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="form-group ">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> 
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                        </div>
+                        <input class="form-control form-control-sm" value="{{current_date}}" type="text" disabled>
+                    </div>
+                </div>
+            </div>     
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
+                        </div>
+                        <input class="form-control form-control-sm" value="{{request.user}}" type="text" disabled>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <label class="label bg-gradient-lightblue btn-xs btn-block text-center">
+                {% trans "Pos Station Info" %}
+        </label>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="label asterisk-input">{% trans "Branch" %}</label>
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <a href="#" @click="openWindow(`{% url 'configurations:add_branches' %}`)">
+                        <i class="fas fa-map-marker"></i>
+                        </a>
+                    </span>
+                </div>
+                {% render_field form.branch class="form-control" v-model="branch" %}
+            </div>
+        </div> 
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="label asterisk-input">{% trans "Name" %}</label>
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fas fa-cash-register"></i>
+                    </span>
+                </div>
+                {% render_field form.name class="form-control" v-model="name" %}
+            </div> 
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group">
+            <label class="label asterisk-input">{% trans "Description" %}</label>
+
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                    <!-- <i class="fas fa-cash-register"></i> -->
+                    </span>
+                </div>
+                {% render_field form.description class="form-control" v-model="description" %}
+            </div> 
+        </div>
+
+    </div>
+</div>

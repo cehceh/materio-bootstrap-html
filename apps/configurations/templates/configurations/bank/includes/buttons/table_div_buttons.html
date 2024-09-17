@@ -1,0 +1,131 @@
+{% load static %}
+{% load i18n %}
+<div class="container-fluid mt--6" id="">
+    <div class="card card-body p-2 pl-3">
+        <div class="col-gl-3">
+        </div>
+        <div class="row">
+            <div class="col-gl-2">
+                <div class="control">
+                    <a href="{% url 'configurations:add_bank' %}" type="button" class="btn btn-info btn-sm" id="">
+                        <i class="fas fa-university"></i>&nbsp;
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-file-export"></i>
+                </a>
+            </div>
+            &nbsp;
+            <div class="col-gl-1">
+                <a href="#" type="button" class="btn btn-outline-info btn-sm">
+                    <i class="fas fa-print"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showMain ? 'info-box-icon bg-gradient-lightblue' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showDeleted=false, showMain=true, showReport=false, showActive=false, showLog=false, inActive=false, showDiv=true" class="text-white show-main">
+                    <i class="fas fa-university"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Banks" %}</span>
+                <span class="info-box-number">{{main_total}}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showActive ? 'info-box-icon bg-gradient-success' : 'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showMain=false, showActive=true, showReport=false, showLog=false, showDeleted=false, inActive=false, showDiv=true" class="text-white is-active">
+                    <i class="fas fa-check-circle"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Active" %}</span>
+                <span class="info-box-number">{{table_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[inActive ? 'info-box-icon bg-gradient-primary' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showDeleted=false, showReport=false, showMain=false, showActive=false, inActive=false, showLog=false, showDiv=true" class="text-white in-active">
+                    <i class="fas fa-ban"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "InActive" %}</span>
+                <span class="info-box-number"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showDeleted ? 'info-box-icon bg-gradient-danger' : 'info-box-icon bg-gradient-gray' ]]">
+                <a href="#" @click="showTable=true, showDeleted=false, showReport=false, showMain=false, showActive=false, showLog=false, inActive=false, showDiv=true" class="text-white show-deleted">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Deleted" %}</span>
+                <span class="info-box-number"></span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showLog ? 'info-box-icon bg-gradient-purple':'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showReport=false, showLog=true, showMain=false, showActive=false, showDeleted=false, inActive=false, showDiv=true" class="text-white show-log">
+                    <i class="fas fa-history"></i>
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Log" %}</span>
+                <span class="info-box-number">{{main_total}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-2">
+        <div class="info-box">
+            <span :class="[[showReport ? 'info-box-icon bg-gradient-info' : 'info-box-icon bg-gradient-gray']]">
+                <a href="#" @click="showTable=true, showMain=false, showActive=false, showReport=true, showLog=false, showDeleted=false, inActive=false, showDiv=true" class="text-white">
+                    <i class="fas fa-file"></i>
+                    <!-- <i class="fas fa-user"></i> -->
+                </a>
+            </span>
+            <div class="info-box-content">
+                <span class="info-box-text">{% trans "Report" %}</span>
+                <span class="info-box-number"></span>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+</div>

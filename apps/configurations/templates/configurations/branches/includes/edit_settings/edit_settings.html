@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<!-- Post -->
+<div class="post" v-if="hideSettings" id="settingsTab">
+    
+    <label class="">{% trans "Settings Of Branches:" %} </label><br> 
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="custom-control custom-switch custom-switch-off-outline-default custom-switch-on-success" disabled>
+                
+                    {% render_field form.active class="custom-control-input custom-control-input-success" type="checkbox" v-model="isActive" @change="isActiveChange"%}
+
+                <label for="id_active" :class="[[isActiveChange ? 'custom-control-label text-success':'custom-control-label']]">
+                    <i :class="[[isActive ? 'fas fa-check': '' ]]"></i>
+
+                    {% trans 'Active' %} 
+                    <!-- {{ set_form.sale.label_tag }} -->
+                </label>
+            </div>
+            isActiveChange=[[isActiveChange]]
+        
+        </div>
+        <div class="col-lg-4">
+            <div class="custom-control custom-switch custom-switch-off-outline-default custom-switch-on-danger" disabled>
+                
+                    {% render_field form.is_deleted class="custom-control-input custom-control-input-danger" type="checkbox" v-model="isDeleted" @change="isDeletedChanged"%}
+
+                <label for="id_is_deleted" :class="[[isDeletedChanged ? 'custom-control-label text-danger':'custom-control-label']]">
+                    <i :class="[[isDeleted ? 'fas fa-trash': '' ]]"></i>
+
+                    {% trans 'Deleted' %} 
+                    <!-- {{ set_form.sale.label_tag }} -->
+                </label>
+            </div>
+            del=[[isDeleted]]
+        
+        </div>
+        <hr class="my-4" />
+    
+    </div>
+</div>
+
+
+

@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="card-header p-0">
+    <ul class="nav nav-pills">
+        <li class="nav-item btn-xs">
+            <a class="nav-link active  font-weight-bold" href="#bank-account-tab" data-toggle="tab" @click="hideSettings, hideBankAccount = true">
+                <i class="nav-icon fas fa-credit-card"></i> {% trans 'Bank Account' %}
+            </a>
+        </li>
+        <li class="nav-item btn-xs">
+            <a class="nav-link  font-weight-bold" href="#settings-tab" data-toggle="tab" @click="hideBankAccount, hideSettings = false">
+                <i class="fas fa-cog"></i> {% trans 'Settings ' %} </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,263 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+
+
+<!--Page CSS-->
+{% block page_css %}
+<style>
+    @media print {
+        /* tfoot {
+            display: table-row-group;
+            position: fixed;
+            bottom: 0;
+        } */
+    }
+</style>
+{% endblock page_css %}
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+
+<!-- Bootstrap Dark Table -->
+<div class="card">
+    <h5 class="card-header">Table Dark</h5>
+    <div class="table-responsive text-nowrap">
+        <div class="card-body">
+
+            <table class="table table-dark patients-table" id="table-dark">
+                <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Patient</th>
+                        <th>Diagnosis</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th><i class="mdi mdi-cog mdi-5px text-primary mdi-spin"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in main_page %}
+                    {% url 'patientdata:edit-patient' obj.id as edit_patient_url %}
+                    <tr>
+                        <td>
+                            <!-- <i class="mdi mdi-wallet-travel mdi-20px text-danger me-3"></i> -->
+                            <i class="mdi mdi-format-list-numbered mdi-5px text-warning me-1"></i>
+                            <span class="fw-medium">
+                                {{obj.id}} 
+                            </span>
+                        </td>
+                        <td>
+                            <i class="mdi mdi-card-account-details mdi-5px text-danger me-1"></i>
+                            <span class="fw-medium">{{obj.patient.name}}</span>
+                        </td>
+                        <td><span class="badge rounded-pill bg-label-primary me-1">{{obj.diagnosis}}</span></td>
+                        <td>
+                            {{obj.amount}}
+                        </td>
+                        <td><span class="badge rounded-pill bg-label-primary me-1">Active</span></td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'visits:edit-visit' obj.id obj.patient_id %}"><i class="mdi mdi-pencil-outline me-1"></i> 
+                                        Visit</a>
+                                    <a class="dropdown-item" href="{% url 'patientdata:edit-patient' obj.patient.id %}"><i class="mdi mdi-pencil-outline me-1"></i> 
+                                        Patient</a>
+                                    
+                                    <a class="dropdown-item" href="{% url 'visits:add-visit' obj.patient.id %}"><i class="mdi mdi-plus-outline me-1"></i> 
+                                        Visit</a>
+                                    <a class="dropdown-item" href="#"><i class="mdi mdi-medical-bag me-1"></i> Present History</a>
+                                    <a class="dropdown-item" href="#"><i class="mdi mdi-pill me-1"></i> Past History</a>
+                                    <a class="dropdown-item" href="javascript:void(0);"><i class="mdi mdi-trash-can-outline me-1"></i> Delete</a>
+                                    <!-- {% qr_from_text obj.cardid size=5 image_format="png" error_correction="L" %} -->
+                                </div>
+                            </div>
+                        </td>
+                    </tr>                    
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
+<!--/ Bootstrap Dark Table -->
+
+
+{% endblock %}
+
+
+{% block page_js %} 
+<!-- ## Files important for js data table -->
+<script src="{% static 'dashboard/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+
+<script src="{% static 'dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+</script>
+
+<!--  -->
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.html5.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.print.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js' %}">
+</script>
+
+<script>
+
+    $(function () {
+        let visitsTable = $("#table-dark").DataTable({         
+            // dom: 'Bfrtip',
+            // paging: true,
+            // searching: true,
+            // ordering: true,
+            // order: [[0, "desc"]],
+            // pagingType: 'full_numbers',
+            // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "pageLength": 5,
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": [
+                {
+                    extend: 'print',
+                    footer: true,
+                    className:'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    },
+                    customize: function (win) {
+                        // $(win.document.body).css('font-size', '12pt'); // '7pt'
+                        $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+                    }
+                    // customize: function (win) {
+                    //     // Ensure footer is included in the print view
+                    //     let body = $(win.document.body);
+                    //     body.find('table').addClass('display').css('font-size', '9pt');
+                    //     body.find('tfoot').css('display', 'table-row-group');
+                    // },
+                },
+                {
+                    extend: 'excel',
+                    className:'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: "colvis",
+                    className:'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                        
+            ],
+
+            footerCallback: function (row, data, start, end, display) {
+                let api = this.api();
+        
+                // Remove the formatting to get integer data for summation
+                let intVal = function (i) {
+                    console.log("Processing value: ", i); // Debugging line
+                    let cleanValue = typeof i === 'string'
+                        ? i.replace(/[\$,]/g, '')
+                        : typeof i === 'number'
+                        ? i
+                        : 0;
+                    // console.log("Converted value: ", cleanValue); // Debugging line
+                    return parseFloat(cleanValue);
+                };
+
+                // Total over all pages
+                total = api
+                    .column(3)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+        
+                // Total over this page
+                pageTotal = api
+                    .column(3, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+        
+                // Update footer
+                $(api.column(3).footer()).html(
+                    // '$' + pageTotal + ' ( $' + total + ' total)'
+                    // 'page total: ' + pageTotal.toLocaleString() + ' ( total: ' + total.toLocaleString() + ' L.E)'
+                    'total: ( ' + total.toLocaleString() + ' L.E )'
+                );
+                console.log('Footer HTML:', $(api.column(3).footer()).html());
+
+            },
+
+        });
+        visitsTable.buttons().container().appendTo('#table-dark_wrapper .col-md-6:eq(0)');
+
+        let versionNo = $.fn.dataTable.version;
+        // alert('versionNo==> '+versionNo)
+        
+        // visitsTable.column( 3 ).data().sum();
+        // var myTable = $("#table-dark").DataTable();
+
+        // Function to sum a column
+        // function sumColumn(columnIndex) {
+        //     // Get the data from the specified column
+        //     let columnData = myTable.column(columnIndex).data();
+
+        //     // Calculate the sum using reduce
+        //     let sum = columnData.reduce(function(total, value) {
+        //         return total + parseFloat(value) || 0;
+        //     }, 0);
+
+        //     return sum;
+        // }
+
+        // Sum the third column (index 2, Salary column)
+        // var sum = sumColumn(3);
+
+        // var myTable = $("#table-dark").DataTable();
+        console.log(
+            // 'versionNo>>>^^', versionNo,
+            // 'SUM>>>:', sum, 
+            // myTable.column( 3 ).data().sum()
+        );
+                
+    });
+
+</script>
+
+
+
+{% endblock page_js %}

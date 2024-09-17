@@ -1,0 +1,191 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const EditPosStationForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on edit-Pos-Station-PAGE ?';
+            const title = 'POS STATIONS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                // name: '',
+                // description:'',
+                
+                editBranch: '{{form.branch.value}}',
+                editDescription: '{{form.description.value}}',
+                editName: '{{form.name.value}}',
+                hideBranch:false,
+                hideEmployees: false,
+                hidePosStation:false,
+                hideSettings:false,
+                isActive:'{{form.active.value|yesno:"yeah,no,maybe"}}',
+                isDeleted:'{{form.is_deleted.value|yesno:"yeah,no,maybe"}}',
+                isEdit: false,
+                posCode: '{{pos_code}}',
+            }
+        },
+        computed: {    
+            isActiveChange() {
+                if (this.isActive == 'yeah'){
+                    this.isActive = true;
+                } else if (this.isActive == true) {
+                    this.isActive = "{{ form.active.value|yesno:'yeah,no,maybe' }}";
+                    this.isActive = true;
+                }else if(this.isActive == 'no'){
+                    this.isActive = false;
+                }else{
+                    this.isActive = false;
+                }
+                return this.isActive;
+                
+            },
+
+            isDeletedChanged() {
+                if (this.isDeleted == 'yeah') {
+                    this.isDeleted = true;
+                } else if (this.isDeleted == true) {
+                    this.isDeleted = "{{ form.is_deleted.value|yesno:'yeah,no,maybe' }}";
+                    this.isDeleted = true;
+                } else if (this.isDeleted == 'no') {
+                    this.isDeleted = false;
+                } else {
+                    this.isDeleted = false;
+                }
+                return this.isDeleted;
+            },
+            //} else if (this.isDeleted == true) {
+            //this.isDeleted = "{{ form.is_deleted.value|yesno:'yeah,no,maybe' }}";
+            //this.isDeleted = true;
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+            //here we can put jqueryb  code
+            let me = this
+            $(document).on('submit', '#edit-pos-station-form', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                console.log(
+                    "is_deleted******",me.isDeleted,
+                    "is_deletedChanged******",me.isDeletedChanged,
+                )
+                console.log(
+                    "active******",me.isActive,
+                    "is_ActiveChange******",me.isActiveChange
+                    )
+                
+                
+                let token = '{{csrf_token}}';
+
+                //let formData = new FormData($(this)[0])
+                //"branch",
+                //"name",
+                //"description",
+                //"code",
+                //"active",
+                //"is_deleted",
+                let formData = new FormData();
+                formData.append("branch", me.editBranch);
+                formData.append("name", me.editName);
+                formData.append("description", me.editDescription);
+                formData.append("code", me.posCode);
+                formData.append("active", me.isActive);
+                formData.append("is_deleted", me.isDeleted);
+                
+                /*console.log(
+                    "active***", me.isActive,
+                    "isActiveChange***", me.isActiveChange,
+                    "is_deleted***", me.isDeleted,
+                    "isDeletedChange***", me.isDeletedChanged,
+                )*/
+                //console.log("isActive:::", formData.get('active'));
+                //console.log("FormData======",formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "configurations:edit_pos_station" qs.id %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    //cache: false,
+                    headers: {'X-CSRFToken': token},
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+
+                    // data: $(this).serialize(),
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var posStationId = data['pos_station_id']; 
+                            // var patch = 
+                            
+                            if (data['type'] == 'error'){
+                                console.log(data['type']);
+                                toastr.error(data['error']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['error']);
+                                //console.log("isActive:::", formData.get('active'));
+                                //console.log("isDeleted:::", formData.get('is_deleted'));
+                                // console.log('PRO-ID: ', data['pro_id']);
+                                // setInterval('location.reload()', 10000);
+                                // window.location.href = (
+                                //     "{% url 'configurations:edit_branches' id=0 %}"
+                                //     ).replace('0', branchId);
+                                // localStorage.setItem('last-department-name', data.last_department_name);
+                                // window.location.href = 'products/add_product.html';
+                                // window.location.pathname = '{% url "products:add_product" %}';
+                                // localStorage.setItem('emp_id', empId);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['error']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX EDIT :')
+                    },
+                });
+                e.preventDefault();
+            });  
+        },
+    });
+    EditPosStationForm.mount('#edit-pos-station-form');
+
+</script>

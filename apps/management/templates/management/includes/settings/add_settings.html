@@ -1,0 +1,31 @@
+{% load widget_tweaks %}
+{% load i18n %}
+
+<!-- Post -->
+<div class="post" v-if="hideSettings" id="settingsTab">
+    <label class=""> [[title]] </label><br>
+    <hr class="my-4">
+    <div class="row">  
+
+        <div class="col-lg-3">
+            <div class="custom-control custom-switch custom-switch-off-default custom-switch-on-danger">
+                {% render_field form.is_deleted class="custom-control-input custom-control-input-danger" id="isdeleted" type="checkbox" v-model="is_deleted" %}
+                <label for="isdeleted" :class="[[ isDeleted ? 'custom-control-label text-danger' : 'custom-control-label' ]]">
+                    <i class="fas fa-trash"></i> {{ form.is_deleted.label_tag }}
+                </label>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="custom-control custom-switch custom-switch-off-outline-default custom-switch-on-success">
+                {% render_field form.active class="custom-control-input custom-control-input-primary" id="inactive" type="checkbox" v-model="isActive" %}
+                <label for="inactive" :class="[[ isActive ? 'custom-control-label text-success' : 'custom-control-label' ]] ">
+                    <i class="fas fa-power-off"></i> [[ isActive ? 'Inactive' : 'Active']]
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.post -->
+

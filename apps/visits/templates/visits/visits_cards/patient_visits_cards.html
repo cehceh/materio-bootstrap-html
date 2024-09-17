@@ -1,0 +1,231 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+
+{% block content %}
+
+<!-- request.path={{request.path}} -->
+
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xxl">
+        {% if main_page %}
+        <div class="row mb-5">
+            <!--  -->
+            <div class="col-md-12 col-lg-4">
+
+                <div class="card mb-4">
+                    <!-- <div class="col-md-12">
+                        <img class="card-img-top" src="{% static 'img/avatars/4.png' %}" alt="Card image cap" />
+                    </div> -->
+                    <div class="card-body col-md-12">
+                        <p class="card-text">                            
+                            
+                            <!-- <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Update visit data">
+                                <i class="mdi mdi-pencil-outline mdi-1px"></i> 
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i> 
+                                
+                            </a> -->
+                            <!-- <a href="#" type="button" class="btn rounded-pill btn-outline-danger btn-xs">
+                                <i class="mdi mdi-history mdi-1px lh-0"></i> 
+                            </a> -->
+                            <!-- Some quick example text to build on the card title. -->
+                            <!-- <small class="text-muted float-end">
+                                <span class="badge bg-danger rounded-pill fs-tiny ms-auto">
+                                    Visit count : {{visits_count}}
+                                </span> 
+                            </small> -->
+                        </p>
+                        
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span class="badge bg-dark rounded-pill fs-tiny">
+                                Name :
+                            </span>
+                            <span class="badge bg-danger-subtle text-danger rounded-pill">{{patient.name}}</span>
+                            
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-dark rounded-pill fs-tiny">
+                                Visits Count : 
+                            </span> 
+                            <span class="badge bg-danger-subtle text-danger rounded-pill">{{visits_count}}</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-dark rounded-pill fs-tiny">
+                                Visits Total Amount :
+                            </span> 
+                            <span class="badge bg-danger-subtle text-danger rounded-pill">{{total_amount}}</span>
+                        </li>
+                        
+                    
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i> 
+                        </a>
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-pill-multiple mdi-1px lh-0"></i> 
+                        </a>
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-stethoscope mdi-1px lh-0"></i> 
+                        </a>
+                                                
+                    </div>
+                </div>
+            
+            </div>
+
+            {% for obj in main_page %}
+            <!--  -->
+            <div class="col-md-12 col-lg-4">
+
+                <div class="card mb-4">
+                    <!-- <div class="col-md-12">
+                        <img class="card-img-top" src="{% static 'img/avatars/4.png' %}" alt="Card image cap" />
+                    </div> -->
+                    <div class="card-body col-md-12">
+                        <p class="card-text">                            
+                            <!-- <a href="{% url 'visits:add-visit' obj.patient.id %}" type="button" class="btn rounded-pill btn-info btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Add new visit">
+                                <i class="mdi mdi-plus-outline mdi-1px"></i> Visit
+                            </a> -->
+                            <a href="{% url 'visits:edit-visit' obj.id obj.patient.id  %}" type="button" class="btn rounded-pill btn-outline-success btn-xs" data-bs-toggle="tooltip" data-bs-placement="top" title="Update visit data">
+                                <i class="mdi mdi-pencil-outline mdi-1px"></i> 
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i> 
+                                <!-- Edit Visit -->
+                            </a>
+                            <a href="#" type="button" class="btn rounded-pill btn-outline-danger btn-xs">
+                                <i class="mdi mdi-history mdi-1px lh-0"></i> 
+                            </a>
+                            <!-- Some quick example text to build on the card title. -->
+                            <small class="text-muted float-end">
+                                <span class="badge bg-primary rounded-pill fs-tiny ms-auto">
+                                    <!-- Visit no.: -->
+                                    {% for num, id in visits_length %}
+                                        {% if obj.id == id %}
+                                            {{ num }}  
+                                        {% endif %}
+                                    {% endfor %}
+                                </span> 
+                            </small>
+                        </p>
+                        
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">
+                                Visit ID :
+                            </span> 
+                            <span class="badge bg-danger-subtle text-danger rounded-pill fs-tiny">{{obj.id}}</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">
+                                Visit Date :
+                            </span> 
+                            <span class="badge bg-primary-subtle text-dark rounded-pill">{{obj.visitdate}}</span>
+                        </li>
+                        <!-- <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">
+                                Name :
+                            </span>
+                            <span class="badge bg-primary-subtle text-dark rounded-pill"> {{obj.patient.name}}</span>
+                        </li> -->
+                        
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">
+                                Diagnosis :
+                            </span> 
+                            <i class="badge bg-primary-subtle text-dark rounded-pill">
+                                {{obj.diagnosis}}</i>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">Intervention :</span> 
+                            <span class="badge bg-primary-subtle text-dark rounded-pill">{{obj.intervension}}</span>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">Amount :</span>
+                            <i class="badge bg-danger-subtle text-danger rounded-pill">{{obj.amount}}</i> 
+                            
+                        </li>
+                        <!-- <li class="list-group-item"> <i class="badge bg-danger  rounded-pill fs-tiny">BOD:</i> {{obj.}}</li> -->
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i> 
+                        </a>
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-pill-multiple mdi-1px lh-0"></i> 
+                        </a>
+                        <a href="#" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-stethoscope mdi-1px lh-0"></i> 
+                        </a>
+                        
+                        <!-- <a href="{% url 'visits:add-visit' obj.id %}" type="button" class="btn rounded-pill btn-outline-info btn-xs">
+                            <i class="mdi mdi-plus-outline mdi-1px"></i> New Visit
+                        </a> -->
+
+                        <!-- <a href="#" type="button" class="btn rounded-pill btn-outline-warning btn-xs">
+                            <i class="mdi mdi-eye-outline mdi-1px"></i> Visits
+                        </a> -->
+                        
+                    </div>
+                </div>
+            
+            </div>
+            {% endfor %}
+        
+        </div>
+        {% else %}
+        <div class="row">
+            
+            <div class="col-2"></div>
+            
+            <div class="col-8">
+                <div class="card bg-secondary-subtle text-dark mb-3">
+                    <div class="card-header text-dark">
+                        <span class="mdi mdi-alert mdi-25px"></span>
+                        <b>No visits for patient:</b> <h5>{{patient.name}}</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title text-dark">Please add visits for this patient</h6>
+                        <p class="card-text">
+                            Click on the "New Visit" button to go to the visit page.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-2"></div>
+        </div>
+        
+        {% endif %}
+    
+    </div>
+</div>
+
+{% include 'layout/partials/includes/pagination.html' with page=main_page %}
+
+
+{% endblock %}
+
+
+{% block page_js %} 
+
+{% endblock page_js %}
+
+
+<!-- {% for num in visits_count %} 
+                                        num={{num}}
+                                        {% for i in num %}
+                                            i={{i}}
+                                            {% if i == obj.id %} 
+                                                {{i}}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %} -->

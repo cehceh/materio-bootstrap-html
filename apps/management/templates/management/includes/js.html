@@ -1,0 +1,46 @@
+<script>
+    // (https://stackoverflow.com/questions/54658658/clone-multiple-inputs-javascript)
+    $(function(){
+        var count = 0;
+        $(document).on('click', '.create-object-plus', function(e) {
+            e.preventDefault();
+            count ++;
+            var parentRow = $(this).closest('.create-object-row'),
+                cloneRow = cloneCategoryRow(parentRow);
+            
+            $('.create-object-row:last').after(cloneRow);
+            
+        }).on('click', '.create-object-minus', function(e) {
+            $(this).closest('.create-object-row').remove();
+            count --;
+            $('.create-object-row').find('.create-object-plus').attr('disabled', false);
+
+            e.preventDefault();
+            return false;
+        });
+
+        function cloneCategoryRow(parentRow) {
+            // Clear existing add button
+            // $('.charge-row').find('.btn-add').removeClass('btn-add btn-success').addClass('btn-remove btn-danger');
+            // $('.charge-row').find('.btn').html('<span class="fa fa-minus"></span>');
+            // $('.create-object-row').find('.checkbox').removeClass('unit-checkbox').addClass('unit-check disabled');
+            // $('.charge-row').find('.checkbox').html('<input type="checkbox" class="checkbox unit-check disabled" name="unit-check" disabled>');
+
+            var newRow = parentRow.clone();
+
+            newRow.find('.add-create-object').addClass('btn-outline-danger create-object-minus').removeClass('btn-outline-primary create-object-plus');
+            newRow.find('.add-create-object').html('<span class="fa fa-minus"></span>');
+
+            newRow.find('input').val('');
+
+            if (count >= 10) {
+                // console.log('COUNT:ELSEIF: ', count)
+                $('.create-object-row').find('.create-object-plus').attr('disabled', true);
+            }; 
+            newRow.find('.vendor-minus').attr('disabled', false).end();
+
+            return newRow;
+        }
+    });
+
+</script>

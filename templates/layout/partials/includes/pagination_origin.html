@@ -1,0 +1,103 @@
+{% load i18n %}
+<section class="section">
+
+  <div class="pagination center">
+    <span class="step-links">
+    {% if main_page %}
+
+      {% if page.has_other_pages %}
+        <ul class="pagination">
+          {% if page.has_previous %}
+            <li>
+              <input class="btn btn-outline-primary" onclick="window.location.href='?page={{  page.previous_page_number }}';"  type="button" value="&laquo;"/>
+              <!-- <a class="btn btn-outline-primary" href='?page={{ page.previous_page_number }}' id="laquo-prev"> &laquo; 
+                {% trans "previous" %}
+              </a> -->
+            </li>
+          {% else %}
+          
+            <li>
+              <a class="btn btn-outline-secondary disabled" type="button" href="#">
+                <span>&laquo;</span>
+              </a>
+            </li>
+          {% endif %}
+          {% for i in page.paginator.page_range %}
+            {% if page.number == i %}
+              <li>
+                <a type="button" class="btn btn-primary active"> <span>{{ i }} 
+                  <span class="sr-only" id="current-num">({% trans "current" %})</span>
+                </a>
+              </li>
+            {% else %}
+            <!-- <a type="button" href="?page={{ i }}">{{ i }}</a> -->
+              <!-- <input type="button" onclick="window.location.href='?page={{ i }}';" value="{{ i }}" /> -->
+              <li>
+                <a class="btn btn-outline-primary" type="button" href='?page={{ i }}'>
+                  {{ i }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+          {% if page.has_next %}
+            <!-- <input type="button" onclick="window.location.href='?page={{ page.next_page_number }}';" value="&raquo;" /> -->
+            <li>
+              <a class="btn btn-outline-primary" type="button" href='?page={{ page.next_page_number }}'>
+                <!-- {% trans "next" %}  -->
+                &raquo; 
+              </a>
+            </li>
+          {% else %}
+            <!-- <input type="button" class="disabled" value="&raquo;" /> -->
+            <li>
+              <a class="btn btn-outline-secondary disabled" type="button" href="#">
+                <span>&raquo;</span>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      {% endif %}
+
+    {% endif %}
+    </span>
+  </div>
+
+</section>
+
+
+
+<!-- 
+
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item first">
+      <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-double-left"></i></a>
+    </li>
+    <li class="page-item prev">
+      <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-left"></i></a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);">1</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);">2</a>
+    </li>
+    <li class="page-item active">
+      <a class="page-link" href="javascript:void(0);">3</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);">4</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="javascript:void(0);">5</a>
+    </li>
+    <li class="page-item next">
+      <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-right"></i></a>
+    </li>
+    <li class="page-item last">
+      <a class="page-link" href="javascript:void(0);"><i class="tf-icon mdi mdi-chevron-double-right"></i></a>
+    </li>
+  </ul>
+</nav>
+
+-->

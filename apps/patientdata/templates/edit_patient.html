@@ -1,0 +1,207 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<!-- <h4 class="py-3 mb-4"><span class="text-muted fw-light">Forms/</span> Horizontal Layouts</h4> -->
+<!-- <div class="col-md mb-4 mb-md-0">
+    <div class="card">
+        <h5 class="card-header">Basic Alerts</h5>
+    <div class="card-body">
+        <div class="alert alert-primary" role="alert">
+            This is a primary alert — check it out!
+        </div>
+    </div>
+</div> -->
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+<!-- Basic Layout & Basic with Icons -->
+<div class="row">
+
+    <div class="col-xxl">
+        <div class="card mb-4">
+            <!-- MY_SETTING={{MY_SETTING.ROOT_URLCONF}} ==>
+            {{MY_SETTING.THEME_VARIABLES.creator_name}} ==> {{MY_SETTING.THEME_LAYOUT_DIR}} -->
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Update Patient Data</h5> 
+                    <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="{{patient.name}}">
+                        <i class="badge rounded-pill bg-primary">{{patient.name}}</i>
+                        <i class="badge rounded-pill bg-primary-subtle text-danger">{{patient.id}}</i>
+                    </small>
+                    <!-- <small class="text-muted float-end">
+                        
+                    </small> -->
+            </div>
+            <div class="card-body">
+                
+                <form method="post" class="edit-patient-form">
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                <label class="col-sm-6 col-form-label" for="id_name">
+                                    {{savepatform.name.label_tag}}
+                                </label>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                    {% render_field savepatform.name class="form-control form-control-sm" placeholder="Patient Name" %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_address">
+                                    {{savepatform.address.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.address class="form-control form-control-sm" placeholder="Address" %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_birth_date"> 
+                                    {{savepatform.birth_date.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.birth_date class="form-control form-control-sm dob" type="date" %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_age">
+                                    {{savepatform.age.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.age class="form-control form-control-sm age" readonly="readonly" %}
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-2">
+                                    {% qr_from_text qr_data size=4 border=6 error_correction='L' %}
+                                </div>
+                                <div class="col-sm-2">
+                                    {% if patient.barimg %}
+                                        <image class="brand-image elevation-6" src="{{patient.barimg.url}}" width="300" height="150" />
+                                    {% endif %}
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- ./End Left Inputs -->
+
+                        <!-- Right inputs -->
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_cardid">
+                                    {{savepatform.cardid.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.cardid class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_phone">
+                                    {{savepatform.phone.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.phone class="form-control form-control-sm" placeholder="phone" %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_mobile"> 
+                                    {{savepatform.mobile.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    <!-- <input type="date" id="basic-default-phone" class="form-control phone-mask" placeholder="00/00/0000" aria-label="658 799 8941" aria-describedby="basic-default-phone" /> -->
+                                    {% render_field savepatform.mobile class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_barcode">
+                                    {{savepatform.barcode.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.barcode class="form-control form-control-sm" %} 
+                                    <!-- ::value="this.id + this.sign + this.dob + this.sign + this.cardid" -->
+                                </div>
+                            </div>
+
+                            
+                            <!-- <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    {% if patient.barimg %}
+                                        <image class="brand-image elevation-6" src="{{patient.barimg.url}}" width="300" height="100" />
+                                    {% endif %}
+                                </div>
+                            </div> -->
+                            
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_barurl">
+                                    {{savepatform.barurl.hidden.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field savepatform.barurl class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Render the QR code -->
+                        <!-- <div class="col-4">
+                            {% qr_from_text qr_data size=4 border=6 error_correction='L' %}
+                        </div> -->
+                        
+                        <!-- <div class="col-4">
+
+                            {% if patient.barimg %}
+                                <image class="brand-image elevation-6" src="{{patient.barimg.url}}" width="300" height="100" />
+                            {% endif %}
+                            
+                        </div> -->
+
+                        <div class="col-6" hidden>
+                            <hr class="my-4">
+                            <div class="row justify-content-end">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ./ -->
+
+                </form>
+            </div>
+
+        </div>
+    </div>   
+
+</div>
+
+{% endblock %}
+
+
+{% block page_js %} 
+
+    {% include 'js/edit_js.html' %}
+
+{% endblock page_js %} 

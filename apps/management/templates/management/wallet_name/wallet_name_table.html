@@ -1,0 +1,589 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+<!-- Page content -->
+<div class="container-fluid mt--6" id="walletTable">
+    <div class="row">
+        <div class="col-xl-12 order-xl-1">
+        <!-- <div class="col-12"> -->
+            {% include 'management/wallet_name/includes/buttons/table_div_buttons.html' %}
+        </div>
+        <div class="col-xl-12 order-xl-2" v-show="showLog">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="branches-log-table" class="table text-nowrap">
+                                    <thead v-show="showLog">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "id" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Creator" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Created at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "User of update" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Updated at" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showLog">
+                                        {% for obj in combined_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.user}}</td>
+                                            <td style="height: 1px;">{{obj.created_at}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.updated_at}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'management:edit_wallet_name' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'management' 'WalletName' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END LOG  TABLE -->
+        <!-- START TOTAL Wallet TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showBranch">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <form method="GET" action=".">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body table-responsive p-0">
+                                <table id="branch-table" class="table text-nowrap">
+                                    <thead v-show="showBranch">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "id" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showBranch">
+                                        {% for obj in main_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet_name' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'management' 'WalletName' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- START DELEtE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="showDeleted">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="delete" class="table text-nowrap">
+                                    <thead v-show="showDeleted">
+                                        <tr >
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "id" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "User of Deletion" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Deleted at" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="showDeleted">
+                                        {% for obj in deleted_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.updated_user}}</td>
+                                            <td style="height: 1px;">{{obj.deleted_at}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">
+                                                {% if not obj.active %}
+                                                <a href="{% url 'switch_active' obj.id 'management' 'WalletName' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-secondary">Inactive</i>
+                                                </a>
+                                                {% else %}
+                                                <a href="{% url 'switch_active' obj.id 'management' 'WalletName' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-green">Active</i>
+                                                </a> 
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{% url 'management:edit_wallet_name' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'management' 'WalletName' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you want to retsore this record ?')">
+                                                    <span class="fas fa-undo-alt"></span>
+                                                </a>
+                                                &nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                                &nbsp;
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- END DELETED TABLE -->
+        <!-- START ACTIVE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="Active">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="active" class="table text-nowrap">
+                                    <thead v-show="Active">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "id" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="Active">
+                                        {% for obj in active_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">
+                                                <a href="{% url 'switch_active' obj.id 'management' 'WalletName' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-green">Active</i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'management:edit_wallet_name' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'management' 'WalletName' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ./END ROW -->
+        <!-- START INACTIVE TABLE -->
+        <div class="col-xl-12 order-xl-2" v-show="inActive">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                        
+                            <div class="card-body table-responsive p-0">
+                                <table id="inactive" class="table text-nowrap">
+                                    <thead v-show="inActive">
+                                        <tr>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "id" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Code" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Wallet Name" %}</th>
+                                            <th  class="text-center bg-gradient-lightblue btn-xs">{% trans "Status" %}</th>
+                                            <th class="text-center bg-gradient-lightblue btn-xs">{% trans "Tools" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody v-show="inActive">
+                                        {% for obj in inactive_qs %}
+                                        <tr class="text-center">
+                                            <td style="height: 1px;">{{obj.id}}</td>
+                                            <td style="height: 1px;">{{obj.code}}</td>
+                                            <td style="height: 1px;">{{obj.name}}</td>
+                                            <td style="height: 1px;">
+                                                <a href="{% url 'switch_active' obj.id 'management' 'WalletName' %}" onclick="return confirm('Are you sure ?')">
+                                                    <i class="badge bg-gradient-secondary">Inactive</i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center" style="height: 1px;">
+                                                <a href="#" class="btn btn-outline-primary btn-sm" onclick="return confirm('Are you sure, you will print this record ?')">
+                                                    <span class="fas fa-print"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'management:edit_wallet_name' obj.id %}" class="btn btn-outline-success btn-sm">
+                                                    <span class="fas fa-edit"></span>
+                                                </a>&nbsp;
+                                                <a href="{% url 'switch_delete' obj.id 'management' 'WalletName' %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure, you will delete this record ?')">
+                                                    <span class="fas fa-trash-alt"></span>
+                                                </a>&nbsp;
+                                                <a href="#" class="btn btn-outline-info btn-sm">
+                                                    <span class="fas fa-eye"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- ./END ROW -->
+</div>
+{% endblock content %}
+{% block javascripts %}
+<script>
+    const { createApp, ref, computed } = Vue;
+    const vueTable = createApp({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Wallet-PAGE ?';
+            const title = 'WALLETS SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+        return {
+            showDiv:false,
+            showTable:false,
+            showLog:false,
+            showBranch:false,
+            showDeleted:false,
+            inActive:false,
+            Active:false
+        };
+    },
+        computed:{
+
+        },
+        methods:{
+            
+        },
+        mounted() {
+            //LOG DATA TABLE
+            $(function () {
+                $("#branches-log-table").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#branches-log-table_wrapper .col-md-6:eq(0)');
+        
+            });
+
+
+            // BRANCHES DATA TABLE
+            $(function () {
+                $("#branch-table").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#branch-table_wrapper .col-md-6:eq(0)');
+        
+            });
+
+        
+            // DELETED DATA TABLE
+            $(function () {
+                $("#delete").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#delete_wrapper .col-md-6:eq(0)');
+        
+            });
+
+            // INACTIVE DATA TABLE
+            $(function () {
+                $("#inactive").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#inactive_wrapper .col-md-6:eq(0)');
+        
+            });
+
+            // ACTIVE DATA TABLE
+            $(function () {
+                $("#active").DataTable({
+                    // dom: 'Bfrtip',
+                    // paging: true,
+                    // searching: true,
+                    ordering: true,
+                    order: [[0, "desc"]],
+                    pagingType: 'full_numbers',
+                    // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                    "pageLength": 5,
+                    "responsive": true,
+                    "lengthChange": false,
+                    "autoWidth": false,
+                    "buttons": [
+                        {
+                            extend: 'print',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        {
+                            extend: "colvis",
+                            className:'bg-gradient-lightblue btn btn-sm',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                            ,
+                    ],
+                }).buttons().container().appendTo('#active_wrapper .col-md-6:eq(0)');
+        
+            });
+
+
+
+        },
+
+    });
+    vueTable.mount("#walletTable")
+
+    
+</script>
+{% endblock javascripts %}
+
+    <!-- <section class="content" id="add-category">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+
+                        {% include 'categories/new_category/includes/buttons/table_tabs_buttons.html' %}
+
+                        <div class="card-body">
+                            <div class="tab-content">
+
+                                <div class="active tab-pane fade show clearfix" id="table-tab" role="tabpanel" aria-labelledby="table-tab">
+                                    {% include 'categories/new_category/includes/table/category_table.html' %}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section> -->

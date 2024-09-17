@@ -1,0 +1,61 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const departmentsForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Departments-PAGE ?';
+            const title = 'Deapartment SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                name: '',
+                hideSettings:false,
+                hideDepartments:false,
+                isActive:false,
+                isDeleted:false,
+                
+                // editName: '{{form.name.value}}',
+                // isEdit: false,
+
+            }
+        },
+        computed: {    
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+    });
+    departmentsForm.mount('#department');
+
+</script>

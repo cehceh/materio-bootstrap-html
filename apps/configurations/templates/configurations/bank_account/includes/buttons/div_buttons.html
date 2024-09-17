@@ -1,0 +1,86 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="container-fluid mt--6" id="edit-bank-account">
+    <div class="card card-body p-2 pl-3">
+        <div class="col-gl-3">
+            <!-- <h5 class="title text-center">{{title}} {% trans "Edit Category" %}</h5> -->
+        </div>
+        <div class="row">
+            
+            &nbsp; &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    {% if request.path == add_bank_account_url %}
+                        <button type="submit" class="btn btn-primary btn-sm" id="btn-save-bank-account">
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% elif request.path == edit_bank_account_url %}
+                        <button type="button" :class="[[!isEdit ? 'btn btn-default btn-sm':'btn btn-primary btn-sm' ]]" id="btn-edit-bank-account" :disabled="!isEdit ? true:false"
+                                @click="">
+                            <i class="fas fa-save"></i> 
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+            &nbsp; 
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="button" class="btn btn-outline-success btn-sm" id="btn-edit-bank-account" @click="isEdit=!isEdit">
+                        <!-- <i class="fas fa-edit"></i> > -->
+                        <i class="fas fa-edit"></i> 
+                        <!-- {% trans 'Edit' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:bank_account_table' %}" type="button" class="btn btn-outline-info btn-sm" id="btn-table" onclick="">
+                        <i class="fas fa-th-list"></i> 
+                    </a>
+                </div>
+            </div> 
+            &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="{% url 'configurations:add_bank_account' %}" type="button" class="btn btn-outline-info btn-sm" id="" onclick="">
+                        <i class="nav-icon fas fa-credit-card"></i> &nbsp;
+                        <i class="fas fa-plus"></i> 
+                    </a>
+                </div>
+            </div> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp; &nbsp;
+            <div class="col-gl-10">
+                <div class="control">
+                    <a href="#" type="" class="btn btn-outline-secondary btn-sm" id="" onclick="return confirm('خلى بالك انت حاتشيل كل الخانات فى شاشة المنتجات')">
+                        <i class="fas fa-broom"></i> 
+                        <!-- {% trans 'Discard' %} -->
+                    </a>
+                </div>
+            </div> 
+            &nbsp; &nbsp;
+            <div class="col-gl-3">
+                <div class="control">
+                    <a href="#" type="" class="btn btn-outline-danger btn-sm" id="btn-delete-bank-account">
+                        <i class="fas fa-trash"></i> 
+                        <!-- {% trans 'Delete' %} -->
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div class="col-xl-12 order-xl-1" > -->
+<div class="container-fluid mt--6" id="cat-save-button">
+    <div class="row">
+        <div class="col-xl-12 order-xl-2">
+
+        </div>
+    </div>
+</div>
+    

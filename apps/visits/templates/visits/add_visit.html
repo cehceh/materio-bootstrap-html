@@ -1,0 +1,210 @@
+{% extends layout_path %} 
+{% load widget_tweaks %}
+{% load static %}
+<!--  -->
+{% block content %}
+
+
+<form method="post" class="save-visit-form">
+    {% csrf_token %}
+    <!-- <div style="background-color: pink;">
+        {{save_visits_form.non_field_errors}}
+    </div> -->
+
+    <div class="row">
+        <div class="col-xxl">
+            {% include 'layout/partials/includes/page-nav.html' %}
+            <!-- <nav class="layout-navbar {{container_class}} navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav align-items-center">
+                        <div class="nav-item d-flex align-items-center">
+                            <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+                            <input type="text" class="form-control border-0 shadow-none bg-body" placeholder="Search anything ..." aria-label="Search...">
+                        </div> &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <a type="button" class="btn rounded-pill btn-primary btn-xs save-visit" href="#">
+                                <span class="mdi mdi-content-save-outline mdi-1px"></span> 
+                                Save
+                            </a>
+                        </div> 
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <a type="button" class="btn rounded-pill btn-secondary btn-xs text-white">
+                                <i class="mdi mdi-plus-outline mdi-1px"></i> New Visit
+                            </a>
+                        </div>
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <a href="{% url 'patientdata:edit-patient' patient_id %}" type="button" class="btn rounded-pill btn-success btn-xs text-white">
+                                <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i> Update Patient Data
+                            </a>
+                        </div>
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <a type="button" class="badge rounded-pill btn-dark btn-xs text-white">
+                                <i class="mdi mdi-plus-outline mdi-1px"></i> Past History
+                            </a>
+                        </div>
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <span class="badge rounded-pill btn-info">
+                            <i class="mdi mdi-plus-outline mdi-1px lh-0"></i> Info</span>
+                        </div>
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <span class="badge rounded-pill btn-warning">
+                            <i class="mdi mdi-plus-outline mdi-1px lh-0"></i> Primary</span>
+                        </div>
+                        &nbsp;
+                        <div class="nav-item d-flex align-items-center">
+                            <span class="badge rounded-pill btn-danger">
+                            <i class="mdi mdi-plus-outline mdi-1px lh-0"></i> Primary</span>
+                        </div>
+                        &nbsp;
+                    
+                    </div>
+                    
+                </div>
+            </nav> -->
+
+        </div>
+    </div>
+    <!-- ./ END BUTTONS -->
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row">    
+
+        <div class="col-xxl">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Add New Visit for Patient({{qs}})</h5> 
+                    <small class="text-muted float-end">
+                        <span class="badge bg-primary rounded-pill ms-auto">
+                            Visit No.: {{visits_count}}
+                        </span> 
+                    </small>
+                </div>
+
+                <div class="card-body">
+                    <!-- <form method="post" class="save-visit-form"> -->
+                    <div class="row">
+                        <!-- LEFT CARD -->
+                        <div class="col-sm-12">
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_name">
+                                    {{save_visits_form.visitdate.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    <!-- <input type="text" class="form-control" id="basic-default-name" placeholder="John Doe" /> -->
+                                    {% render_field save_visits_form.visitdate class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_address">
+                                    {{save_visits_form.complain.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field save_visits_form.complain class="form-control form-control-sm" placeholder="Address" %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_birth_date"> 
+                                    {{save_visits_form.amount.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    <!-- <input type="date" id="basic-default-phone" class="form-control phone-mask" placeholder="00/00/0000" aria-label="658 799 8941" aria-describedby="basic-default-phone" /> -->
+                                    {% render_field save_visits_form.amount class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- ./End Left Inputs -->
+                    </div>
+                    <!-- ./END ROW -->
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="col-xxl">
+            <div class="card mb-4">
+
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">
+                        <!-- Add New Visit for Patient({{qs}}) -->
+                    </h5> 
+                    <small class="text-muted float-end">
+                        <span class="badge bg-primary rounded-pill ms-auto">
+                            Visit No.: {{visits_count}}
+                        </span> 
+                    </small>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Right inputs -->
+                        <div class="col-sm-12">
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_cardid">
+                                    {{save_visits_form.diagnosis.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field save_visits_form.diagnosis class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_phone">
+                                    {{save_visits_form.sign.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field save_visits_form.sign class="form-control form-control-sm" placeholder="" %}
+                                </div>
+                            </div>
+        
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_mobile"> 
+                                    {{save_visits_form.intervention.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    <!-- <input type="date" id="basic-default-phone" class="form-control phone-mask" placeholder="00/00/0000" aria-label="658 799 8941" aria-describedby="basic-default-phone" /> -->
+                                    {% render_field save_visits_form.intervention class="form-control form-control-sm" %}
+                                </div>
+                            </div>        
+                            
+                        </div>
+
+                        <div class="col-6" hidden>
+                            <hr class="my-4">
+                            <div class="row justify-content-end">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ./END ROW -->
+                        
+                    <!-- </form> -->
+                
+                </div>
+                <!-- ./ END CARD BODY -->
+                
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+{% endblock %}
+
+
+{% block page_js %} 
+
+    {% include 'visits/js/js.html' %}
+
+{% endblock page_js %} 

@@ -1,0 +1,135 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+
+{% block content %}
+
+<!-- request.path={{request.path}} -->
+
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-xxl">
+        <!-- visits==>{{visits}} -->
+        <div class="row mb-5">
+            {% for obj in main_page %}
+            <!--  -->
+            <div class="col-md-6 col-lg-3">
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="col-md-12">
+                            <span class="mdi mdi-account mdi-1px"> <b>{{obj.name}}</b></span>
+                            <span class="badge bg-danger rounded-pill fs-tiny float-end">
+                                <small>{{obj.id}}</small>
+                            </span>
+                        </div>
+                        <!-- <div class="col-2 bg-black">
+                            <span class="badge bg-primary">{{obj.id}}</span>
+                        </div>
+                        <div class="col-2 bg-black"></div> -->
+
+                    </div>
+                    <div class="card-body col-md-12">
+                        <p class="card-text">
+                            <a href="{% url 'patientdata:edit-patient' obj.id %}" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                                <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i>
+                                <i class="mdi mdi-account mdi-1px lh-0"></i>
+                            </a>
+                            {% if obj.id in visits %}
+                            <a href="{% url 'visits:add-visit' obj.id %}" type="button" class="btn rounded-pill btn-info btn-xs">
+                                <i class="mdi mdi-plus-outline mdi-1px"></i>
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i>
+                            </a>
+                            
+                            <a href="{% url 'visits:patient-visits-cards' obj.id %}" type="button" class="btn rounded-pill btn-primary btn-xs">
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i>                               
+                                <i class="mdi mdi-cards mdi-1px"></i> &nbsp;                              
+                                {% for i, pat_id in visits_count %}
+                                    {% if pat_id == obj.id %}
+                                        {{i}}
+                                    {% endif %}
+                                {% endfor %}
+                                <!-- Visits -->
+                            </a>
+                            {% else %}
+                            <a href="{% url 'visits:add-visit' obj.id %}" type="button" class="btn rounded-pill btn-outline-info btn-xs">
+                                <i class="mdi mdi-plus-outline mdi-1px"></i> 
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i>                               
+                                <!-- Visit -->
+                            </a>
+                            <a href="{% url 'visits:patient-visits-cards' obj.id %}" type="button" class="btn rounded-pill btn-outline-primary btn-xs">
+                                <i class="mdi mdi-clipboard-pulse mdi-1px"></i>                               
+                                <i class="mdi mdi-cards mdi-1px"></i> 
+                                <!-- Visits -->
+                            </a>
+                            {% endif %}
+                            <!-- Some quick example text to build on the card title. -->
+                        </p>
+                        <!-- <h5 class="card-title">{{obj.name}}</h5> -->
+                        
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <!-- <li class="list-group-item">
+                            <span class="badge bg-dark  rounded-pill fs-tiny">Name:</span>
+                            <h4 class="card-title"> {{obj.name}}</h4>
+                        </li> -->
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">Card ID:</span>
+                            {{obj.cardid}}
+                        </li>
+                        <li class="list-group-item">
+                            <span class="badge bg-primary rounded-pill fs-tiny">Phone:</span> 
+                            {{obj.phone}}  
+                        </li>
+                        <li class="list-group-item">
+                            <i class="badge bg-primary rounded-pill fs-tiny">Mobile:</i> 
+                            {{obj.mobile}}
+                        </li>
+                        <li class="list-group-item"> 
+                            <i class="badge bg-primary rounded-pill fs-tiny">BOD:</i> 
+                            {{obj.birth_date|date:'d/m/Y'}}</li>
+                        <li class="list-group-item"> 
+                            <i class="badge bg-primary rounded-pill fs-tiny">Age:</i> 
+                            {{obj.age}}
+                        </li>
+                    </ul>
+                    <div class="card-body col-12">
+                        <!-- <a href="{% url 'patientdata:edit-patient' obj.id %}" type="button" class="btn rounded-pill btn-outline-success btn-xs">
+                            <i class="mdi mdi-pencil-outline mdi-1px lh-0"></i> Edit
+                        </a> -->
+                        
+                        <!-- <a href="{% url 'visits:add-visit' obj.id %}" type="button" class="btn rounded-pill btn-info btn-xs">
+                            <i class="mdi mdi-plus-outline mdi-1px"></i> Visit
+                        </a> -->
+
+                        <a href="{% url 'patientdata:patient-history' obj.id %}" type="button" class="btn rounded-pill btn-outline-danger btn-xs">
+                            <i class="mdi mdi-history mdi-1px"></i> History
+                        </a>
+                        
+                    </div>
+                </div>
+                <!-- history==>{% url 'patientdata:patient-history' obj.id %} -->
+            </div>
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+</div>
+
+{% include 'layout/partials/includes/pagination.html' with page=main_page %}
+
+
+{% endblock %}
+
+
+{% block page_js %} 
+
+{% endblock page_js %}

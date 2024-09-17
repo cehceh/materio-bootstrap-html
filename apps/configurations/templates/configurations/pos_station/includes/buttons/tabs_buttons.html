@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="card-header p-0">
+    <ul class="nav nav-pills">
+
+        <!-- Pos Station Info Tab -->
+        <li class="nav-item btn-xs">
+            <a class="nav-link active " href="#pos-station-tab" data-toggle="tab" @click="hideSettings=false,  hideEmployees = false, hideBranch=false, hidePosStation = true">
+                <i class="fas fa-cash-register"></i> <b>{% trans "Pos Station" %}</b>
+            </a>
+        </li>
+
+        <!-- Pos Station Branch Tab -->
+        <li class="nav-item btn-xs">
+            <a class="nav-link " href="#branch-tab" data-toggle="tab" @click="hideSettings=false, hideEmployees = false, hidePosStation=false, hideBranch = true">
+                <i class="fas fa-map-marker"></i> <b>{% trans "Branch" %}</b> </a>
+        </li>
+
+        <!-- Pos Station Settings Tab -->
+        <li class="nav-item btn-xs">
+            <a class="nav-link" href="#settings-tab" data-toggle="tab" @click="hidePosStation=false, hideEmployees = false, hideBranch=false, hideSettings = true">
+                <i class="fas fa-cog"></i> <b>{% trans "Settings" %} </b></a>
+        </li>
+
+        <li class="nav-item btn-xs">
+            <a class="nav-link " href="#employees-tab" data-toggle="tab" @click="hidePosStation = false, hideSettings = false, hideBranch = false, hideEmployees = true">
+                <i class="fas fa-user-tie"></i> <b>{% trans "Employees" %}</b>
+            </a>
+        </li>
+    </ul>
+</div>

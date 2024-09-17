@@ -1,0 +1,148 @@
+
+
+
+<!-- for vue 3 -->
+<script>
+    
+    const { createApp, ref, computed } = Vue;
+
+    const EditWalletNameForm = createApp ({
+        delimiters:["[[", "]]"],
+        setup() {
+            const msg = 'What is going on edit-WalLETT-PAGE ?';
+            const title = 'WALLLEETT SETTINGS ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                // name: '',
+                // description:'',
+                walletCode: '{{wallet_code}}',
+                editName: '{{form.name.value}}',
+                editDescription: '{{form.description.value}}',
+                isEdit: false,
+                hideSettings: false,
+                isActive:"{{form.active.value|yesno:'yeah,no,maybe'}}",
+                isDeleted:"{{form.is_deleted.value|yesno:'yeah,no,maybe'}}",
+                // hideBranch:false,
+                
+
+
+            }
+        },
+        computed: {    
+            isActiveChange() {
+                if (this.isActive == 'yeah'){
+                    this.isActive = true;
+                } else if (this.isActive == true) {
+                    this.isActive = "{{ form.active.value|yesno:'yeah,no,maybe' }}";
+                    this.isActive = true;
+                }else if(this.isActive == 'no'){
+                    this.isActive = false;
+                }else{
+                    this.isActive = false;
+                }
+                return this.isActive;
+                
+            },
+
+            isDeletedChanged() {
+                if (this.isDeleted == 'yeah') {
+                    this.isDeleted = true;
+                } else if (this.isDeleted == 'no') {
+                    this.isDeleted = false;
+                } else if (this.isDeleted == true) {
+                    this.isDeleted = "{{ form.is_deleted.value|yesno:'yeah,no,maybe' }}";
+                    this.isDeleted = true;
+                } else {
+                    this.isDeleted = false;
+                }
+                return this.isDeleted;
+            },
+
+            
+        },
+        methods: {
+            
+            // next function works as expected here in methods not in computed
+            openWindow(url) {
+                var w = 480, 
+                    h = 340;
+                if (document.getElementById) {
+                    w = screen.availWidth;
+                    h = screen.availHeight;
+                }
+
+                var popW = 1300, //300,
+                    popH = 700; //200;
+
+                var leftPos = (w - popW) / 2;
+                var topPos = (h - popH) / 2;
+
+                msgWindow = window.open(url, 'popup', 'width=' + popW + ',height=' + popH +
+                ',top=' + topPos + ',left=' + leftPos + ', scrollbars=yes');
+                // alert('Clicked by Vue methods');
+
+            },
+
+        },
+
+        mounted() {
+            let me = this;
+            //here we can put jqueryb  code
+            $(document).on('submit', '#edit-wallet-name-form', function(e) {
+                // let lastUnitName = '{{last_unit_name}}';
+                let token = '{{csrf_token}}';
+                let formData = new FormData($(this)[0])
+                console.log('FO?RMMDATAAAAA',formData,me.isActive,me.editName)
+
+                // formData.append("active", me.isActive);
+                // formData.append("is_deleted", me.isDeleted);
+                // formData.append("name", me.editName);
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "management:edit_wallet_name" qs.id %}',
+                    // data: {}, //{'my-form':$(this).serialize()},
+                    // cache: false,
+                    // headers: {'X-CSRFToken': token},
+                    // contentType: false,
+                    // processData: false,
+                    // data: formData,
+                    cache: false,
+                    headers: {'X-CSRFToken': token},
+                    data: $(this).serialize(),
+                    // data: $(this).serialize(),
+                    success: function(data) {
+                        // console.log('last-Unit-Name-FROM-AJAX:::', data.last_department_name);
+                        // localStorage.setItem('last-unit-name', lastUnitName);
+                        $(function() {
+                            var Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 9000
+                            });
+                            var walletNameId = data['wallet_name_id']; 
+                            if (data['type'] == 'error'){
+                                console.log(data['type'])
+                                toastr.error(data['error']);
+                            } else if (data['type'] == 'success') {
+                                toastr.success(data['error']);
+                            } else if (data['type'] == 'info') {
+                                toastr.info(data['error']);
+                            }
+                        });
+                    },
+                    error: function(){
+                        console.log('ERROR FROM AJAX EDIT :')
+                    },
+                });
+                e.preventDefault();
+            });  
+        },
+    });
+    EditWalletNameForm.mount('#edit-wallet-name-form');
+
+</script>
