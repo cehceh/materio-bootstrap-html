@@ -1,0 +1,72 @@
+<!-- ## Files important for js data table -->
+<script src="{% static 'dashboard/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+
+<script src="{% static 'dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}">
+</script>
+
+<!--  -->
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.html5.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.print.min.js' %}">
+</script>
+
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js' %}">
+</script>
+
+<script>
+
+    $(function () {
+        $("#permission-main-table").DataTable({
+            // dom: 'Bfrtip',
+            // paging: true,
+            // searching: true,
+            // ordering: true,
+            // order: [[0, "desc"]],
+            // pagingType: 'full_numbers',
+            // "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+            "pageLength": 5,
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": [
+                {
+                    extend: 'print',
+                    className: 'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    className: 'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: "colvis",
+                    className: 'bg-gradient-lightblue btn btn-sm',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                ,
+            ],
+        }).buttons().container().appendTo('#permission-main-table_wrapper .col-md-6:eq(0)')
+
+    });
+
+</script>

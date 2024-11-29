@@ -1,33 +1,55 @@
 from django import forms
+from apps.users.models import CustomUser
 from .models import CreateVisa, CreateWallet, WalletName
 from django.core.exceptions import ValidationError
-from . import choices 
+from . import choices
+
+
+class UserPermissionsForm(forms.ModelForm):
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            "username",
+            "role",
+            "is_active",
+            # "user_permissions__codename",
+            # "groups__name",
+            # "groups__permissions__name",
+            # "groups__permissions__content_type",
+            # "groups__permissions__codename",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(UserPermissionsForm, self).__init__(*args, **kwargs)
+
+        # self.fields["age"].disabled = True
 
 
 class CreateVisaForm(forms.ModelForm):
 
-
     class Meta:
         model = CreateVisa
         fields = [
-            'visa_name', 
-            'expire_date', 
-            'visa_no', 
-            'bank', 
-            'bank_branch', 
-            'account_no',
+            "visa_name",
+            "expire_date",
+            "visa_no",
+            "bank",
+            "bank_branch",
+            "account_no",
             "active",
             "is_deleted",
             "total",
             "code",
         ]
-        
+
     def __init__(self, *args, **kwargs):
         super(CreateVisaForm, self).__init__(*args, **kwargs)
-        self.fields['code'].initial = 'visa-'
+        self.fields["code"].initial = "visa-"
+
 
 class WalletNameForm(forms.ModelForm):
-    
+
     class Meta:
         model = WalletName
         fields = [
@@ -37,52 +59,48 @@ class WalletNameForm(forms.ModelForm):
             "active",
             "is_deleted",
         ]
+
     def clean(self):
         return super().clean()
-    
+
     def clean_name(self):
         data = self.cleaned_data
-        name = data.get('name')
+        name = data.get("name")
 
-        if name == '' or name == None :
-            raise ValidationError('Please write wallet name')
+        if name == "" or name == None:
+            raise ValidationError("Please write wallet name")
         return name
+
     # init function is important in saving user automatically in create() function
     def __init__(self, *args, **kwargs):
         super(WalletNameForm, self).__init__(*args, **kwargs)
-        self.fields['name'] = forms.CharField(
-            required=False,
-            widget=forms.TextInput()
-        )
-        
-        self.fields['code'].initial = 'walname-'
+        self.fields["name"] = forms.CharField(required=False, widget=forms.TextInput())
+
+        self.fields["code"].initial = "walname-"
+
 
 class CreateWalletForm(forms.ModelForm):
     name = forms.IntegerField(
-            required=False,
-            widget=forms.Select(
-                choices=choices.PAYMENT_WALLET
-            )
-        )
-
+        required=False, widget=forms.Select(choices=choices.PAYMENT_WALLET)
+    )
 
     class Meta:
         model = CreateWallet
         fields = [
-            'name', 
-            'wallet_name',
-            'wallet_type',
-            'code',
-            'mobile', 
-            'account_name', 
-            'total', 
+            "name",
+            "wallet_name",
+            "wallet_type",
+            "code",
+            "mobile",
+            "account_name",
+            "total",
             "active",
             "is_deleted",
         ]
-        
+
     def __init__(self, *args, **kwargs):
         super(CreateWalletForm, self).__init__(*args, **kwargs)
-        self.fields['code'].initial = 'wal-'
+        self.fields["code"].initial = "wal-"
         # self.fields['name'] = forms.IntegerField(
         #     required=False,
         #     widget=forms.Select(
@@ -91,4 +109,3 @@ class CreateWalletForm(forms.ModelForm):
         # )
         # wallet = [(""), ("")]
         # self.fields['name'] = choices.PAYMENT_WALLET[1]
-

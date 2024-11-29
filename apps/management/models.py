@@ -8,7 +8,7 @@ import os
 
 from .choices import PAYMENT_WALLET, WALLET_TYPE
 
-from posapp import choices
+from config import choices
 
 
 @deconstructible

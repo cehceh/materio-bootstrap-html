@@ -1,14 +1,9 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q
-from django.contrib import messages
-from django.urls import reverse_lazy
+from django.shortcuts import render
 from django.http import JsonResponse
 from itertools import chain
 
 from .models import WalletName
 from .forms import WalletNameForm
-from posapp.utils import model_id_restriction
 def add_wallet_name(request):
     data = {}
     data['wallet_name_id'] = None 
