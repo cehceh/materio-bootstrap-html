@@ -2,7 +2,9 @@
 {% load static %}
 
 
-<nav class="layout-navbar {{container_class}} main-header navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+<nav
+  class="layout-navbar {{container_class}} main-header navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+  id="layout-navbar">
   {% if not navbar_hide_toggle %}
   <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
     <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
@@ -17,9 +19,53 @@
       <div class="nav-item d-flex align-items-center">
         <i class="badge bg-primary rounded-pill mdi-24px lh-0">{{title}}</i>
         <!-- <input type="text" class="form-control border-0 shadow-none bg-body" placeholder="Search anything ..." aria-label="Search..."> -->
-      </div> 
+      </div>
       &nbsp;
-  
+
+      {% if request.path == reservation_dashboard_url %}
+      <!-- BUTTONS -->
+      <div class="nav-item d-flex align-items-center">
+        <a href="#" type="button" class="btn rounded-pill btn-secondary btn-xs" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Hour">
+          <!-- <i class="mdi mdi-account-plus mdi-1px lh-0"></i> -->
+          Hour = {{show_hour}}
+        </a>
+      </div>
+      &nbsp;
+
+      <div class="nav-item d-flex align-items-center">
+        <a href="#" type="button" class="btn rounded-pill btn-primary btn-xs" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Day">
+          <!-- <i class="mdi mdi-account-plus mdi-1px lh-0"></i> -->
+          Day = {{show_day}}
+        </a>
+      </div>
+      &nbsp;
+
+      <div class="nav-item d-flex align-items-center">
+        <a href="#" type="button" class="btn rounded-pill btn-info btn-xs" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Week">
+          Week
+        </a>
+      </div>
+      &nbsp;
+
+      <div class="nav-item d-flex align-items-center">
+        <a href="#" type="button" class="btn rounded-pill btn-success btn-xs" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Month">
+          Month
+        </a>
+      </div>
+      &nbsp;
+
+      <div class="nav-item d-flex align-items-center">
+        <a href="#" type="button" class="btn rounded-pill btn-danger btn-xs" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Year">
+          Year
+        </a>
+      </div>
+      &nbsp;
+      {% endif %}
       <!-- BUTTONS -->
       <!-- <div class="nav-item d-flex align-items-center">
         <span class="badge rounded-pill btn-primary">
@@ -56,14 +102,16 @@
           <i class="mdi mdi-plus-outline mdi-1px lh-0"></i> Primary</span>
       </div>
       &nbsp; -->
-    
+
     </div>
     <!-- /Search -->
 
     <ul class="navbar-nav flex-row align-items-center ms-auto">
       <!-- Place this tag where you want the button to render. -->
       <li class="nav-item lh-1 me-3">
-        <a class="github-button" href="{% get_theme_variables 'git_repository' %}" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star themeselection/materio-html-admin-template-free on GitHub">Star</a>
+        <a class="github-button" href="{% get_theme_variables 'git_repository' %}" data-icon="octicon-star"
+          data-size="large" data-show-count="true"
+          aria-label="Star themeselection/materio-html-admin-template-free on GitHub">Star</a>
       </li>
 
       <!-- User -->

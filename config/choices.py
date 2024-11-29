@@ -5,31 +5,28 @@ from django.utils.translation import gettext_lazy as _
 #     (2, "★★☆☆☆"),
 #     (3, "★★★☆☆"),
 #     (4, "★★★★☆"),
-    # (5, "★★★★★"),
+# (5, "★★★★★"),
 # )
 
 # ☆☆☆☆☆☆☆ **
 
-#* for category // not used 
-L1= "1"
-L2= "2"
-L3= "3"
+# * for ManageAppSettings //
 
-LEVELS = (
-    (L1, _("Level-1")),
-    (L2, _("Level-2")),
-    (L3, _("Level-3")),
+APP_TYPES = (
+    (0, _("Select Your Bussiness")),
+    (1, _("Single Clinic App.")),
+    (2, _("Multi Clinic App.")),
+    (3, _("Maintenance App.")),
 )
-
 
 
 SESSION_STATUS = (
-    (0, '--- Session Status ---'),
-    (1, 'مفتوح'),
-    (2, 'معلق'),
-    (3, 'مغلق'),
+    (0, "--- Session Status ---"),
+    (1, "مفتوح"),
+    (2, "معلق"),
+    (3, "مغلق"),
 )
-#* for unites of measure
+# * for unites of measure
 
 UNITS = (
     ("main", _("الوحدة الاساسية")),
@@ -58,10 +55,10 @@ TIMES = (
 CASH = "نقدى"
 DUE = "اجل"
 
-DUE_CASH= "دفعات نقدية"
+DUE_CASH = "دفعات نقدية"
 CASH_MONEY = "كاش"
 CHEQUE = "شيك"
-TRANSFERE = "تحويل" 
+TRANSFERE = "تحويل"
 
 VISA = "فيزا"
 WALLET = "محفظة"
@@ -72,7 +69,7 @@ STORES = "مخازن"
 
 
 PAYMENT_METHODS = (
-    (0, '--- Payment Methods ---'),
+    (0, "--- Payment Methods ---"),
     (1, CASH),
     (2, DUE),
     # (3, VISA),
@@ -81,7 +78,7 @@ PAYMENT_METHODS = (
 )
 
 TREASURY_TYPES = (
-    (0, '--- Treasury Types ---'),
+    (0, "--- Treasury Types ---"),
     (1, SAFE),
     (2, VISA),
     (3, WALLET),
@@ -90,39 +87,39 @@ TREASURY_TYPES = (
 
 
 CASH_PAYMENT_METHODS = (
-    (0, '--- Cash Payment Methods ---'),
+    (0, "--- Cash Payment Methods ---"),
     (1, SAFE),
     (2, VISA),
     (3, WALLET),
-    (4, NEW_WALLET)
+    (4, NEW_WALLET),
 )
 
 TYPES = (
-    (0, '--- Choose Type ---'),
+    (0, "--- Choose Type ---"),
     (1, SAFE),
     (2, VISA),
     (3, WALLET),
     (4, NEW_WALLET),
     (5, BANK_ACCOUNT),
-    (6, STORES)
+    (6, STORES),
 )
 
 DUE_PAYMENT_METHODS = (
     (1, DUE_CASH),
     (2, CHEQUE),
-    (3, TRANSFERE),  # need an account_no 
+    (3, TRANSFERE),  # need an account_no
 )
 
 OWNER = "owner"
 CLIENT = "client"
-ADMIN = 'admin'
-VENDOR = 'vendor'
+ADMIN = "admin"
+VENDOR = "vendor"
 # EDITOR = 'editor'
-MANAGER = 'manager'
-EMPLOYEE = 'employee'
-REPRESENTATIVE = 'rep'
-DRIVER = 'driver'
-GUEST= 'guest'
+MANAGER = "manager"
+EMPLOYEE = "employee"
+REPRESENTATIVE = "rep"
+DRIVER = "driver"
+GUEST = "guest"
 
 USER_TYPES = (
     (OWNER, "Owner"),
@@ -136,7 +133,7 @@ USER_TYPES = (
     (GUEST, "Guest"),
 )
 
-#* In Carts app SellService model
+# * In Carts app SellService model
 CLIENT_ROLE = (
     (0, "--Select Account Type--"),
     (1, "Client"),
@@ -158,14 +155,14 @@ TRANSACTION_TYPE = (
 # )
 
 SERVCIE_BILL_TYPE = (
-    (0, '--Select Bill Type--'),
-    (1, 'Services'),
-    (2, 'Items'),
-    (3, 'Services & Items'),
+    (0, "--Select Bill Type--"),
+    (1, "Services"),
+    (2, "Items"),
+    (3, "Services & Items"),
 )
 
 
-#* for gender
+# * for gender
 MALE = "m"
 FEMALE = "f"
 
@@ -193,162 +190,159 @@ RELIGION = (
     (0, "--Select Religion--"),
     (1, "Muslim"),
     (2, "Christian"),
-    
 )
 
-#* for Discount
+# * for Discount
 DISCOUNT_CHOICES = (
-    (0, 'Disc / Off'),
-    (1, '%'),
-    (2, '$'),
+    (0, "Disc / Off"),
+    (1, "%"),
+    (2, "$"),
 )
 
-#* for Tax
+# * for Tax
 TAX_CHOICES = (
-    (0, 'Tax/Off'),
-    (1, '%'),
-    (2, '$'),
+    (0, "Tax/Off"),
+    (1, "%"),
+    (2, "$"),
 )
 
 
-#* for Bill
+# * for Bill
 BILL_LINKED = (
-    (0, 'Bill Off'),
-    (1, 'Bill On'),
+    (0, "Bill Off"),
+    (1, "Bill On"),
     # (2, 'Off'),
 )
 
 BILL_TYPES = (
-    (0, 'Select Bill Type'),
-    (1, 'Sales Bill'),
-    (2, 'Return Sales Bill'),
-    (3, 'Purchases Bill'),
-    (4, 'Return Purchases Bill'),
+    (0, "Select Bill Type"),
+    (1, "Sales Bill"),
+    (2, "Return Sales Bill"),
+    (3, "Purchases Bill"),
+    (4, "Return Purchases Bill"),
 )
 
 
-#* for store responsibles
+# * for store responsibles
 STORE_ROLES = (
-    (0, '--Select Store Roles--'),
-    (1, 'Full Access'),
-    (2, 'Add and Update'),
-    (3, 'Add Only'),
+    (0, "--Select Store Roles--"),
+    (1, "Full Access"),
+    (2, "Add and Update"),
+    (3, "Add Only"),
 )
 
 SALES_OFFER = (
-    (0, '--Select Sales Offer--'),
-    (1, 'Sales Offer 1'),
-    (2, 'Sales Offer 2'),
-    (3, 'Sales Offer 3'),
+    (0, "--Select Sales Offer--"),
+    (1, "Sales Offer 1"),
+    (2, "Sales Offer 2"),
+    (3, "Sales Offer 3"),
 )
 
 CLIENT_TYPE = (
-    (0, '--Select Cliet Type--'),
-    (1, 'Cash'),
-    (2, 'On Line'),
-    (3, 'Due'),
-    (4, 'Payments'),
+    (0, "--Select Cliet Type--"),
+    (1, "Cash"),
+    (2, "On Line"),
+    (3, "Due"),
+    (4, "Payments"),
 )
 
 #####
 
 EQUIPMENT_TYPE = (
-    (0, '--- Equipment Type ---'),
-    (1, 'Equipment'),
-    (2, 'Vehicle'),
+    (0, "--- Equipment Type ---"),
+    (1, "Equipment"),
+    (2, "Vehicle"),
 )
 
 CURRENT_STATUS = (
-    (0, '--- Status ---'),
-    (1, 'In Service'),
-    (2, 'Out Of Service'),
-    (3, 'Under Maintenance'),
-    (4, 'In Storage'),
-    (5, 'Reserved'),
-    (6,'On Assignment'),
-    (7,'Damaged'),
-    (8,'Sold'),
+    (0, "--- Status ---"),
+    (1, "In Service"),
+    (2, "Out Of Service"),
+    (3, "Under Maintenance"),
+    (4, "In Storage"),
+    (5, "Reserved"),
+    (6, "On Assignment"),
+    (7, "Damaged"),
+    (8, "Sold"),
 )
 
 VEHICLE_TYPES = (
-    (0, '--- Select Vehicle Type ---'),
-    (1, 'Car'),
-    (2, 'Motorcycle'),
-    (3, 'Truck'),
-    (4, 'Bus'),
-    (5, 'Bicycle'),
-    (6, 'Scooter'),
-    (7, 'Van'),
-    (8, 'Tractor'),
-    (9, 'ATV'),
-    (10, 'RV'),
+    (0, "--- Select Vehicle Type ---"),
+    (1, "Car"),
+    (2, "Motorcycle"),
+    (3, "Truck"),
+    (4, "Bus"),
+    (5, "Bicycle"),
+    (6, "Scooter"),
+    (7, "Van"),
+    (8, "Tractor"),
+    (9, "ATV"),
+    (10, "RV"),
 )
 
 EGYPT_GOVERNORATES = (
-    (0, '--- Select Governorates ---'),
-    (1, 'Alexandria'),
-    (2, 'Aswan'),
-    (3, 'Asyut'),
-    (4, 'Beheira'),
-    (5, 'Beni Suef'),
-    (6, 'Cairo'),
-    (7, 'Dakahlia'),
-    (8, 'Damietta'),
-    (9, 'Faiyum'),
-    (10, 'Gharbia'),
-    (11, 'Giza'),
-    (12, 'Ismailia'),
-    (13, 'Kafr El Sheikh'),
-    (14, 'Luxor'),
-    (15, 'Matruh'),
-    (16, 'Minya'),
-    (17, 'Monufia'),
-    (18, 'New Valley'),
-    (19, 'North Sinai'),
-    (20, 'Port Said'),
-    (21, 'Qalyubia'),
-    (22, 'Qena'),
-    (23, 'Red Sea'),
-    (24, 'Sharqia'),
-    (25, 'Sohag'),
-    (26, 'South Sinai'),
-    (27, 'Suez'),
+    (0, "--- Select Governorates ---"),
+    (1, "Alexandria"),
+    (2, "Aswan"),
+    (3, "Asyut"),
+    (4, "Beheira"),
+    (5, "Beni Suef"),
+    (6, "Cairo"),
+    (7, "Dakahlia"),
+    (8, "Damietta"),
+    (9, "Faiyum"),
+    (10, "Gharbia"),
+    (11, "Giza"),
+    (12, "Ismailia"),
+    (13, "Kafr El Sheikh"),
+    (14, "Luxor"),
+    (15, "Matruh"),
+    (16, "Minya"),
+    (17, "Monufia"),
+    (18, "New Valley"),
+    (19, "North Sinai"),
+    (20, "Port Said"),
+    (21, "Qalyubia"),
+    (22, "Qena"),
+    (23, "Red Sea"),
+    (24, "Sharqia"),
+    (25, "Sohag"),
+    (26, "South Sinai"),
+    (27, "Suez"),
 )
-
-
 
 
 ####
 CITY = (
-    ('alexandria', 'ALEXANDRIA'),
-    ('aswan', 'ASWAN'),
-    ('asyut', 'ASYUT'),
-    ('beheira', 'BEHEIRA'),
-    ('benisuef', 'BENI SUEF'),
-    ('cairo', 'CAIRO'),
-    ('dakahlia', 'DAKAHLIA'),
-    ('demiatta', 'DAMIETTA'),
-    ('faiyum', 'FAIYUM'),
-    ('gharbia', 'GHARBIA'),
-    ('giza', 'GIZA'),
-    ('ismailia', 'ISMAILIA'),
-    ('kafr_el_sheikh', 'KAFR EL SHEIKH'),
-    ('luxor', 'LUXOR'),
-    ('matruh', 'MATRUH'),
-    ('minya', 'MINYA'),
-    ('monufia', 'MONUFIA'),
-    ('new_valley', 'NEW VALLEY'),
-    ('north_sinai', 'NORTH SINAI'),
-    ('port_said', 'PORT SAID'),
-    ('qalyubia', 'QALYUBIA'),
-    ('qena', 'QENA'),
-    ('red_sea', 'RED SEA'),
-    ('sharqia', 'SHARQIA'),
-    ('sohag', 'SOHAG'),
-    ('south_sinai', 'SOUTH SINAI'),
-    ('suez', 'SUEZ'),
-    ('halayb', 'HALAYB'),
-    ('shalateen', 'SHALATEEN'),
+    ("alexandria", "ALEXANDRIA"),
+    ("aswan", "ASWAN"),
+    ("asyut", "ASYUT"),
+    ("beheira", "BEHEIRA"),
+    ("benisuef", "BENI SUEF"),
+    ("cairo", "CAIRO"),
+    ("dakahlia", "DAKAHLIA"),
+    ("demiatta", "DAMIETTA"),
+    ("faiyum", "FAIYUM"),
+    ("gharbia", "GHARBIA"),
+    ("giza", "GIZA"),
+    ("ismailia", "ISMAILIA"),
+    ("kafr_el_sheikh", "KAFR EL SHEIKH"),
+    ("luxor", "LUXOR"),
+    ("matruh", "MATRUH"),
+    ("minya", "MINYA"),
+    ("monufia", "MONUFIA"),
+    ("new_valley", "NEW VALLEY"),
+    ("north_sinai", "NORTH SINAI"),
+    ("port_said", "PORT SAID"),
+    ("qalyubia", "QALYUBIA"),
+    ("qena", "QENA"),
+    ("red_sea", "RED SEA"),
+    ("sharqia", "SHARQIA"),
+    ("sohag", "SOHAG"),
+    ("south_sinai", "SOUTH SINAI"),
+    ("suez", "SUEZ"),
+    ("halayb", "HALAYB"),
+    ("shalateen", "SHALATEEN"),
 )
 
 
@@ -358,7 +352,7 @@ COUNTRY = (
     # "AF":"Afghanistan",
     # "AX":"Aland Islands",
     # "AL":"Albania",
-    ("DZ", "Algeria"), # index=0
+    ("DZ", "Algeria"),  # index=0
     # "AS":"American Samoa",
     # "AD":"Andorra",
     # "AO":"Angola",
@@ -420,7 +414,7 @@ COUNTRY = (
     # "DM":"Dominica",
     # "DO":"Dominican Republic",
     # "EC":"Ecuador",
-    ("EG", "Egypt"),   # index=8
+    ("EG", "Egypt"),  # index=8
     # "SV":"El Salvador",
     # "GQ":"Equatorial Guinea",
     # "ER":"Eritrea",
@@ -600,179 +594,179 @@ COUNTRY = (
     # "VG":"Virgin Islands, British",
     # "VI":"Virgin Islands, U.S.",
     # "WF":"Wallis and Futuna",
-    ("YE","Yemen"),
-    ("ZM","Zambia"),
-    ("ZW", "Zimbabwe")
+    ("YE", "Yemen"),
+    ("ZM", "Zambia"),
+    ("ZW", "Zimbabwe"),
 )
 
 
 NATIONALITIES = (
-    ('AF', _(u'Afghan')),
-    ('AL', _(u'Albanian')),
-    ('DZ', _(u'Algerian')),
-    ('AD', _(u'Andorran')),
-    ('AO', _(u'Angolan')),
-    ('AR', _(u'Argentinian')),
-    ('AM', _(u'Armenian')),
-    ('AU', _(u'Australian')),
-    ('AT', _(u'Austrian')),
-    ('AZ', _(u'Azerbaijani')),
-    ('BS', _(u'Bahamian')),
-    ('BH', _(u'Bahraini')),
-    ('BD', _(u'Bangladeshi')),
-    ('BB', _(u'Barbadian')),
-    ('BY', _(u'Belorussian')),
-    ('BE', _(u'Belgian')),
-    ('BZ', _(u'Belizian')),
-    ('BJ', _(u'Beninese')),
-    ('BT', _(u'Bhutanese')),
-    ('BO', _(u'Bolivian')),
-    ('BA', _(u'Bosnian')),
-    ('BW', _(u'Botswanan')),
-    ('BR', _(u'Brazilian')),
-    ('GB', _(u'British')),
-    ('BN', _(u'Bruneian')),
-    ('BG', _(u'Bulgarian')),
-    ('BF', _(u'Burkinese')),
-    ('MM', _(u'Burmese')),
-    ('BF', _(u'Burundian')),
-    ('BI', _(u'Cambodian')),
-    ('CM', _(u'Cameroonian')),
-    ('CA', _(u'Canadian')),
-    ('CV', _(u'Cape Verdean')),
-    ('TD', _(u'Chadian')),
-    ('CL', _(u'Chilean')),
-    ('CN', _(u'Chinese')),
-    ('CO', _(u'Colombian')),
-    ('CG', _(u'Congolese')),
-    ('CR', _(u'Costa Rican')),
-    ('HR', _(u'Croatian')),
-    ('CU', _(u'Cuban')),
-    ('CY', _(u'Cypriot')),
-    ('CZ', _(u'Czech')),
-    ('DK', _(u'Danish')),
-    ('DJ', _(u'Djiboutian')),
-    ('DM', _(u'Dominican')),
-    ('DO', _(u'Dominican')),
-    ('EC', _(u'Ecuadorean')),
-    ('EG', _(u'Egyptian')), # index=48
-    ('SV', _(u'Salvadorean')),
-    ('GB', _(u'English')),
-    ('ER', _(u'Eritrean')),
-    ('EE', _(u'Estonian')),
-    ('ET', _(u'Ethiopian')),
-    ('FJ', _(u'Fijian')),
-    ('FI', _(u'Finnish')),
-    ('FR', _(u'French')),
-    ('GA', _(u'Gabonese')),
-    ('GM', _(u'Gambian')),
-    ('GE', _(u'Georgian')),
-    ('DE', _(u'German')),
-    ('GH', _(u'Ghanaian')),
-    ('GR', _(u'Greek')),
-    ('GD', _(u'Grenadian')),
-    ('GT', _(u'Guatemalan')),
-    ('GQ', _(u'Guinean')),
-    ('GY', _(u'Guyanese')),
-    ('HT', _(u'Haitian')),
-    ('NL', _(u'Dutch')),
-    ('HN', _(u'Honduran')),
-    ('HU', _(u'Hungarian')),
-    ('IS', _(u'Icelandic')),
-    ('IO', _(u'Indian')),
-    ('ID', _(u'Indonesian')),
-    ('IR', _(u'Iranian')),
-    ('IQ', _(u'Iraqi')),
-    ('IE', _(u'Irish')),
-    ('IL', _(u'Israeli')),
-    ('IT', _(u'Italian')),
-    ('JM', _(u'Jamaican')),
-    ('JP', _(u'Japanese')),
-    ('JO', _(u'Jordanian')),
-    ('KZ', _(u'Kazakh')),
-    ('KE', _(u'Kenyan')),
-    ('KW', _(u'Kuwaiti')),
-    ('LA', _(u'Laotian')),
-    ('LV', _(u'Latvian')),
-    ('LB', _(u'Lebanese')),
-    ('LR', _(u'Liberian')),
-    ('LY', _(u'Libyan')),
-    ('LT', _(u'Lithuanian')),
-    ('MK', _(u'Macedonian')),
-    ('MG', _(u'Malagasay')),
-    ('MW', _(u'Malawian')),
-    ('MY', _(u'Malaysian')),
-    ('MV', _(u'Maldivian')),
-    ('ML', _(u'Malian')),
-    ('MT', _(u'Maltese')),
-    ('MR', _(u'Mauritanian')),
-    ('MU', _(u'Mauritian')),
-    ('MX', _(u'Mexican')),
-    ('MD', _(u'Moldovan')),
-    ('MC', _(u'Monacan')),
-    ('MN', _(u'Mongolian')),
-    ('ME', _(u'Montenegrin')),
-    ('MA', _(u'Moroccan')),
-    ('MZ', _(u'Mozambican')),
-    ('NA', _(u'Namibian')),
-    ('NP', _(u'Nepalese')),
-    ('NI', _(u'Nicaraguan')),
-    ('NE', _(u'Nigerien')),
-    ('NG', _(u'Nigerian')),
-    ('KP', _(u'North Korean')),
-    ('NO', _(u'Norwegian')),
-    ('OM', _(u'Omani')),
-    ('PK', _(u'Pakistani')),
-    ('PA', _(u'Panamanian')),
-    ('PG', _(u'Guinean')),
-    ('PY', _(u'Paraguayan')),
-    ('PE', _(u'Peruvian')),
-    ('PH', _(u'Philippine')),
-    ('PL', _(u'Polish')),
-    ('PT', _(u'Portuguese')),
-    ('QA', _(u'Qatari')),
-    ('RO', _(u'Romanian')),
-    ('RU', _(u'Russian')),
-    ('RW', _(u'Rwandan')),
-    ('SA', _(u'Saudi')),
-    ('AE', _(u'Scottish')),
-    ('SN', _(u'Senegalese')),
-    ('RS', _(u'Serbian')),
-    ('SC', _(u'Seychellois')),
-    ('SL', _(u'Sierra Leonian')),
-    ('SG', _(u'Singaporean')),
-    ('SK', _(u'Slovak')),
-    ('SI', _(u'Slovenian')),
-    ('SO', _(u'Somali')),
-    ('ZA', _(u'South African')),
-    ('KR', _(u'South Korean')),
-    ('ES', _(u'Spanish')),
-    ('LK', _(u'Sri Lankan')),
-    ('SD', _(u'Sudanese')),
-    ('SR', _(u'Surinamese')),
-    ('SZ', _(u'Swazi')),
-    ('SE', _(u'Swedish')),
-    ('CH', _(u'Swiss')),
-    ('SY', _(u'Syrian')),
-    ('TW', _(u'Taiwanese')),
-    ('TJ', _(u'Tadjik')),
-    ('TZ', _(u'Tanzanian')),
-    ('TH', _(u'Thai')),
-    ('TG', _(u'Togolese')),
-    ('TT', _(u'Trinidadian')),
-    ('TN', _(u'Tunisian')),
-    ('TR', _(u'Turkish')),
-    ('TM', _(u'Turkmen')),
-    ('TV', _(u'Tuvaluan')),
-    ('UG', _(u'Ugandan')),
-    ('UA', _(u'Ukrainian')),
-    ('UY', _(u'Uruguayan')),
-    ('UZ', _(u'Uzbek')),
-    ('VU', _(u'Vanuatuan')),
-    ('VE', _(u'Venezuelan')),
-    ('VN', _(u'Vietnamese')),
-    ('GB', _(u'Welsh')),
-    ('YE', _(u'Yemeni')),
-    ('ZM', _(u'Zambian')),
-    ('ZW', _(u'Zimbabwean')),
+    ("AF", _("Afghan")),
+    ("AL", _("Albanian")),
+    ("DZ", _("Algerian")),
+    ("AD", _("Andorran")),
+    ("AO", _("Angolan")),
+    ("AR", _("Argentinian")),
+    ("AM", _("Armenian")),
+    ("AU", _("Australian")),
+    ("AT", _("Austrian")),
+    ("AZ", _("Azerbaijani")),
+    ("BS", _("Bahamian")),
+    ("BH", _("Bahraini")),
+    ("BD", _("Bangladeshi")),
+    ("BB", _("Barbadian")),
+    ("BY", _("Belorussian")),
+    ("BE", _("Belgian")),
+    ("BZ", _("Belizian")),
+    ("BJ", _("Beninese")),
+    ("BT", _("Bhutanese")),
+    ("BO", _("Bolivian")),
+    ("BA", _("Bosnian")),
+    ("BW", _("Botswanan")),
+    ("BR", _("Brazilian")),
+    ("GB", _("British")),
+    ("BN", _("Bruneian")),
+    ("BG", _("Bulgarian")),
+    ("BF", _("Burkinese")),
+    ("MM", _("Burmese")),
+    ("BF", _("Burundian")),
+    ("BI", _("Cambodian")),
+    ("CM", _("Cameroonian")),
+    ("CA", _("Canadian")),
+    ("CV", _("Cape Verdean")),
+    ("TD", _("Chadian")),
+    ("CL", _("Chilean")),
+    ("CN", _("Chinese")),
+    ("CO", _("Colombian")),
+    ("CG", _("Congolese")),
+    ("CR", _("Costa Rican")),
+    ("HR", _("Croatian")),
+    ("CU", _("Cuban")),
+    ("CY", _("Cypriot")),
+    ("CZ", _("Czech")),
+    ("DK", _("Danish")),
+    ("DJ", _("Djiboutian")),
+    ("DM", _("Dominican")),
+    ("DO", _("Dominican")),
+    ("EC", _("Ecuadorean")),
+    ("EG", _("Egyptian")),  # index=48
+    ("SV", _("Salvadorean")),
+    ("GB", _("English")),
+    ("ER", _("Eritrean")),
+    ("EE", _("Estonian")),
+    ("ET", _("Ethiopian")),
+    ("FJ", _("Fijian")),
+    ("FI", _("Finnish")),
+    ("FR", _("French")),
+    ("GA", _("Gabonese")),
+    ("GM", _("Gambian")),
+    ("GE", _("Georgian")),
+    ("DE", _("German")),
+    ("GH", _("Ghanaian")),
+    ("GR", _("Greek")),
+    ("GD", _("Grenadian")),
+    ("GT", _("Guatemalan")),
+    ("GQ", _("Guinean")),
+    ("GY", _("Guyanese")),
+    ("HT", _("Haitian")),
+    ("NL", _("Dutch")),
+    ("HN", _("Honduran")),
+    ("HU", _("Hungarian")),
+    ("IS", _("Icelandic")),
+    ("IO", _("Indian")),
+    ("ID", _("Indonesian")),
+    ("IR", _("Iranian")),
+    ("IQ", _("Iraqi")),
+    ("IE", _("Irish")),
+    ("IL", _("Israeli")),
+    ("IT", _("Italian")),
+    ("JM", _("Jamaican")),
+    ("JP", _("Japanese")),
+    ("JO", _("Jordanian")),
+    ("KZ", _("Kazakh")),
+    ("KE", _("Kenyan")),
+    ("KW", _("Kuwaiti")),
+    ("LA", _("Laotian")),
+    ("LV", _("Latvian")),
+    ("LB", _("Lebanese")),
+    ("LR", _("Liberian")),
+    ("LY", _("Libyan")),
+    ("LT", _("Lithuanian")),
+    ("MK", _("Macedonian")),
+    ("MG", _("Malagasay")),
+    ("MW", _("Malawian")),
+    ("MY", _("Malaysian")),
+    ("MV", _("Maldivian")),
+    ("ML", _("Malian")),
+    ("MT", _("Maltese")),
+    ("MR", _("Mauritanian")),
+    ("MU", _("Mauritian")),
+    ("MX", _("Mexican")),
+    ("MD", _("Moldovan")),
+    ("MC", _("Monacan")),
+    ("MN", _("Mongolian")),
+    ("ME", _("Montenegrin")),
+    ("MA", _("Moroccan")),
+    ("MZ", _("Mozambican")),
+    ("NA", _("Namibian")),
+    ("NP", _("Nepalese")),
+    ("NI", _("Nicaraguan")),
+    ("NE", _("Nigerien")),
+    ("NG", _("Nigerian")),
+    ("KP", _("North Korean")),
+    ("NO", _("Norwegian")),
+    ("OM", _("Omani")),
+    ("PK", _("Pakistani")),
+    ("PA", _("Panamanian")),
+    ("PG", _("Guinean")),
+    ("PY", _("Paraguayan")),
+    ("PE", _("Peruvian")),
+    ("PH", _("Philippine")),
+    ("PL", _("Polish")),
+    ("PT", _("Portuguese")),
+    ("QA", _("Qatari")),
+    ("RO", _("Romanian")),
+    ("RU", _("Russian")),
+    ("RW", _("Rwandan")),
+    ("SA", _("Saudi")),
+    ("AE", _("Scottish")),
+    ("SN", _("Senegalese")),
+    ("RS", _("Serbian")),
+    ("SC", _("Seychellois")),
+    ("SL", _("Sierra Leonian")),
+    ("SG", _("Singaporean")),
+    ("SK", _("Slovak")),
+    ("SI", _("Slovenian")),
+    ("SO", _("Somali")),
+    ("ZA", _("South African")),
+    ("KR", _("South Korean")),
+    ("ES", _("Spanish")),
+    ("LK", _("Sri Lankan")),
+    ("SD", _("Sudanese")),
+    ("SR", _("Surinamese")),
+    ("SZ", _("Swazi")),
+    ("SE", _("Swedish")),
+    ("CH", _("Swiss")),
+    ("SY", _("Syrian")),
+    ("TW", _("Taiwanese")),
+    ("TJ", _("Tadjik")),
+    ("TZ", _("Tanzanian")),
+    ("TH", _("Thai")),
+    ("TG", _("Togolese")),
+    ("TT", _("Trinidadian")),
+    ("TN", _("Tunisian")),
+    ("TR", _("Turkish")),
+    ("TM", _("Turkmen")),
+    ("TV", _("Tuvaluan")),
+    ("UG", _("Ugandan")),
+    ("UA", _("Ukrainian")),
+    ("UY", _("Uruguayan")),
+    ("UZ", _("Uzbek")),
+    ("VU", _("Vanuatuan")),
+    ("VE", _("Venezuelan")),
+    ("VN", _("Vietnamese")),
+    ("GB", _("Welsh")),
+    ("YE", _("Yemeni")),
+    ("ZM", _("Zambian")),
+    ("ZW", _("Zimbabwean")),
 )

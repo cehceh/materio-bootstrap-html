@@ -1,0 +1,73 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<div class="row mb-5" id="select-app">
+
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">KMA Maintainance App.</h5>
+                <p class="card-text">
+                    An app to manage the maintainance department of computer and mobile shops.
+                </p>
+                showDiv==[[showDiv]]
+                <a href="javascript:void(0)" class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#largeModal" @click="isMaintenance=true, isSingle=false, isMulti=false">
+                    Maintenance App.</a>
+            </div>
+            <img class="card-img-top" src="{% static 'img/elements/1.jpg' %}" alt="Card image cap" />
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">KMA Clinic Management App.</h5>
+                <p class="card-text">
+                    An app to manage a clinic of a single clinic cycle as (Gynecology, Pediatrics, Urology, Orthopedics,
+                    Cardiology, Dermatology, Internology, Vascularology and more).
+                </p>
+                <a href="javascript:void(0)" class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#largeModal" @click="isSingle=true, isMulti=false, isMaintenance=false">
+                    Single Clinic App</a>
+            </div>
+            <img class="card-img-bottom" src="{% static 'img/clinic/gyna3.jpg' %}" alt="Card image cap" />
+        </div>
+    </div>
+
+
+
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">KMA Multi Clinics App</h5>
+                <p class="card-text">
+                    An app to manage a corporate of multi clinics as (Gynecology, Pediatrics, Urology, Orthopedics,
+                    Cardiology, Dermatology, Internology, Vascularology and more)
+                </p>
+                <a href="javascript:void(0)" class="btn btn-outline-primary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#largeModal" @click="isMulti=true, isSingle=false, isMaintenance=false">
+                    Multi Clinics App</a>
+            </div>
+            <img class="card-img-top" src="{% static 'img/clinic/pdata.jpg' %}" alt="Card image cap" />
+            <!-- 'img/clinic/doctor.jpg' -->
+        </div>
+    </div>
+
+    {% include './modals/single_clinic_modal.html' %}
+
+</div>
+
+
+{% endblock %}
+
+{% block page_js %}
+
+{% include './js/vueJs.html' %}
+
+{% endblock page_js %}

@@ -1,0 +1,96 @@
+<!-- VueJs -->
+<script type="module">
+
+    import { createApp, ref, computed } from '{% static "js/vue.esm-browser.js" %}';
+    // const { createApp, ref, computed } = Vue;
+    const selectApp = createApp({
+        delimiters: ["[[", "]]"],
+        setup() {
+            const msg = 'What is going on SELECT-APP-PAGE ?';
+            const title = 'SELECT-APP-TITLE ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                showDiv: false,
+                // showTable: false,
+                isSingle: false,
+                isMulti: false,
+                isMaintenance: false,
+                // showActive: false,
+                // showDeleted: false,
+                // showMain: false,
+                // inActive: false,
+                // showReport: false,
+            };
+        },
+        computed: {
+
+        },
+        methods: {
+            formatDate(d) {
+                let yyyy = d.getFullYear().toString();
+                let mm = (d.getMonth() + 101).toString().slice(-2);
+                let dd = (d.getDate() + 100).toString().slice(-2);
+                let hh = (d.getHours() + 100).toString().slice(-2);
+                let min = (d.getMinutes() + 100).toString().slice(-2);
+                let ss = (d.getSeconds() + 100).toString().slice(-2);
+
+                let meridiem = "AM";
+                if (parseInt(hh) >= 12) {
+                    meridiem = "PM";
+                    if (parseInt(hh) > 12) {
+                        hh = (parseInt(hh) - 12).toString();
+                    }
+                }
+                return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss + ' ' + meridiem;
+            },
+
+        },
+        mounted() {
+            let me = this;
+            // alert("Hiiiiiiii")
+            $(document).ready(function () {
+
+                $(document).on('submit', ".single-clinic-modal", function (e) {
+                    let formData = new FormData($(this)[0]);
+                    formData.append("app-type", $("#app-type option:selected").val())
+                    let token = '{% csrf_token %}'
+                    console.log(
+                        'BUSSINESS==>>>', $("#app-type option:selected").val()
+                    )
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "select-app" %}',
+                        headers: { 'X-CSRFToken': token },
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (data) {
+                            if (data.type == 'success') {
+                                alert('SUCCESS -->>');
+                                toastr.success(data.msg + " " + $('#company').val(), $("#app-type option:selected").val());
+                            } else if (data.type == 'error') {
+                                toastr.error(data.msg);
+                            };
+
+                        },
+                        error: function (error) {
+                            alert('Error -->>' + $('#company').val(), $("#app-type option:selected").val());
+                        }
+                    });
+                    e.preventDefault();
+
+                });
+
+
+
+            });
+        },
+    });
+    selectApp.mount("#select-app")
+
+</script>

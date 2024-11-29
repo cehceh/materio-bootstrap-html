@@ -20,7 +20,8 @@
 
   <ul class="menu-inner py-1">
     <!-- REQUEST==>{{request.resolver_match.url_name}} -- {{request.path}} -->
-    <li class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
+    <li
+      class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
         <div class="text-truncate" data-i18n="Patients">Patients</div>
@@ -29,7 +30,7 @@
       <ul class="menu-sub">
         <li class="menu-item">
           <a href="{% get_theme_variables 'add_patient_url' %}" class="menu-link" target="_blank">
-            <div class="text-truncate" data-i18n="CRM">New Patient 
+            <div class="text-truncate" data-i18n="CRM">New Patient
               <!-- <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{patients_count}}</span> -->
             </div>
             <span class="menu-icon tf-icons mdi mdi-account-plus-outline ms-auto"></span>
@@ -50,13 +51,14 @@
             <div class="text-truncate" data-i18n="New Visit">All Visits</div>
           </a>
         </li>
-        
+
       </ul>
     </li>
 
     <ul class="menu-inner py-1">
       <!-- REQUEST==>{{request.resolver_match.url_name}} -- {{request.path}} -->
-      <li class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
+      <li
+        class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
         <a href="javascript:void(0);" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
           <div class="text-truncate" data-i18n="Reservations">Reservations</div>
@@ -65,10 +67,19 @@
         <ul class="menu-sub">
           <li class="menu-item">
             <a href="{% get_theme_variables 'reservations_url' %}" class="menu-link" target="_blank">
-              <div class="text-truncate" data-i18n="CRM"> Reservations 
+              <div class="text-truncate" data-i18n="Reservations"> Reservations
                 <!-- <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{patients_count}}</span> -->
               </div>
               <span class="menu-icon tf-icons mdi mdi-account-plus-outline ms-auto"></span>
+            </a>
+          </li>
+          <!--  -->
+          <li class="menu-item">
+            <a href="{% url 'patientdata:reservation-dashboard' %}" class="menu-link" target="_blank">
+              <div class="text-truncate" data-i18n="Reservation Dashboard"> Reservation Dashboard
+                <!-- <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{patients_count}}</span> -->
+              </div>
+              <span class="menu-icon tf-icons mdi mdi-home-outline ms-auto"></span>
             </a>
           </li>
         </ul>
@@ -79,7 +90,8 @@
       <span class="menu-header-text">Apps &amp; Pages</span>
     </li>
 
-    <li class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
+    <li
+      class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
         <div class="text-truncate" data-i18n="Dashboards">Doctors</div>
@@ -88,11 +100,11 @@
       <ul class="menu-sub">
         <li class="menu-item">
           <a href="{% url 'configurations:add-doctor-names' %}" class="menu-link" target="_blank">
-            <div class="text-truncate" data-i18n="doctor">New Doctor 
+            <div class="text-truncate" data-i18n="doctor">New Doctor
               <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{doctors_count}}</span>
             </div>
             <span class="menu-icon tf-icons mdi mdi-account-plus-outline ms-auto"></span>
-            
+
           </a>
         </li>
         <li class="menu-item {% if 'index' == request.resolver_match.url_name %}active{% endif %}">
@@ -100,9 +112,57 @@
             <div class="text-truncate" data-i18n="doctors table">All Doctors Names</div>
           </a>
         </li>
-        
+
       </ul>
     </li>
+
+    <li
+      class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
+        <div class="text-truncate" data-i18n="Dashboards">Specializations</div>
+        <span class="badge bg-danger rounded-pill ms-auto">{{specialization_count}}</span>
+      </a>
+      <ul class="menu-sub">
+        <li class="menu-item">
+          <a href="{% url 'configurations:add-specialization' %}" class="menu-link" target="_blank">
+            <div class="text-truncate" data-i18n="Specialization">New Specialization
+              <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{specialization_count}}</span>
+            </div>
+            <span class="menu-icon tf-icons mdi mdi-account-plus-outline ms-auto"></span>
+
+          </a>
+        </li>
+        <li class="menu-item {% if 'index' == request.resolver_match.url_name %}active{% endif %}">
+          <a href="{% url 'configurations:specializations-table' %}" class="menu-link">
+            <div class="text-truncate" data-i18n="Specialization table">All Specialization</div>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <ul class="menu-inner py-1">
+      <!-- REQUEST==>{{request.resolver_match.url_name}} -- {{request.path}} -->
+      <li
+        class="menu-item {% if 'index' == request.resolver_match.url_name or '/dashbord/' in request.path %}active open{% endif %}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
+          <div class="text-truncate" data-i18n="Permissions">Permissions Settings</div>
+          <span class="badge bg-primary rounded-pill ms-auto"></span>
+        </a>
+        <ul class="menu-sub">
+          <li class="menu-item">
+            <a href="{% url 'management:user-permission-table' %}" class="menu-link" target="_blank">
+              <div class="text-truncate" data-i18n="Permisions Table"> Permisions Table
+                <!-- <span class="badge bg-label-success fs-tiny rounded-pill ms-auto">{{patients_count}}</span> -->
+              </div>
+              <span class="menu-icon tf-icons mdi mdi-account-plus-outline ms-auto"></span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
 
     <li class="menu-header fw-medium mt-4">
       <span class="menu-header-text">Apps &amp; Pages</span>
@@ -367,7 +427,7 @@
         <div class="text-truncate" data-i18n="Tables">Tables</div>
       </a>
     </li>
-    
+
 
     <li class="menu-header fw-medium mt-4">
       <span class="menu-header-text">Misc</span>
@@ -380,7 +440,8 @@
       </a>
     </li>
     <li class="menu-item">
-      <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/django-introduction.html" class="menu-link" target="_blank">
+      <a href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/documentation/django-introduction.html"
+        class="menu-link" target="_blank">
         <i class="menu-icon tf-icons mdi mdi-file-document-multiple-outline"></i>
         <div class="text-truncate" data-i18n="Documentation">Documentation</div>
       </a>

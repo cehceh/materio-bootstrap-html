@@ -33,13 +33,20 @@ THEME_VARIABLES = {
     "git_repo_access": "https://tools.themeselection.com/github/github-access",
     "live_preview_free": "https://demos.themeselection.com/materio-html-django-admin-template-free/",
     "product_page_free": "https://themeselection.com/item/materio-free-bootstrap-html-django-admin-template/",
-    # ? My New Variables
+    # ? /* ------------ My New URLs Variables --------- */
+    # ? Patients URLs -----------------------------
     "add_patient_url": "/patients/add/new/patient/",
-    "reservations_url": "/patients/reservation/area/",
-    "visits_table_url": "/visits/table/list/every/visits/",
     "all_patients_url": "/patients/list/all/patients/from/patient-view-class/",
     "patients_dashboard_url": "/patients/list/all/patients/",
     "history_patient_url": "/patients/choose/history/for/patient-id/{patient_id}/",
+    # ? Reservaation URLs ----------------------------
+    "reservations_url": "/patients/reservation/area/",
+    # ? Visits URLs --------------------------------------
+    "visits_table_url": "/visits/table/list/every/visits/",
+    # ? Doctor Names URLs
+    "add_doctor_name_url": "/config/add/doctor/name/",
+    "edit_doctor_name_url": "/config/edit/doctor/name/id/{id}/",
+    "all_doctor_name_url": "/config/table/of/all/doctor/names/",
 }
 
 # ! Don't change THEME_LAYOUT_DIR unless it's required

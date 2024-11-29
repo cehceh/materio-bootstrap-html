@@ -229,6 +229,7 @@ class VisitUpdateView(UpdateView):
             next_index = [
                 i for i, obj in enumerate(visits_length) if i == current_index + 1
             ][0] + 1
+
         print("first_id", first_id)
         print(
             "last_id",
@@ -317,13 +318,7 @@ class VisitListView(ListView):
         data = {}
         # A function to init the global layout. It is defined in web_project/__init__.py file
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
-        # print("self.get_queryset()[1]>>>", self.get_queryset()[1])
 
-        # patient_search not in [
-        #     Visits.objects.filter(patient_id=self.kwargs["patient_id"])
-        # ]:
-        #     search_result = self.get_queryset()[1]
-        #     print("I-AM-ALL-VISITS-ALSO>>>", search_result)
         # ?
         if self.request.path == self.visits_url:
             patient_visits = Visits.objects.select_related("patient")
@@ -394,14 +389,6 @@ class VisitListView(ListView):
         visits_count = patient_visits.aggregate(count=Count("id"))
         total_visits_amount = patient_visits.aggregate(sum_amount=Sum("amount"))
         visits_length = [obj for obj in patient_visits.values_list("id", flat=True)]
-        print(
-            # "SELF.QUERYSET>>>",
-            # self.queryset,
-            # "INDEX::::",
-            # # len(visits_length),
-            # [(index + 1, obj) for index, obj in enumerate(visits_length)],
-            # [(index + 1) for index in range(len(visits_length))],
-        )
 
         data["main_page"] = main_page
         data["patient_visits"] = patient_visits
@@ -424,17 +411,7 @@ class VisitListView(ListView):
             if path != self.visits_url
             else "All Visits In The Clinic"
         )
-        print(
-            # "PATIENT>>>", self.get_queryset()[0], "VISITS>>>", self.get_queryset()[1]
-            "VALUES-LIST-IDS>>>>",
-            # [
-            #     obj
-            #     for obj in Visits.objects.filter(
-            #         patient_id=self.kwargs["patient_id"]
-            #     ).values_list("id", flat=True)
-            #     if path != self.visits_url
-            # ],
-        )
+
         return context | data
 
 

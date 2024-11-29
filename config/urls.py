@@ -21,10 +21,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from web_project.views import SystemView
+from config.utils import single_clinic_app
 
+from apps.home.views import select_app
+
+
+## Main urlpatterns
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # Dashboard urls
+    # * Dashboard urls
     path("", include("apps.dashboards.urls")),
     # layouts urls
     path("", include("apps.layouts.urls")),
@@ -47,7 +52,9 @@ urlpatterns = [
     # Tables urls
     path("", include("apps.tables.urls")),
     # ? MY APPS STARTS FROM HERE
+    path("", single_clinic_app(select_app), name="select-app"),  # * This is our server
     path("config/", include("apps.configurations.urls")),
+    path("management/", include("apps.management.urls")),
     path("patients/", include("apps.patientdata.urls")),
     path("visits/", include("apps.visits.urls")),
     path("pasthistory/", include("apps.pasthistory.urls")),
