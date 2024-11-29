@@ -7,6 +7,13 @@ class DoctorSpecializations(BasicData):
     name = models.CharField(
         max_length=100, unique=True, verbose_name="Doctor Specialization"
     )
+    name_ar = models.CharField(
+        max_length=100,
+        unique=False,
+        blank=True,
+        null=True,
+        verbose_name="Arabic Specialization",
+    )
     # doctor = models.OneToOneField(
     #     DoctorNames,
     #     related_name="doctor_name_specializations",
@@ -43,8 +50,18 @@ class DoctorSpecializations(BasicData):
             models.Index(fields=["deleted_at"]),
         ]
 
+    def save(self, *args, **kwargs):
+        generated_code = "spec-" + str(self.id)
+        # Only generate a code if it doesn't already exist
+        if not self.code:
+            super().save(*args, **kwargs)  # Save to generate the ID first
+            self.code = (
+                generated_code  # "spec-" + str(self.id)  # Create code based on ID
+            )
+        super().save(*args, **kwargs)  # Save again to store the updated code
+
     def __str__(self):
-        return f"{self.doctor}: {self.name}"
+        return f"{self.name} - {self.name_ar}"
 
 
 class DoctorNames(BasicData):
@@ -61,8 +78,12 @@ class DoctorNames(BasicData):
         # on_delete=models.CASCADE,
     )
 
-    mobile1 = models.CharField(max_length=25, unique=True, verbose_name=_("Mobile1"))
-    mobile2 = models.CharField(max_length=25, verbose_name=_("Mobile2"))
+    mobile1 = models.CharField(
+        max_length=25, default="", unique=False, verbose_name=_("Mobile1")
+    )
+    mobile2 = models.CharField(
+        max_length=25, blank=True, null=True, verbose_name=_("Mobile2")
+    )
     phone1 = models.CharField(
         max_length=25, blank=True, null=True, verbose_name=_("Phone1")
     )
@@ -93,6 +114,13 @@ class DoctorNames(BasicData):
             models.Index(fields=["is_deleted"]),
             models.Index(fields=["deleted_at"]),
         ]
+
+    def save(self, *args, **kwargs):
+        # Only generate a code if it doesn't already exist
+        if not self.code:
+            super().save(*args, **kwargs)  # Save to generate the ID first
+            self.code = "doctor-" + str(self.id)  # Create code based on ID
+        super().save(*args, **kwargs)  # Save again to store the updated code
 
     def __str__(self):
         return f"{self.name}"

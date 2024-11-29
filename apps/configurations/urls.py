@@ -35,7 +35,14 @@ from django.urls import path
 #     ajax_get,
 # )
 
-from .views import DoctorView, DoctorUpdateView, DoctorListView  # noqa: F811
+from .views import (
+    DoctorView,
+    DoctorUpdateView,
+    DoctorListView,
+    SpecializationView,
+    SpecializationUpdateView,
+    SpecializationListView,
+)  # noqa: F811
 
 
 app_name = "configurations"
@@ -49,7 +56,7 @@ urlpatterns = [
         name="doctors-table",
     ),
     path(
-        "add/doctor/names/",
+        "add/doctor/name/",
         (DoctorView.as_view()),
         name="add-doctor-names",
     ),
@@ -57,6 +64,22 @@ urlpatterns = [
         "edit/doctor/name/id/<int:id>/",
         (DoctorUpdateView.as_view()),
         name="edit-doctor-names",
+    ),
+    # ? ------- Doctors Specializations Urls -------
+    path(
+        "table/of/all/specializations/names/",
+        (SpecializationListView.as_view()),
+        name="specializations-table",
+    ),
+    path(
+        "add/specialization/name/",
+        (SpecializationView.as_view()),
+        name="add-specialization",
+    ),
+    path(
+        "edit/specialization/id/<int:id>/",
+        (SpecializationUpdateView.as_view()),
+        name="edit-specialization",
     ),
     # ? ------- Branches Urls -------
     # ? ------- Work Types Urls -------

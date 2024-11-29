@@ -6,12 +6,12 @@
             e.preventDefault();
             // alert("CLICKED--->>")
             let formData = new FormData($(this)[0]);
-            // formData.append('age', $('#id_age').val())
+            formData.append('code', $('#id_code').val())
 
             let token = '{{csrf_token}}';
             $.ajax({
                 type: 'POST',
-                url: '{% url "configurations:add-doctor-names" %}',
+                url: '{% url "configurations:add-specialization" %}',
                 headers: { 'X-CSRFToken': token },
                 cache: false,
                 contentType: false,
@@ -32,13 +32,13 @@
                             showConfirmButton: false,
                             timer: 9000
                         });
-                        let doctorNameId = data.doctor_name_id;
+                        let specializaionId = data.specialization_id;
                         if (data['type'] == 'error') {
                             toastr.error(data['msg']);
                         } else if (data['type'] == 'success') {
                             toastr.success(data['msg']);
                             // setInterval('location.reload()', 20000);
-                            window.location.href = ("{% url 'configurations:edit-doctor-names' id=0 %}").replace('0', doctorNameId);
+                            window.location.href = ("{% url 'configurations:edit-specialization' id=0 %}").replace('0', specializaionId);
                         } else if (data['type'] == 'info') {
                             toastr.info(data['msg']);
                         }

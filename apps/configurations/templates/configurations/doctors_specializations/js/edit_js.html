@@ -2,18 +2,18 @@
 <script>
 
     $(function () { // Is equivilant To $( document ).ready(function(){})
-        $(document).on('submit', '.edit-doctor-form', function (e) {
+        $(document).on('submit', '.edit-form', function (e) {
             e.preventDefault();
-            // let url = window.location.href;//$(this).attr('href');
-            // console.log('URL--->>>', url)
+            let url = window.location.href;//$(this).attr('href');
+            console.log('URL--->>>', url, '///////->', $(this).attr('href'))
             let formData = new FormData($(this)[0]);
-            // formData.append('age', $('#id_age').val())
+            formData.append('code', $('#id_code').val())
 
             let token = '{{csrf_token}}';
-            let doctorId = '{{doctor_id}}'
+            let specializationId = '{{specialization_id}}'
             $.ajax({
                 type: 'POST',
-                url: '{% url "configurations:edit-doctor-names" id=0 %}'.replace('0', doctorId),
+                url: '{% url "configurations:edit-specialization" id=0 %}'.replace('0', specializationId),
                 headers: { 'X-CSRFToken': token },
                 cache: false,
                 contentType: false,
@@ -38,7 +38,8 @@
                         } else if (data['type'] == 'success') {
                             toastr.success(data['msg']);
                             history.go(0);
-
+                            // window.location.href = ;
+                            // setInterval(url, 5000)
                         } else if (data['type'] == 'info') {
                             toastr.info(data['msg']);
                         }

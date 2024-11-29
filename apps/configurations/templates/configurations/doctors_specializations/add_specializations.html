@@ -1,0 +1,117 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-xxl">
+        {% include 'layout/partials/includes/page-nav.html' %}
+    </div>
+</div>
+<!-- Basic Layout & Basic with Icons -->
+<div class="row">
+
+    <div class="col-xxl">
+        <div class="card mb-4">
+            <!-- MY_SETTING={{MY_SETTING.ROOT_URLCONF}} ==>
+            {{MY_SETTING.THEME_VARIABLES.creator_name}} ==> {{MY_SETTING.THEME_LAYOUT_DIR}} -->
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Add Specializaion for Doctors</h5>
+                <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="{{specializaion.name}}">
+                    <i class="badge rounded-pill bg-primary">{{specializaion.name}}</i>
+                    <i class="badge rounded-pill bg-primary-subtle text-danger">{{specializaion.id}}</i>
+                </small>
+            </div>
+            <div class="card-body">
+
+                <form method="post" class="add-form">
+                    {% csrf_token %}
+
+                    <div class="row">
+
+                        <div class="col-sm-12">
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6 col-form-label" for="id_code">
+                                        {{form.code.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        {% render_field form.code class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-6">
+                                    <label class="col-sm-6 col-form-label" for="id_name">
+                                        {{form.name.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="col-sm-6 col-form-label" for="id_name_ar">
+                                        {{form.name_ar.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {% render_field form.name class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {% render_field form.name_ar class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_description">
+                                    {{form.description.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field form.description class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+
+                            <div class="col-6" hidden>
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- ./End Left Inputs -->
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block page_js %}
+
+{% include 'configurations/doctors_specializations/js/js.html' %}
+
+{% endblock page_js %}

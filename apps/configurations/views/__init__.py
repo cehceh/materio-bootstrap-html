@@ -3,3 +3,5 @@
 from .departments import *
 
 from .doctors import *
+
+from .specializations import *

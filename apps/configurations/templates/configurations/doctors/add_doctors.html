@@ -20,20 +20,36 @@
             <!-- MY_SETTING={{MY_SETTING.ROOT_URLCONF}} ==>
             {{MY_SETTING.THEME_VARIABLES.creator_name}} ==> {{MY_SETTING.THEME_LAYOUT_DIR}} -->
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Add New Doctor</h5> 
-                <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="{{doctor.name}}">
+                <h5 class="mb-0">Add New Doctor</h5>
+                <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="{{doctor.name}}">
                     <i class="badge rounded-pill bg-primary">{{doctor.name}}</i>
                     <i class="badge rounded-pill bg-primary-subtle text-danger">{{doctor.id}}</i>
                 </small>
             </div>
             <div class="card-body">
-                
-                <form method="post" class="add-doctor-form">
+
+                <form method="post" class="add-form">
                     {% csrf_token %}
 
                     <div class="row">
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6 col-form-label" for="id_code">
+                                        {{form.code.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        {% render_field form.code class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <div class="row mb-3">
                                 <div class="col-sm-12">
@@ -44,7 +60,7 @@
 
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                    {% render_field form.name class="form-control form-control-sm" placeholder="Doctor Name" %}
+                                        {% render_field form.name class="form-control form-control-sm" %}
                                     </div>
                                 </div>
 
@@ -55,7 +71,7 @@
                                     {{form.description.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field form.description class="form-control form-control-sm" placeholder="Description" %}
+                                    {% render_field form.description class="form-control form-control-sm" %}
                                 </div>
                             </div>
 
@@ -70,21 +86,84 @@
 
                         </div>
                         <!-- ./End Left Inputs -->
+
+                        <div class="col-sm-6">
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_specializations">
+                                    {{form.specializations.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field form.specializations %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6 col-form-label" for="id_mobile1">
+                                        {{form.mobile1.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        {% render_field form.mobile1 class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_mobile2">
+                                    {{form.mobile2.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field form.mobile2 class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-6 col-form-label" for="id_phone1">
+                                        {{form.phone1.label_tag}}
+                                    </label>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        {% render_field form.phone1 class="form-control form-control-sm" %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-12 col-form-label" for="id_phone2">
+                                    {{form.phone2.label_tag}}
+                                </label>
+                                <div class="col-sm-12">
+                                    {% render_field form.phone2 class="form-control form-control-sm" %}
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- ./End Left Inputs -->
+
                     </div>
 
                 </form>
             </div>
 
         </div>
-    </div>   
+    </div>
 
 </div>
 
 {% endblock %}
 
 
-{% block page_js %} 
+{% block page_js %}
 
-    {% include 'configurations/doctors/js/js.html' %}
+{% include 'configurations/doctors/js/js.html' %}
 
-{% endblock page_js %} 
+{% endblock page_js %}

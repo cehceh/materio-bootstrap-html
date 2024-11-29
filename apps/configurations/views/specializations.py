@@ -4,8 +4,9 @@ from django.db.models import Q, Count
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 
-from ..models import DoctorNames  # noqa: F811
-from ..forms import DoctorNamesForm
+# from apps.configurations.models.doctors_models import
+from ..models import DoctorNames, DoctorSpecializations  # noqa: F811
+from ..forms import DoctorSpecializationsForm
 
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView
@@ -20,11 +21,11 @@ Refer to tables/urls.py file for more pages.
 """
 
 
-class DoctorView(CreateView):  # (TemplateView):
-    template_name = "configurations/doctors/add_doctors.html"
-    form_class = DoctorNamesForm
-    queryset = DoctorNames.objects.only()[:100]
-    success_url = reverse_lazy("configurations:add-doctor-names")
+class SpecializationView(CreateView):  # (TemplateView):
+    template_name = "configurations/doctors_specializations/add_specializations.html"
+    form_class = DoctorSpecializationsForm
+    queryset = DoctorSpecializations.objects.only()[:100]
+    success_url = reverse_lazy("configurations:add-specializations")
 
     def post(self, request, *args, **kwargs):
         """
@@ -37,16 +38,12 @@ class DoctorView(CreateView):  # (TemplateView):
             data = {}
             print("I am here in form_valid")
 
-            save_form = form.save(commit=False)
-            # save_form.age = request.POST.get("age")
+            save_form = form.save()  # commit=False
             save_form.save()
-            specializations = form.cleaned_data.get("specializations")
+            # save_form.code = "spec-" + str(save_form.id)
 
-            if specializations:
-                save_form.specializations.set(specializations)
-
-            data["doctor_name_id"] = save_form.id
-            data["msg"] = "Doctor (" + save_form.name + ") saved done"
+            data["specialization_id"] = save_form.id
+            data["msg"] = "Specialization (" + save_form.name + ") saved done"
             data["type"] = "success"
             return JsonResponse(data)
         else:
@@ -74,17 +71,19 @@ class DoctorView(CreateView):  # (TemplateView):
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         title = ""  # noqa: F841
         # context |= {"var": "Amr Amer"}
-        lastid = DoctorNames.objects.values("id").last()
-        doctorid = lastid["id"] + 1 if lastid else 1
-        context["lastid"] = doctorid
-        doctor_count = DoctorNames.objects.aggregate(count=Count("id") + 1)
-        context["doctor_count"] = str(doctor_count["count"])
+        lastid = DoctorSpecializations.objects.values("id").last()
+        specialization_id = lastid["id"] + 1 if lastid else 1
+        context["lastid"] = specialization_id
+        specialization_count = DoctorSpecializations.objects.aggregate(
+            count=Count("id") + 1
+        )
+        context["specialization_count"] = str(specialization_count["count"])
         # if self.request.path == "/patients/add/new/patient/":
         #     title = "Add New Patient"
         # elif self.request.path == "/patients/reservation/area/":
         #     title = "Reservations"
 
-        context["title"] = "Add New Doctor"
+        context["title"] = "Add New Specialization"
         context["form"] = self.form_class
         # context["savepatform"] = form.form_valid
         context["qs"] = self.get_queryset()
@@ -93,14 +92,14 @@ class DoctorView(CreateView):  # (TemplateView):
         return context | data
 
 
-class DoctorUpdateView(UpdateView):
-    model = DoctorNames
-    template_name = "configurations/doctors/edit_doctors.html"
+class SpecializationUpdateView(UpdateView):
+    model = DoctorSpecializations
+    template_name = "configurations/doctors_specializations/edit_specializations.html"
     pk_url_kwarg = "id"
-    queryset = DoctorNames.objects.all()
-    form_class = DoctorNamesForm
-    template_name_suffix = "_update_form"
-    success_url = reverse_lazy("configurations:edit-doctor-names")
+    queryset = DoctorSpecializations.objects.all()
+    form_class = DoctorSpecializationsForm
+    # template_name_suffix = "_update_form"
+    # success_url = reverse_lazy("configurations:edit-specialization")
 
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
@@ -131,22 +130,17 @@ class DoctorUpdateView(UpdateView):
             data = {}
             print("I am here in form_valid-IN-POST()>>")
 
-            save_form = form.save(commit=False)
-            save_form.code = "doctor-" + str(kwargs["id"])
+            save_form = form.save()  # commit=False
+            # save_form.updated = request.user
             if form.has_changed():
                 save_form.save()
-                specializations = form.cleaned_data.get("specializations")
 
-                if specializations:
-                    save_form.specializations.set(
-                        specializations
-                    )  # Update many-to-many relationship
             else:
                 data["msg"] = "No changes made ..."
                 data["type"] = "info"
                 return JsonResponse(data, safe=False)
 
-            data["msg"] = "Doctor (" + save_form.name + ") updated done"
+            data["msg"] = "Specialization (" + save_form.name + ") updated done"
             data["type"] = "success"
             return JsonResponse(data)
         else:
@@ -194,23 +188,30 @@ class DoctorUpdateView(UpdateView):
         context["qr_data"] = qr_data
         # context["qr_options"] = qr_options
 
-        context["doctor_id"] = self.get_object().id
+        context["specialization_id"] = self.get_object().id
         context["form"] = self.form_class(instance=self.get_object())
-        context["doctor"] = self.get_object()
-        print("QUERYSET>>>", self.get_queryset())
+        context["specialization"] = self.get_object()
+        print(
+            "QUERYSET>>>",
+            self.get_queryset(),
+            ">>>>",
+        )
+        for f in self.get_form():
+            print("ERRORS>>>>", f.name, f.errors)
+
         data = {}
-        data["title"] = "Edit doctor: (" + str(self.get_object().name) + ")"
+        data["title"] = "Edit specialization: (" + str(self.get_object().name) + ")"
         return context | data
 
 
-class DoctorListView(ListView):
+class SpecializationListView(ListView):
     """
     for patient-table, patient-cards and search patients in patient cards
     """
 
-    model = DoctorNames
-    template_name = "configurations/doctors/doctors_table.html"
-    queryset = DoctorNames.objects.only().order_by("-id")  # [:100]
+    model = DoctorSpecializations
+    template_name = "configurations/doctors_specializations/specializations_table.html"
+    queryset = DoctorSpecializations.objects.only().order_by("-id")  # [:100]
 
     # def get(self, request, *args, **kwargs):
     #     patient_search = request.GET.get("pat")
