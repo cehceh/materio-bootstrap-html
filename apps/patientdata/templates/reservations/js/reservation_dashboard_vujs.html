@@ -1,0 +1,151 @@
+<script type="module">
+
+    import { createApp, ref, computed } from '{% static "js/vue.esm-browser.js" %}';
+    // const { createApp, ref, computed } = Vue;
+    const reservationDashboard = createApp({
+        delimiters: ["[[", "]]"],
+        setup() {
+            const msg = 'What is going on Table-PATIENT-PAGE ?';
+            const title = 'Patient-TITLE ';
+            return {
+                msg, title,
+            }
+        },
+        data() {
+            return {
+                showDiv: false,
+                showTable: false,
+                showHour: false,
+                showDay: false,
+                showWeek: false,
+                showMonth: false,
+                showYear: false,
+                // inActive: false,
+                // showReport: false,
+            };
+        },
+        computed: {
+            passingVar() {
+
+                axios.get(
+                    `{% url "patientdata:reservation-dashboard" %}`,
+                    {
+                        'show_hour': this.showHour,
+                        'show_day': this.showDay,
+                        'show_week': this.showWeek,
+
+                    },
+                ).then(response => {
+                    console.log('done-var')
+                }).catch(error => {
+                    console.log('error occurs')
+                })
+                return "HOUR>", this.showHour, "DAY>", this.showDay
+            }
+
+        },
+        methods: {
+            formatDate(d) {
+                let yyyy = d.getFullYear().toString();
+                let mm = (d.getMonth() + 101).toString().slice(-2);
+                let dd = (d.getDate() + 100).toString().slice(-2);
+                let hh = (d.getHours() + 100).toString().slice(-2);
+                let min = (d.getMinutes() + 100).toString().slice(-2);
+                let ss = (d.getSeconds() + 100).toString().slice(-2);
+
+                let meridiem = "AM";
+                if (parseInt(hh) >= 12) {
+                    meridiem = "PM";
+                    if (parseInt(hh) > 12) {
+                        hh = (parseInt(hh) - 12).toString();
+                    }
+                }
+                return yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss + ' ' + meridiem;
+            },
+            passingVars() {
+
+                axios.get(
+                    `{% url "patientdata:reservation-dashboard" %}`,
+                    {
+                        'show_hour': this.showHour,
+                        'show_day': this.showDay,
+                        'show_week': this.showWeek,
+
+                    },
+                ).then(response => {
+                    console.log('VARS')
+                }).catch(error => {
+                    console.log('error occurs')
+                })
+                return "HOUR>", this.showHour, "DAY>", this.showDay
+            }
+
+        },
+        mounted() {
+            let me = this;
+            // alert("Hiiiiiiii", me.passingVars())
+            // me.passingVar
+            console.log('PASSING-VAR:::', me.passingVar)
+            $(document).ready(function () {
+                //     $(document).on('click', '.show-log, .show-deleted, .in-active, .is-active, .show-main', function (e) {
+                //         console.log('sHOWLOGGGG', me.showLog)
+                //         console.log('sHOWDELETED', me.showDeleted)
+                //         //$('#main-permission').DataTable().destroy();
+                //         let type = true;
+                //         if (me.showLog == type) {
+                //             // If showLog is true, set it to false, showDeleted to false, and inActive to false
+                //             // me.showLog = false;
+                //             me.showActive = false;
+                //             me.showDeleted = false;
+                //             me.showMain = false;
+                //             me.inActive = false;
+                //             console.log("SHOW LOG TRUE", me.showLog);
+                //         } else if (me.showDeleted == type) {
+                //             // If showDeleted is true, set it to false, showLog to false, and inActive to false
+                //             me.showLog = false;
+                //             me.showActive = false;
+                //             // me.showDeleted = false;
+                //             me.showMain = false;
+                //             me.inActive = false;
+                //             console.log("SHOW LOG FALSEE", me.showLog);
+                //         } else if (me.inActive == type) {
+                //             // If inActive is true, set showLog and showDeleted to false
+                //             me.showLog = false;
+                //             me.showActive = false;
+                //             me.showDeleted = false;
+                //             me.showMain = false;
+
+                //             console.log("inActive TRUE");
+                //         } else if (me.showActive === true) {
+                //             me.showLog = false;
+                //             me.inActive = false;
+                //             me.showDeleted = false;
+                //             me.showMain = false;
+                //             console.log("ACTIVE TRUE")
+
+                //         } else if (me.showMain == true) {
+                //             me.showLog = false;
+                //             me.inActive = false;
+                //             me.showDeleted = false;
+                //             me.showActive = false;
+                //             console.log("Main TRUE")
+                //         }
+
+                //         $.ajax({
+                //             type: 'GET',
+                //             url: '{% url "patientdata:reservation-dashboard" %}',
+                //             data: {
+                //                 'show_hour': me.showHour,
+
+                //             },
+                //             success: function (data) { },
+                //             error: function (error) { }
+                //         });
+                //         e.preventDefault();
+                //     });
+            });
+        },
+    });
+    reservationDashboard.mount("#reservation-dashboard")
+
+</script>

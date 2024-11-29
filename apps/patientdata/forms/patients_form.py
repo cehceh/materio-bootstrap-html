@@ -17,70 +17,70 @@ def validate_none(value):
 # you will write your class forms to be appear to the users
 class PatientsForm(forms.ModelForm):
 
-    name = forms.CharField(
-        required=True,
-        widget=forms.TextInput(),
-    )
-    address = forms.CharField(
-        required=False,
-        # validators=[validate_none("")],
-        widget=forms.TextInput(),
-    )
-    birth_date = forms.DateField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "form-control",
-                # 'id': 'birth-date',
-                # "type": "date",
-                # "name": "dob",
-                # "value": date.today(),
-                # 'placeholder': date.today(),
-                # 'readonly': 'readonly', # to make an input disabled
-            }
-        ),
-    )
-    cardid = forms.CharField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "form-control",
-                # "id": "cardid",
-                # 'type': 'number',
-            }
-        ),
-    )
-    phone = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "form-control",
-                # "id": "phone",
-            }
-        ),
-    )
-    mobile = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "form-control",
-                # "id": "mobile",
-            }
-        ),
-    )
+    # name = forms.CharField(
+    #     required=True,
+    #     widget=forms.TextInput(),
+    # )
+    # address = forms.CharField(
+    #     required=False,
+    #     # validators=[validate_none("")],
+    #     widget=forms.TextInput(),
+    # )
+    # birth_date = forms.DateField(
+    #     required=True,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "form-control",
+    #             # 'id': 'birth-date',
+    #             # "type": "date",
+    #             # "name": "dob",
+    #             # "value": date.today(),
+    #             # 'placeholder': date.today(),
+    #             # 'readonly': 'readonly', # to make an input disabled
+    #         }
+    #     ),
+    # )
+    # cardid = forms.CharField(
+    #     required=True,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "form-control",
+    #             # "id": "cardid",
+    #             # 'type': 'number',
+    #         }
+    #     ),
+    # )
+    # phone = forms.CharField(
+    #     required=False,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "form-control",
+    #             # "id": "phone",
+    #         }
+    #     ),
+    # )
+    # mobile = forms.CharField(
+    #     required=False,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "form-control",
+    #             # "id": "mobile",
+    #         }
+    #     ),
+    # )
 
-    age = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-                # "class": "form-control",
-                # 'id': 'age',
-                # "type": "text",
-                # 'name': 'age',
-                # "readonly": "readonly",  # to make an input disabled
-            }
-        ),
-    )
+    # age = forms.CharField(
+    #     required=False,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             # "class": "form-control",
+    #             # 'id': 'age',
+    #             # "type": "text",
+    #             # 'name': 'age',
+    #             # "readonly": "readonly",  # to make an input disabled
+    #         }
+    #     ),
+    # )
 
     # barcode = forms.CharField(
     #     required=True,
@@ -129,8 +129,29 @@ class PatientsForm(forms.ModelForm):
             "mobile",
             "cardid",
         ]
-        # "__all__"
-        # fields = ('__str__', 'address', )
+        widgets = {
+            "name": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-sm",
+                    "placeholder": "Patient Name",
+                }
+            ),
+            "address": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-sm",
+                    "placeholder": "Address",
+                }
+            ),
+            "birth_date": forms.DateInput(
+                attrs={"class": "form-control form-control-sm dob", "type": "date"}
+            ),
+            "age": forms.TextInput(
+                attrs={
+                    "class": "form-control form-control-sm age",
+                    # "readonly": "readonly",
+                }
+            ),
+        }
 
     def clean(self) -> dict[str, Any]:
         print("CLEANED-DATA::::", super().clean())

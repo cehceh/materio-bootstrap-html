@@ -40,8 +40,13 @@ class PatientReservation(BasicData):
         related_query_name="patient",
         on_delete=models.CASCADE,
     )
+    clinic_start_date = models.DateTimeField(default=now, blank=True, null=True)
+    clinic_end_date = models.DateTimeField(default=now, blank=True, null=True)
 
     start_date = models.DateTimeField(default=now, blank=True, null=True)
+    clinic_start_date = models.DecimalField(
+        decimal_places=2, max_digits=3, default=0, blank=True, null=True
+    )
     end_date = models.DateTimeField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     # phone = models.CharField(max_length=150, blank=True, null=True)

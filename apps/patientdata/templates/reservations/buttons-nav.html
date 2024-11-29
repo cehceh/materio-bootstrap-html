@@ -1,0 +1,63 @@
+<nav class="layout-navbar {{container_class}} navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+    id="layout-navbar">
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+            <!-- BUTTONS -->
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button"
+                    :class="[[!showHour ? 'btn rounded-pill btn-outline-secondary btn-xs':'btn rounded-pill btn-secondary btn-xs']]"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Hour"
+                    @click.prevent="showHour=true, showDay=false, showWeek=false, showMonth=false, showYear=false, passingVars()">
+                    <!-- <i class="mdi mdi-account-plus mdi-1px lh-0"></i> -->
+                    Hour
+                    <!--  == {{show_hour}} -->
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button"
+                    :class="[[!showDay ? 'btn rounded-pill btn-outline-primary btn-xs': 'btn rounded-pill btn-primary btn-xs']]"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Day"
+                    @click.prevent="showHour=false, showDay=true, showWeek=false, showMonth=false, showYear=false, passingVar">
+                    <!-- <i class="mdi mdi-account-plus mdi-1px lh-0"></i> -->
+                    Day
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button"
+                    :class="[[!showWeek ? 'btn rounded-pill btn-outline-info btn-xs':'btn rounded-pill btn-info btn-xs']]"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Week"
+                    @click="showHour=false, showDay=false, showWeek=true, showMonth=false, showYear=false">
+                    Week
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button"
+                    :class="[[!showMonth ? 'btn rounded-pill btn-outline-success btn-xs':'btn rounded-pill btn-success btn-xs']]"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Month"
+                    @click="showHour=false, showDay=false, showWeek=false, showMonth=true, showYear=false">
+                    Month
+                </a>
+            </div>
+            &nbsp;
+
+            <div class="nav-item d-flex align-items-center">
+                <a href="#" type="button"
+                    :class="[[!showYear ? 'btn rounded-pill btn-outline-danger btn-xs':'btn rounded-pill btn-danger btn-xs']]"
+                    data-bs-toggle="tooltip" data-bs-placement="top" title="Year"
+                    @click="showHour=false, showDay=false, showWeek=false, showMonth=false, showYear=true">
+                    Year
+                </a>
+            </div>
+            &nbsp;
+
+        </div>
+        <!-- /Search -->
+    </div>
+</nav>

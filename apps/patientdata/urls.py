@@ -14,13 +14,6 @@ urlpatterns = [
         name="save-patient",
     ),
     path(
-        "reservation/area/",
-        views.PatientView.as_view(
-            template_name="reservations/reservations.html"
-        ),  # (template_name="save_patient.html"),
-        name="reservations",
-    ),
-    path(
         "list/all/patients/",
         views.PatientListView.as_view(),  # (template_name="save_patient.html"),
         name="patients-cards",
@@ -43,6 +36,21 @@ urlpatterns = [
             template_name="patients_table.html"
         ),  # (template_name="save_patient.html"),
         name="all-patients",
+    ),
+    ## --------------- RESERVATION ------------------
+    path(
+        "reservation/area/",
+        views.PatientView.as_view(
+            template_name="reservations/reservations.html"
+        ),  # (template_name="save_patient.html"),
+        name="reservations",
+    ),
+    path(
+        "reservation/dashboard/",
+        views.ReservationsView.as_view(
+            template_name="reservations/reservation_dashboard.html"
+        ),  # (template_name="save_patient.html"),
+        name="reservation-dashboard",
     ),
     # * for patient
     # path("create/patient/", save_patient, name="save_patient"),

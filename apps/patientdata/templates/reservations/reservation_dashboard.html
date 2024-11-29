@@ -1,0 +1,80 @@
+{% extends layout_path %}
+{% load static %}
+{% load qr_code %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<!-- <div class="row">
+
+</div> -->
+<div class="row" id="reservation-dashboard">
+    <div class="col-md-12 col-xl-12">
+        {% include './buttons-nav.html' %}
+    </div>
+
+    <div class="row" v-if="showHour">
+
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-primary text-white mb-3">
+                <div class="card-header text-white">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title text-white">Hour title</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="javascript:void(0)" class="card-link btn btn-dark mb-3">Go</a>
+                    <a href="javascript:void(0)" class="card-link btn btn-success mb-3">Go</a>
+                    <a href="javascript:void(0)" class="card-link btn btn-secondary mb-3">Go</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOR DAY RESERVATION -->
+    <div class="row" v-if="showDay">
+        {% include './includes/day.html' %}
+    </div>
+
+    <!--  FOR WEEK RESERVATION -->
+    <div class="row" v-if="showWeek">
+        {% include './includes/week.html' %}
+    </div>
+
+    <!--  FOR MONTH RESERVATION -->
+    <div class="row" v-if="showMonth">
+        {% include './includes/month.html' %}
+    </div>
+
+    <div class="row" v-if="showYear">
+
+        <div class="col-md-6 col-xl-4">
+            <div class="card shadow-3 border border-2 border-danger mb-3">
+                <div class="card-header">Header</div>
+                <div class="card-body">
+                    <h5 class="card-title">Year title</h5>
+                    <p class="card-text">
+                        Some quick example text to build on the card title and make up.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block page_js %}
+
+{% include './js/reservation_dashboard_vujs.html' %}
+
+{% endblock page_js %}

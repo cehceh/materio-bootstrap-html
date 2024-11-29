@@ -29,6 +29,7 @@ class PatientView(CreateView):  # (TemplateView):
     form_class = PatientsForm
     queryset = Patients.objects.only()[:100]
     success_url = reverse_lazy("patientdata:save-patient")
+    patient_table_url = "/patients/list/all/patients/from/patient-view-class/"
 
     def post(self, request, *args, **kwargs):
         """
@@ -71,6 +72,7 @@ class PatientView(CreateView):  # (TemplateView):
     def get_context_data(self, **kwargs):
         # A function to init the global layout. It is defined in web_project/__init__.py file
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
+        data = {"var": "Amr Ali Amer"}
         title = ""
         # context |= {"var": "Amr Amer"}
         lastid = Patients.objects.values("id").last()
@@ -78,9 +80,12 @@ class PatientView(CreateView):  # (TemplateView):
         context["lastid"] = patid
         patient_count = Patients.objects.aggregate(count=Count("id") + 1)
         context["patient_count"] = str(patient_count["count"])
+        path = self.request.path
         if self.request.path == "/patients/add/new/patient/":
             title = "Add New Patient"
-        elif self.request.path == "/patients/reservation/area/":
+        elif path == self.patient_table_url:
+            title = "All Patients"
+        elif path == "/patients/reservation/area/":
             title = "Reservations"
 
         context["title"] = title
@@ -88,7 +93,6 @@ class PatientView(CreateView):  # (TemplateView):
         # context["savepatform"] = form.form_valid
         context["qs"] = self.get_queryset()
 
-        data = {"var": "Amr Ali Amer"}
         return context | data
 
 
@@ -302,8 +306,8 @@ class PatientListView(ListView):
         ]
 
         print()
-
-        if self.request.path == "/patients/list/all/patients/":
+        path = self.request.path
+        if path == "/patients/list/all/patients/":
             data["patient_id"] = 0
             data["title"] = "All Patients Cards"
         else:

@@ -29,17 +29,18 @@
             <!-- MY_SETTING={{MY_SETTING.ROOT_URLCONF}} ==>
             {{MY_SETTING.THEME_VARIABLES.creator_name}} ==> {{MY_SETTING.THEME_LAYOUT_DIR}} -->
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="mb-0">Update Patient Data</h5> 
-                    <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top" title="{{patient.name}}">
-                        <i class="badge rounded-pill bg-primary">{{patient.name}}</i>
-                        <i class="badge rounded-pill bg-primary-subtle text-danger">{{patient.id}}</i>
-                    </small>
-                    <!-- <small class="text-muted float-end">
+                <h5 class="mb-0">Update Patient Data</h5>
+                <small class="text-muted float-end" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="{{patient.name}}">
+                    <i class="badge rounded-pill bg-primary">{{patient.name}}</i>
+                    <i class="badge rounded-pill bg-primary-subtle text-danger">{{patient.id}}</i>
+                </small>
+                <!-- <small class="text-muted float-end">
                         
                     </small> -->
             </div>
             <div class="card-body">
-                
+
                 <form method="post" class="edit-patient-form">
                     {% csrf_token %}
 
@@ -48,13 +49,13 @@
                         <div class="col-sm-6">
                             <div class="row mb-3">
                                 <div class="col-sm-12">
-                                <label class="col-sm-6 col-form-label" for="id_name">
-                                    {{savepatform.name.label_tag}}
-                                </label>
+                                    <label class="col-sm-6 col-form-label" for="id_name">
+                                        {{savepatform.name.label_tag}}
+                                    </label>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                    {% render_field savepatform.name class="form-control form-control-sm" placeholder="Patient Name" %}
+                                        {% render_field savepatform.name class="form-control form-control-sm" %}
                                     </div>
                                 </div>
                             </div>
@@ -64,16 +65,16 @@
                                     {{savepatform.address.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field savepatform.address class="form-control form-control-sm" placeholder="Address" %}
+                                    {% render_field savepatform.address class="form-control form-control-sm" %}
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-12 col-form-label" for="id_birth_date"> 
+                                <label class="col-sm-12 col-form-label" for="id_birth_date">
                                     {{savepatform.birth_date.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field savepatform.birth_date class="form-control form-control-sm dob" type="date" %}
+                                    {% render_field savepatform.birth_date class="form-control form-control-sm dob" %}
                                 </div>
                             </div>
 
@@ -82,12 +83,27 @@
                                     {{savepatform.age.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field savepatform.age class="form-control form-control-sm age" readonly="readonly" %}
-                                    
+                                    {% render_field savepatform.age class="form-control form-control-sm age" %}
+
                                 </div>
                             </div>
 
                             <div class="row mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <label class="col-sm-4 col-form-label">
+                                            Barcode for patient :
+                                        </label>
+                                        <div class="col-sm-8">
+                                            {% qr_from_text qr_data size=5 border=6 error_correction='L' %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="row mb-3">
                                 <div class="col-sm-2">
                                     {% qr_from_text qr_data size=4 border=6 error_correction='L' %}
                                 </div>
@@ -96,8 +112,7 @@
                                         <image class="brand-image elevation-6" src="{{patient.barimg.url}}" width="300" height="150" />
                                     {% endif %}
                                 </div>
-                            </div>
-
+                            </div> -->
 
                         </div>
                         <!-- ./End Left Inputs -->
@@ -112,18 +127,18 @@
                                     {% render_field savepatform.cardid class="form-control form-control-sm" %}
                                 </div>
                             </div>
-        
+
                             <div class="row mb-3">
                                 <label class="col-sm-12 col-form-label" for="id_phone">
                                     {{savepatform.phone.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field savepatform.phone class="form-control form-control-sm" placeholder="phone" %}
+                                    {% render_field savepatform.phone class="form-control form-control-sm" %}
                                 </div>
                             </div>
-        
+
                             <div class="row mb-3">
-                                <label class="col-sm-12 col-form-label" for="id_mobile"> 
+                                <label class="col-sm-12 col-form-label" for="id_mobile">
                                     {{savepatform.mobile.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
@@ -131,18 +146,18 @@
                                     {% render_field savepatform.mobile class="form-control form-control-sm" %}
                                 </div>
                             </div>
-        
+
                             <div class="row mb-3">
                                 <label class="col-sm-12 col-form-label" for="id_barcode">
                                     {{savepatform.barcode.label_tag}}
                                 </label>
                                 <div class="col-sm-12">
-                                    {% render_field savepatform.barcode class="form-control form-control-sm" %} 
+                                    {% render_field savepatform.barcode class="form-control form-control-sm" %}
                                     <!-- ::value="this.id + this.sign + this.dob + this.sign + this.cardid" -->
                                 </div>
                             </div>
 
-                            
+
                             <!-- <div class="row mb-3">
                                 <div class="col-sm-6">
                                     {% if patient.barimg %}
@@ -150,9 +165,9 @@
                                     {% endif %}
                                 </div>
                             </div> -->
-                            
+
                         </div>
-                        
+
                         <div class="col-12">
                             <div class="row mb-3">
                                 <label class="col-sm-12 col-form-label" for="id_barurl">
@@ -168,7 +183,7 @@
                         <!-- <div class="col-4">
                             {% qr_from_text qr_data size=4 border=6 error_correction='L' %}
                         </div> -->
-                        
+
                         <!-- <div class="col-4">
 
                             {% if patient.barimg %}
@@ -193,15 +208,15 @@
             </div>
 
         </div>
-    </div>   
+    </div>
 
 </div>
 
 {% endblock %}
 
 
-{% block page_js %} 
+{% block page_js %}
 
-    {% include 'js/edit_js.html' %}
+{% include 'js/edit_js.html' %}
 
-{% endblock page_js %} 
+{% endblock page_js %}

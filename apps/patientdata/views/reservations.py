@@ -10,8 +10,11 @@ from ..models import Patients, PatientReservation
 
 
 from django.views.generic.edit import CreateView, UpdateView
-
 from web_project import TemplateLayout
+
+import logging
+
+logger = logging.getLogger("myapp")
 
 
 class ReservationsView(CreateView):  # (TemplateView):
@@ -19,6 +22,7 @@ class ReservationsView(CreateView):  # (TemplateView):
     form_class = ReservationsForm
     queryset = PatientReservation.objects.only()[:100]
     success_url = reverse_lazy("patientdata:reservations")
+    reservation_dashboard_url = reverse_lazy("patientdata:reservation-dashboard")
 
     def post(self, request, *args, **kwargs):
         """
@@ -68,17 +72,31 @@ class ReservationsView(CreateView):  # (TemplateView):
         context["lastid"] = patid
         patient_count = Patients.objects.aggregate(count=Count("id") + 1)
         context["patient_count"] = str(patient_count["count"])
-        if self.request.path == "/patients/add/new/patient/":
-            title = "Add New Patient"
+        if (
+            self.request.path == self.reservation_dashboard_url
+        ):  # "/patients/reservation/dashboard/":
+            title = "Reservstion Dashboard"
+            # print(self.reservation_dashboard_url, "<<===")
         elif self.request.path == "/patients/reservation/area/":
             title = "Reservations"
 
+        ##
+        logger.debug("Debug message")
+        logger.info("Info message")
+        logger.warning("Warning message")
+        logger.error("Error message")
+        logger.critical("Critical message")
+
         context["title"] = title
-        context["savepatform"] = self.form_class
+        # context["savepatform"] = self.form_class
         # context["savepatform"] = form.form_valid
         context["qs"] = self.get_queryset()
-
-        data = {"var": "Amr Ali Amer"}
+        context["reservation_dashboard_url"] = self.reservation_dashboard_url
+        data = {
+            "var": "Amr Ali Amer",
+            "show_hour": self.request.GET.get("show_hour"),
+            "show_day": self.request.GET.get("show_day"),
+        }
         return context | data
 
 
