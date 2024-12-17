@@ -61,12 +61,55 @@ class ReservationsView(CreateView):  # (TemplateView):
             return JsonResponse(data)
         return self.render_to_response(self.get_context_data(form=form))
 
+    def get_queryset(self):
+        data = {}
+        msg = ""
+        if self.queryset is not None:
+            queryset = self.queryset
+            if isinstance(queryset, QuerySet):
+                queryset = queryset.all()
+        elif self.model is not None:
+            queryset = self.model._default_manager.all()
+        else:
+            # raise ImproperlyConfigured
+            msg = (
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {"cls": self.__class__.__name__}
+            )
+            data["msg"] = msg
+            data["type"] = "info"
+            return JsonResponse(data)
+
+        return self.queryset  # .all()
+
     # Predefined function
     def get_context_data(self, **kwargs):
         # A function to init the global layout. It is defined in web_project/__init__.py file
         context = TemplateLayout.init(self, super().get_context_data(**kwargs))
         title = ""
-        # context |= {"var": "Amr Amer"}
+        # Get all field names dynamically
+        # field_names = [f"{field.name}" for field in PatientReservation._meta.fields]
+        patient_reservation = PatientReservation.objects.values(
+            "id",
+            "user",
+            "active",
+            "created_at",
+            "updated_at",
+            "is_deleted",
+            "deleted_at",
+            "patient",
+            "patient__name",
+            "clinic_end_date",
+            "start_date",
+            "clinic_start_date",
+            "end_date",
+            "notes",
+            "reservation_count",
+        )
+        # (*field_names)
+
+        # print("FIELDS-NAMES::>>>", field_names)
         lastid = Patients.objects.values("id").last()
         patid = lastid["id"] + 1 if lastid else 1
         context["lastid"] = patid
@@ -76,24 +119,46 @@ class ReservationsView(CreateView):  # (TemplateView):
             self.request.path == self.reservation_dashboard_url
         ):  # "/patients/reservation/dashboard/":
             title = "Reservstion Dashboard"
+            # print("self.get_queryset()>>>>", self.get_queryset())
+
             # print(self.reservation_dashboard_url, "<<===")
         elif self.request.path == "/patients/reservation/area/":
             title = "Reservations"
 
         ##
-        logger.debug("Debug message")
-        logger.info("Info message")
+        # logger.debug("Debug message")
+        # logger.info("Info message")
         logger.warning("Warning message")
         logger.error("Error message")
         logger.critical("Critical message")
 
         context["title"] = title
+        context["qs"] = patient_reservation
+        # [obj["patient"] for obj in patient_reservation]  # self.get_queryset()
+        context["new_qs"] = PatientReservation.objects.values(
+            "id",  # "patient__name", "start_date",
+            # "user",
+            "active",
+            "created_at",
+            "updated_at",
+            "is_deleted",
+            "deleted_at",
+            # "patient",
+            "patient__name",
+            # "clinic_end_date",
+            "start_date",
+            # "clinic_start_date",
+            "end_date",
+            "notes",
+            "reservation_count",
+        )  # filter(patient__isnull=False)
+        # context
         # context["savepatform"] = self.form_class
         # context["savepatform"] = form.form_valid
-        context["qs"] = self.get_queryset()
+
         context["reservation_dashboard_url"] = self.reservation_dashboard_url
         data = {
-            "var": "Amr Ali Amer",
+            "var": self.queryset.values("patient_id", "patient__name"),
             "show_hour": self.request.GET.get("show_hour"),
             "show_day": self.request.GET.get("show_day"),
         }

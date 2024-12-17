@@ -1,18 +1,35 @@
 <!-- FOR DAY RESERVATION -->
 <!-- <div class="row" v-if="showDay"> -->
+{% for obj in qs %}
 <div class="col-md-6 col-xl-4">
     <div class="card shadow-none border border-primary border-2 mb-3">
         <!-- shadow-none bg-transparent border border-primary -->
+
         <div class="card-body">
-            <h5 class="card-title">Patient Name: His Name</h5>
+            <h5 class="card-title">Reservation Date:
+                <i class="badge bg-primary text-white text-bold rounded-pill">{{obj.start_date|date:"Y-m-d"}}</i>
+            </h5>
             <div class="card-text text-dark">
-                <b class="text-primary">Patient Name: </b>His Name<br>
+                <b class="text-dark">Patient ID:</b>
+                <i class="badge bg-danger-subtle text-dark rounded-pill">
+                    <b>{{obj.patient}}</b>
+                </i><br>
+                <b class="text-dark"></b>
+                <b class="text-dark">Patient Name:</b>
+                <i class="badge bg-primary text-white text-bold rounded-pill">
+                    <b>{{obj.patient__name}}</b></i> <br>
                 <!-- <i class="badge bg-primary rounded-pill"></i> -->
-                <b class="text-primary">Reservation Time:</b> 6.00 pm to 6.15 pm<br>
+                <b class="text-dark">Reservation Time: </b>
+                <i class="badge bg-primary text-white text-bold rounded-pill">
+                    {{obj.start_date|date:"h.i A"}} </i>
+                <i class="badge bg-success-subtle text-dark rounded-pill">TO</i>
+                <i class="badge bg-primary text-white text-bold rounded-pill">{{obj.end_date|date:"h.i A"}}</i>
+                <br>
             </div>
         </div>
         <div class="card-footer text-center">
-            <a href="javascript:void(0)" class="card-link btn btn-dark btn-xs rounded-pill mb-3">
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#reservationModal"
+                class="card-link btn btn-primary btn-xs rounded-pill mb-3">
                 <i class="mdi mdi-plus mdi-1px lh-0"></i>
             </a>
             <a href="javascript:void(0)" class="card-link btn btn-info btn-xs rounded-pill mb-3">
@@ -24,6 +41,7 @@
         </div>
     </div>
 </div>
+{%endfor%}
 
 <div class="col-md-6 col-xl-4">
     <div class="card shadow-none border border-primary mb-3">

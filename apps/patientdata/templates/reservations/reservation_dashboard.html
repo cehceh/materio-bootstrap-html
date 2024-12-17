@@ -35,6 +35,12 @@
 
     </div>
 
+    var=>
+    {% for ob in var %}{{ob.patient_id}}{%endfor%}
+    <!-- qs=>> {{qs.0}}--{{qs.1}}==>>> -->
+    {% for obj in new_qs %}
+    queryset ==> {{obj.id}} - {{obj.patient__name}}
+    {% endfor %}
     <!-- FOR DAY RESERVATION -->
     <div class="row" v-if="showDay">
         {% include './includes/day.html' %}
@@ -69,6 +75,7 @@
 </div>
 
 
+{% include './includes/modals/add_new_reservation.html' %}
 
 
 {% endblock %}

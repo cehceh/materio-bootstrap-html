@@ -1,0 +1,104 @@
+<!-- Large Modal -->
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+
+        <form method="post" class="single-clinic-modal">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel3">Add New Reservation</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="&times;"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                        <div class="col mb-2 mt-0">
+                            <div class="form-floating form-floating-outline">
+                                <input type="text" name="company" id="company" class="form-control form-control-xs"
+                                    placeholder="Enter Name">
+                                <label for="company">Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col mb-6 mt-0">
+                            <div class="form-floating form-floating-outline">
+                                <select type="text" name="app-type" id="app-type" class="form-control form-control-xs"
+                                    v-if="isSingle" disabled>
+                                    <option value="0">
+                                        <p class="bg-danger">-- Select Bussiness Type --</p>
+                                    </option>
+                                    <option value="1" selected>Single Clinic App.</option>
+                                    <option value="2">Multi Clinics App.</option>
+                                    <option value="3">Maintenance App.</option>
+                                </select>
+                                <select type="text" name="app-type" id="app-type" class="form-control form-control-xs"
+                                    v-if="isMulti" disabled>
+                                    <option value="0">
+                                        <p class="bg-danger">-- Select Bussiness Type --</p>
+                                    </option>
+                                    <option value="1">Single Clinic App.</option>
+                                    <option value="2" selected>Multi Clinics App.</option>
+                                    <option value="3">Maintenance App.</option>
+                                </select>
+                                <select type="text" name="app-type" id="app-type" class="form-control form-control-xs"
+                                    v-if="isMaintenance" disabled>
+                                    <option value="0">
+                                        <p class="bg-danger">-- Select Bussiness Type --</p>
+                                    </option>
+                                    <option value="1">Single Clinic App.</option>
+                                    <option value="2">Multi Clinics App.</option>
+                                    <option value="3" selected>Maintenance App.</option>
+                                </select>
+
+                                <label for="app-type">Bussiness App Type</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row g-2">
+                        <!-- <div class="col mb-2">
+                            <div class="form-floating form-floating-outline">
+                                <select type="text" name="app-type" id="app-type" class="form-control form-control-xs">
+                                    <option value="0">-- Select Bussiness Type --</option>
+                                    <option value="1">Single Clinic App.</option>
+                                    <option value="2">Multi Clinics App.</option>
+                                    <option value="1">Maintenance App.</option>
+                                </select>
+                                <label for="app-type">App Type</label>
+                            </div>
+                        </div> -->
+                        <div class="col mb-2">
+                            <div class="form-floating form-floating-outline">
+                                <input type="date" name="start-date" id="start-date"
+                                    class="form-control form-control-xs">
+                                <label for="start-date">Optional: Start Date</label>
+                            </div>
+                        </div>
+                        <div class="col mb-2">
+                            <div class="form-floating form-floating-outline">
+                                <input type="date" name="end-date" id="end-date" class="form-control form-control-xs">
+                                <label for="end-date">Optional: End Date</label>
+                            </div>
+                        </div>
+                        <!-- <div class="col mb-2">
+                            <div class="form-floating form-floating-outline form-control-xs">
+                                <input type="date" id="dobLarge" class="form-control form-control-xs">
+                                <label for="dobLarge">DOB</label>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger btn-xs" data-bs-dismiss="modal">
+                        <i class="mdi mdi-close mdi-7px lh-0"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-xs">
+                        <i class="mdi mdi-content-save mdi-7px lh-0"></i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

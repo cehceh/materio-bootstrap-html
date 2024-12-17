@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-
+print("BASE+DIR -- >>", BASE_DIR)
 # Update secret key in .env file and .env.prod file
 # SECRET_KEY = os.environ.get("SECRET_KEY", default='')
 
@@ -300,5 +300,75 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": False,
         },
+    },
+}
+
+###
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "main_formatter": {
+            "format": "%(levelname)s: %(asctime)s %(pathname)s:%(lineno)d : %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        }
+    },
+    "handlers": {
+        # "log_file": {
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "class": "logging.handlers.RotatingFileHandler",
+        #     "filename": os.path.join(BASE_DIR / "/logs/main_debug.log"),
+        #     "maxBytes": 1024 * 1024 * 20,  # 5 MB
+        #     "backupCount": 7,
+        #     "formatter": "main_formatter",
+        # },
+        # "users_email_and_update_log_file": {
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "class": "logging.handlers.RotatingFileHandler",
+        #     "filename": os.path.join(BASE_DIR / "/logs/users_email_and_update.log"),
+        #     "maxBytes": 1024 * 1024 * 20,  # 5 MB
+        #     "backupCount": 7,
+        #     "formatter": "main_formatter",
+        # },
+        # "delete_users_log_file": {
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "class": "logging.handlers.RotatingFileHandler",
+        #     "filename": os.path.join(BASE_DIR / "/logs/delete_users.log"),
+        #     "maxBytes": 1024 * 1024 * 20,  # 5 MB
+        #     "backupCount": 7,
+        #     "formatter": "main_formatter",
+        # },
+    },
+    "loggers": {
+        # "main": {
+        #     "handlers": ["log_file"],
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "propagate": True,
+        # },
+        # "purchase": {
+        #     "handlers": ["log_file"],
+        #     "level": "DEBUG" if DEBUG else "INFO",
+        #     "propagate": True,
+        # },
+        # "services": {
+        #     "handlers": ["log_file"],
+        #     "level": "INFO",
+        #     "propagate": True,
+        # },
+        # "django.request": {
+        #     "handlers": ["log_file"],
+        #     "level": "INFO",
+        #     "propagate": True,
+        # },
+        # "email_and_update_service": {
+        #     "handlers": ["users_email_and_update_log_file"],
+        #     "level": "INFO",
+        #     "propagate": True,
+        # },
+        # "delete_users_service": {
+        #     "handlers": ["delete_users_log_file"],
+        #     "level": "INFO",
+        #     "propagate": True,
+        # },
     },
 }

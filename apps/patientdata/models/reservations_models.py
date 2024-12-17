@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from django.utils.timezone import now
 
 import os
@@ -44,11 +43,12 @@ class PatientReservation(BasicData):
     clinic_end_date = models.DateTimeField(default=now, blank=True, null=True)
 
     start_date = models.DateTimeField(default=now, blank=True, null=True)
-    clinic_start_date = models.DecimalField(
-        decimal_places=2, max_digits=3, default=0, blank=True, null=True
-    )
+    # clinic_start_date = models.DecimalField(
+    #     decimal_places=2, max_digits=3, default=0, blank=True, null=True
+    # )
     end_date = models.DateTimeField(blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+    reservation_count = models.IntegerField(default=0)
     # phone = models.CharField(max_length=150, blank=True, null=True)
 
     # mobile = models.CharField(max_length=30, blank=True, null=True)
@@ -63,11 +63,11 @@ class PatientReservation(BasicData):
         verbose_name_plural = "Patients Reservations"
 
     def __str__(self):
-        return "{}".format(self.name)
+        return "{}".format(self.patient.name)
 
-    def edit_reservation_url(self):
-        # return "/clinic/edit/{}/".format(self.id)
-        return reverse("patientdata:edit_reservation", kwargs={"id": self.id})
+    # def edit_reservation_url(self):
+    # # return "/clinic/edit/{}/".format(self.id)
+    # return reverse("patientdata:edit_reservation", kwargs={"id": self.id})
 
     # Override the save method
     # def save(self, *args, **kwargs):
